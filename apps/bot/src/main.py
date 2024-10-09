@@ -1,6 +1,17 @@
-def hello(name: str) -> str:
-    return f'Hello, {name}!'
+from vars import TELEGRAM_API_TOKEN
 
-name = input('Введи своё имя: ')
+import asyncio
+from aiogram import Bot
 
-print(hello(name))
+from routes import dispatcher
+
+
+bot = Bot(token=TELEGRAM_API_TOKEN)
+
+
+async def main():
+    print('Done')
+    await dispatcher.start_polling(bot)
+
+if __name__ == '__main__':
+    asyncio.run(main())
