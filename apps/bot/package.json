@@ -9,6 +9,6 @@
         "typescript": "^5.0.0"
     },
     "scripts": {
-        "dev": "python3 ./src/main.py"
+        "dev": "nodemon --exec python3 ./src/main.py"
     }
 }
