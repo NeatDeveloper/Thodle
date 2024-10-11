@@ -1,0 +1,14 @@
+{
+    "name": "@app/bot",
+    "module": "src/main.py",
+    "type": "module",
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "scripts": {
+        "dev": "nodemon --exec python3 ./src/main.py"
+    }
+}
