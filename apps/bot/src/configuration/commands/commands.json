@@ -1,0 +1,23 @@
+[
+    {
+        "command": "start",
+        "description": {
+            "ru": "Запуск сервиса",
+            "en": "Startup service"
+        }
+    },
+    {
+        "command": "schedule",
+        "description": {
+            "ru": "Получить расписание",
+            "en": "Take schedules"
+        }
+    },
+    {
+        "command": "help",
+        "description": {
+            "ru": "Помощь",
+            "en": "Help"
+        }
+    }
+]
