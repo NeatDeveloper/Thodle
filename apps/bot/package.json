@@ -1,6 +1,6 @@
 {
     "name": "@app/bot",
-    "module": "src/main.py",
+    "module": "src/index.ts",
     "type": "module",
     "devDependencies": {
         "@types/bun": "latest"
@@ -9,6 +9,6 @@
         "typescript": "^5.0.0"
     },
     "scripts": {
-        "dev": "nodemon --exec python3 ./src/main.py"
+        "dev": "bun run --watch ./src/index.ts"
     }
 }
