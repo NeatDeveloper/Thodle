@@ -8,6 +8,8 @@
             "configuration/*": ["./src/configuration/*"],
             "commands": ["./src/commands"],
             "commands/*": ["./src/commands/*"],
+            "middlewares": ["./src/middlewares"],
+            "middlewares/*": ["./src/middlewares/*"],
         }
     }
 }
