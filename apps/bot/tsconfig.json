@@ -1,5 +1,5 @@
 {
-    "extends": "@repo/types/base.json",
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "resolveJsonModule": true,
         "esModuleInterop": true,
