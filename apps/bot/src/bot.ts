@@ -1,11 +1,15 @@
 import { Bot } from 'grammy';
-import { setMyCommands } from './configuration';
-import routes from './commands';
+import Context from './context';
 
-const bot = new Bot(Bun.env.TELEGRAM_API_TOKEN);
+import { setMyCommands } from './configuration';
+import commands from 'commands';
+
+const bot = new Bot<APP.Context>(Bun.env.TELEGRAM_API_TOKEN, {
+    ContextConstructor: Context
+});
 
 setMyCommands(bot);
 
-bot.use(routes);
+bot.use(commands);
 
 export default bot;

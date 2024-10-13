@@ -5,7 +5,10 @@
         "build": "bun --bun turbo build --env-mode=loose",
         "dev": "bun --bun turbo dev --env-mode=loose",
         "lint": "turbo lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+
+
+        "start-bot": "bun --bun turbo dev --env-mode=loose --filter=@app/bot"
     },
     "devDependencies": {
         "prettier": "^3.3.3",
