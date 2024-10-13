@@ -4,8 +4,8 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "paths": {
-            "commands": ["./src/configuration/commands"],
-            "commands/*": ["./src/configuration/commands/*"],
+            "configuration": ["./src/configuration"],
+            "commands/*": ["./src/configuration/*"],
         }
     }
 }
