@@ -1,8 +1,9 @@
 import { Composer } from 'grammy';
 
-const commands = new Composer();
+const commands = new Composer<APP.Context>();
 
 commands.command('start', async __context__ => {
+    console.log(__context__.user)
     await __context__.reply('Hello, world!');
 });
 

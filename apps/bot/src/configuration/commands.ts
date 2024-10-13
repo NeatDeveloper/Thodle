@@ -1,6 +1,6 @@
 import { Bot } from 'grammy';
 
-export default (bot: Bot) => {
+export default (bot: Bot<APP.Context>) => {
     bot.api.setMyCommands([
         {
             command: "start",
