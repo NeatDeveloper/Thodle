@@ -5,7 +5,9 @@
         "esModuleInterop": true,
         "paths": {
             "configuration": ["./src/configuration"],
-            "commands/*": ["./src/configuration/*"],
+            "configuration/*": ["./src/configuration/*"],
+            "commands": ["./src/commands"],
+            "commands/*": ["./src/commands/*"],
         }
     }
 }
