@@ -10,9 +10,5 @@
     },
     "publishConfig": {
         "access": "public"
-    },
-    "exports": {
-        "env": "./env.d.ts",
-        "base": "./base.json"
     }
 }
