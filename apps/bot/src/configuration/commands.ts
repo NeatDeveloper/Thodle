@@ -1,7 +1,7 @@
 import { Bot } from 'grammy';
 
-export default (bot: Bot<APP.Context>) => {
-    bot.api.setMyCommands([
+export default async (bot: Bot<APP.Context>) => {
+    await bot.api.setMyCommands([
         {
             command: "start",
             description: "Startup service"
@@ -16,7 +16,7 @@ export default (bot: Bot<APP.Context>) => {
         }
     ], { language_code: 'en' });
 
-    bot.api.setMyCommands([
+    await bot.api.setMyCommands([
         {
             command: "start",
             description: "Запуск сервиса"

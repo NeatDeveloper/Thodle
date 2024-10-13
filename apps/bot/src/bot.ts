@@ -8,7 +8,7 @@ const bot = new Bot<APP.Context>(Bun.env.TELEGRAM_API_TOKEN, {
     ContextConstructor: Context
 });
 
-setMyCommands(bot);
+await setMyCommands(bot);
 
 bot.use(commands);
 
