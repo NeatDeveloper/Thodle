@@ -1,19 +1,33 @@
-/// @namespace UniversityStructure
-
+/// Модель **Университета**
+///
+/// Точка входа для описания структуры университета. Тут содержатся основные его данные, для нормальной работы всего приложения
+/// @namespace СтруктураУниверситета
 model University {
+    /// ID университета в базе данных
     id Int @id @default(autoincrement())
 
+    /// Название университета в сокращенном варианте
     name     String @unique
+    /// Название университета
     fullName String @unique @map("full_name")
 
+    /// Город, где университет находится
     city      String
+    /// Массив, где хранятся время когда проходят учебные процессы
+    /// @minItems 5
     studyTime Json   @map("study_time")
+    /// Связь с моделью Week для определения названий недель в конкретном университете
+    /// @minItems 2
     weeks     Week[]
 
+    /// Факультеты, которые относятся к данному университету
     faculties Faculity[]
+    /// Корпуса, которые относятся к данному университету
     buildings Building[]
 
+    /// Дата создания пользователя в нашей системе
     createdAt DateTime @default(now()) @map("created_at")
+    /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("Universities")
