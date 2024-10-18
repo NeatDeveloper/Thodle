@@ -1,18 +1,7 @@
-/// Both description and ERD on Actors chatper.
-///
-/// Also, only ERD on Articles and Orders chapters.
-///
-/// @namespace Actors
-/// @erd Articles
-/// @erd Orders
+
 model Week {
     id Int @id @default(autoincrement())
 
-    /// The tag "minItems 1" means mandatory relationship `||---|{`.
-    ///
-    /// Otherwise, no tag means optional relationship `||---o{`.
-    ///
-    /// @minItems 1
     title String
     count WeekCount
 

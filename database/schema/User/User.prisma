@@ -1,12 +1,22 @@
+/// Модель пользователя.
+/// @namespace User
 model User {
+    /// ID пользователя в базе данных
     id String @id @default(uuid())
 
+    /// ID пользователя в телеграм
     tgID BigInt @unique @map("tg_id")
 
+    /// Фамилия пользователя в телеграм
     lastName  String? @map("last_name")
+    /// Имя пользователя в телеграм
     firstName String? @map("first_name")
+    /// Имя пользователя пользователя в телеграм
     username  String? @unique
 
+    /// Роль пользователя в системе, воможные значения:
+    /// 1. REGULAR
+    /// 2. ADMIN
     role UserRole @default(REGULAR)
 
     lang Lang
