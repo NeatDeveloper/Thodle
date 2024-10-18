@@ -1,0 +1,16 @@
+model Group {
+    id Int @id @default(autoincrement())
+
+    curator    Curator?
+    groupHeads GroupHead[]
+    students   Student[]
+    tutor      Tutor?
+
+    groupYear Int @map("group_year")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("Groups")
+    @@schema("univesityStructure")
+}

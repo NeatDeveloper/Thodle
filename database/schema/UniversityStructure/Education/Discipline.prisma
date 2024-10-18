@@ -1,0 +1,13 @@
+model Discipline {
+    id Int @id @default(autoincrement())
+
+    title String
+    faculity Int?
+
+    schedules Schedule[]
+    Faculity Faculity? @relation(fields: [faculity], references: [id])
+
+    @@schema("univesityStructure")
+    @@index([faculity])
+    @@map("Disciplines")
+}

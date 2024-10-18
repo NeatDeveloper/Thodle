@@ -1,0 +1,16 @@
+model Faculity {
+    id Int @id @default(autoincrement())
+
+    university Int
+
+    disciplines Discipline[]
+    lectors     Lector[]
+    University  University   @relation(fields: [university], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@index([university])
+    @@map("Facilities")
+    @@schema("univesityStructure")
+}
