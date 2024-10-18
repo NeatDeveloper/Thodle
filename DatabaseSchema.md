@@ -45,6 +45,13 @@ erDiagram
   DateTime created_at
   DateTime updated_at
 }
+"Groups" {
+  Int id PK
+  Int group_year
+  Int faculity FK
+  DateTime created_at
+  DateTime updated_at
+}
 "Universities" {
   Int id PK
   String name UK
@@ -59,6 +66,7 @@ erDiagram
 "Disciplines" }o--o| "Facilities" : Faculity
 "Facilities" }o--|| "Universities" : University
 "Weeks" }|--o| "Universities" : University
+"Groups" }o--|| "Facilities" : Faculity
 ```
 
 ### `Auditoriums`
@@ -120,9 +128,24 @@ erDiagram
 
 **Properties**
   - `id`: ID недели в университете
-  - `title`: 
-  - `count`: 
-  - `university`: 
+  - `title`: Название недели в кокретном университете
+  - `count`: Порядок недели
+  - `university`: ID университета
+  - `created_at`: Дата создания пользователя в нашей системе
+  - `updated_at`: Дата обновления пользователя в нашей системе
+
+### `Groups`
+Модель **Неделя**
+
+Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
+а также, позволяет реализовать поддержку именования недель в конкретном университете.
+
+Например: "Первая и Вторая", "Красная и Чёрная"
+
+**Properties**
+  - `id`: ID группы в университете
+  - `group_year`: 
+  - `faculity`: 
   - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
 
@@ -239,21 +262,11 @@ erDiagram
   Int id PK
   Int discipline FK
 }
-"Groups" {
-  Int id PK
-  Int group_year
-  DateTime created_at
-  DateTime updated_at
-}
-"Curators" |o--|| "Groups" : Group
 "Curators" |o--|| "Amplua" : Amplua
-"GroupHeads" }o--|| "Groups" : Group
 "GroupHeads" |o--|| "Amplua" : Amplua
 "Lectors" |o--|| "Amplua" : Amplua
 "LectorRanks" }o--|| "Lectors" : Lector
 "Student" |o--|| "Amplua" : user
-"Student" }o--o| "Groups" : Group
-"Tutors" |o--|| "Groups" : Group
 "Tutors" |o--|| "Amplua" : Amplua
 ```
 
@@ -330,11 +343,3 @@ erDiagram
 **Properties**
   - `id`: 
   - `discipline`: 
-
-### `Groups`
-
-**Properties**
-  - `id`: 
-  - `group_year`: 
-  - `created_at`: 
-  - `updated_at`: 

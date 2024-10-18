@@ -1,6 +1,12 @@
-/// @namespace UniversityStructure
-
+/// Модель **Неделя**
+///
+/// Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
+/// а также, позволяет реализовать поддержку именования недель в конкретном университете.
+///
+/// Например: "Первая и Вторая", "Красная и Чёрная"
+/// @namespace СтруктураУниверситета
 model Group {
+    /// ID группы в университете
     id Int @id @default(autoincrement())
 
     curator    Curator?
@@ -10,9 +16,15 @@ model Group {
 
     groupYear Int @map("group_year")
 
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
+    faculity Int
+    Faculity Faculity @relation(fields: [faculity], references: [id])
+
+    /// Дата создания пользователя в нашей системе
+    createdAt  DateTime @default(now()) @map("created_at")
+    /// Дата обновления пользователя в нашей системе
+    updatedAt  DateTime @updatedAt @map("updated_at")
 
     @@map("Groups")
     @@schema("univesityStructure")
+    @@index([faculity])
 }
