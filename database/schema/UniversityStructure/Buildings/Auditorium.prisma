@@ -1,12 +1,21 @@
+/// Модель **Аудитории**
+///
+/// Описание, всех аудиторий университета. Конкретно в данном случае, аудитории прикреплены к корпусам
+/// @namespace СтруктураУниверситета
 model Auditorium {
+    /// ID университета в базе данных
     id Int @id @default(autoincrement())
 
+    /// ID корпуса
     building Int
+    /// Номер аудитории в строковом формате(302, 302a)
     number String
 
     Building Building @relation(fields: [building], references: [id])
 
+    /// Дата создания пользователя в нашей системе
     createdAt  DateTime @default(now()) @map("created_at")
+    /// Дата обновления пользователя в нашей системе
     updatedAt  DateTime @updatedAt @map("updated_at")
 
     @@map("Auditoriums")

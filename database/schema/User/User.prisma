@@ -1,5 +1,7 @@
-/// Модель пользователя.
-/// @namespace User
+/// Модель **пользователя**
+///
+/// Является основной моделью в базе данных, от которого мы наследуемся при работе с расписаниями
+/// @namespace Пользователь
 model User {
     /// ID пользователя в базе данных
     id String @id @default(uuid())
@@ -14,19 +16,23 @@ model User {
     /// Имя пользователя пользователя в телеграм
     username  String? @unique
 
-    /// Роль пользователя в системе, воможные значения:
-    /// 1. REGULAR
-    /// 2. ADMIN
+    /// Роль пользователя в системе
     role UserRole @default(REGULAR)
 
+    /// Выбраный им язык
     lang Lang
 
+    /// Модель, которая является входной точкой "в системе университета"
     amplua Amplua?
 
+    /// Является ли пользователь ботом
     isBot     Boolean  @map("is_bot")
+    /// Является ли пользователь премиум пользователем
     isPremium Boolean  @map("is_premium")
 
+    /// Дата создания пользователя в нашей системе
     createdAt DateTime @default(now()) @map("created_at")
+    /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@unique([id, tgID])
