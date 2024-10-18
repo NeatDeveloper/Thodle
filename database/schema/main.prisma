@@ -5,8 +5,9 @@ generator client {
 
 generator markdown {
   provider = "prisma-markdown"
-  output   = "../../DatabaseStructure.md"
-  title    = "Shopping Mall"
+  output   = "../../DatabaseSchema.md"
+  title    = "Thodle Bot"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
