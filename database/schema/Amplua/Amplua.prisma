@@ -1,0 +1,33 @@
+model Amplua {
+    id   String @id
+    tgID BigInt @unique
+
+    user User @relation(fields: [id, tgID], references: [id, tgID])
+
+    amplua AmpluaEnum[] @default([UNDEFINED])
+
+    student   Student?
+    groupHead GroupHead?
+    curator   Curator?
+    tutor     Tutor?
+    lector    Lector?
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@unique([id, tgID])
+    @@map("Amplua")
+    @@schema("amplua")
+}
+
+enum AmpluaEnum {
+    UNDEFINED  @map("amplua_undefined")
+    STUDENT    @map("amplua_student")
+    CURATOR    @map("amplua_curator")
+    GROUP_HEAD @map("amplua_group_head")
+    LECTOR     @map("amplua_lector")
+    TUTOR      @map("amplua_tutor")
+
+    @@map("AmpluaEnum")
+    @@schema("amplua")
+}
