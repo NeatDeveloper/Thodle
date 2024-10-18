@@ -1,12 +1,14 @@
+/// @namespace UniversityStructure
+
 model University {
     id Int @id @default(autoincrement())
 
     name     String @unique
     fullName String @unique @map("full_name")
 
-    city     String
-    studyTime Json @map("study_time")
-    weeks Week[]
+    city      String
+    studyTime Json   @map("study_time")
+    weeks     Week[]
 
     faculties Faculity[]
     buildings Building[]
@@ -14,6 +16,6 @@ model University {
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@map("Univesities")
+    @@map("Universities")
     @@schema("univesityStructure")
 }

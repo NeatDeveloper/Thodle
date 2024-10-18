@@ -1,3 +1,5 @@
+/// @namespace UniversityStructure
+
 model Faculity {
     id Int @id @default(autoincrement())
 
