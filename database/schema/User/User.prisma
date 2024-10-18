@@ -1,0 +1,33 @@
+model User {
+    id String @id @default(uuid())
+
+    tgID BigInt @unique @map("tg_id")
+
+    lastName  String? @map("last_name")
+    firstName String? @map("first_name")
+    username  String? @unique
+
+    role UserRole @default(REGULAR)
+
+    lang Lang
+
+    amplua Amplua?
+
+    isBot     Boolean  @map("is_bot")
+    isPremium Boolean  @map("is_premium")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@unique([id, tgID])
+    @@map("Users")
+    @@schema("user")
+}
+
+enum UserRole {
+    REGULAR @map("role_regular")
+    ADMIN   @map("role_admin")
+
+    @@map("UserRoles")
+    @@schema("user")
+}

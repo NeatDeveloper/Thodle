@@ -1,0 +1,10 @@
+model Schedule {
+    id Int @id @default(autoincrement())
+
+    discipline Int
+
+    Discipline   Discipline @relation(fields: [discipline], references: [id])
+
+    @@schema("schedule")
+    @@index([discipline])
+}

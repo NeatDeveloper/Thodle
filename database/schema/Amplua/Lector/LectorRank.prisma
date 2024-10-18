@@ -1,0 +1,13 @@
+model LectorRank {
+    id Int @id @default(autoincrement())
+
+    title        String @unique
+    shortVariant String @unique @map("short_variant")
+
+    Lector   Lector @relation(fields: [lectorId], references: [id])
+    lectorId String
+
+    @@schema("amplua")
+    @@index([lectorId])
+    @@map("LectorRanks")
+}

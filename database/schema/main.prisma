@@ -1,0 +1,27 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextIndex", "fullTextSearch", "multiSchema", "prismaSchemaFolder"]
+}
+
+datasource db {
+    provider          = "postgresql"
+    url               = env("DATABASE_URL")
+    relationMode      = "prisma"
+    schemas           = ["base", "user", "univesityStructure", "amplua", "schedule"]
+}
+
+enum Lang {
+    RU @map("lang_ru")
+    EN @map("lang_en")
+
+    @@map("Lang")
+    @@schema("base")
+}
+
+enum LessonType {
+    LECTURE @map("lesson_type_lecture")
+    PRACTICE @map("lesson_type_practice")
+
+    @@map("LessonType")
+    @@schema("base")
+}

@@ -1,0 +1,22 @@
+model Week {
+    id Int @id @default(autoincrement())
+
+    title String
+    count WeekCount
+
+    University University? @relation(fields: [university], references: [id])
+
+    schedules  Schedule[]
+    university Int?
+
+    @@index([university])
+    @@map("Weeks")
+    @@schema("univesityStructure")
+}
+
+enum WeekCount {
+    FIRST  @map("week_count_first")
+    SECOND @map("week_count_second")
+
+    @@schema("univesityStructure")
+}
