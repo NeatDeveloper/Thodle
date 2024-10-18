@@ -3,11 +3,18 @@ generator client {
     previewFeatures = ["fullTextIndex", "fullTextSearch", "multiSchema", "prismaSchemaFolder"]
 }
 
+generator markdown {
+  provider = "prisma-markdown"
+  output   = "../../DatabaseSchema.md"
+  title    = "Thodle Bot"
+  previewFeatures = ["multiSchema"]
+}
+
 datasource db {
-    provider          = "postgresql"
-    url               = env("DATABASE_URL")
-    relationMode      = "prisma"
-    schemas           = ["base", "user", "univesityStructure", "amplua", "schedule"]
+    provider     = "postgresql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
+    schemas      = ["base", "user", "univesityStructure", "amplua", "schedule"]
 }
 
 enum Lang {
@@ -19,7 +26,7 @@ enum Lang {
 }
 
 enum LessonType {
-    LECTURE @map("lesson_type_lecture")
+    LECTURE  @map("lesson_type_lecture")
     PRACTICE @map("lesson_type_practice")
 
     @@map("LessonType")
