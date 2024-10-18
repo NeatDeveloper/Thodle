@@ -1,0 +1,15 @@
+model Auditorium {
+    id Int @id @default(autoincrement())
+
+    building Int
+    number String
+
+    Building Building @relation(fields: [building], references: [id])
+
+    createdAt  DateTime @default(now()) @map("created_at")
+    updatedAt  DateTime @updatedAt @map("updated_at")
+
+    @@map("Auditoriums")
+    @@schema("univesityStructure")
+    @@index([building])
+}

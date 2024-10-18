@@ -1,0 +1,17 @@
+model Tutor {
+    id   String @id
+    tgID BigInt @unique
+
+    group Int @unique
+
+    Group  Group  @relation(fields: [group], references: [id])
+    Amplua Amplua @relation(fields: [id, tgID], references: [id, tgID])
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@unique([id, tgID])
+    @@index([group])
+    @@map("Tutors")
+    @@schema("amplua")
+}
