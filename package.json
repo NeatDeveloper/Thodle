@@ -9,6 +9,7 @@
 
 
         "db:migrate": "bunx prisma migrate dev",
+        "db:deploy": "bunx prisma migrate deploy",
         "db:create-doc": "bunx prisma generate",
         "db:update": "bun db:migrate && bun db:create-doc"
     },
