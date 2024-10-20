@@ -1,5 +1,5 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+import '@repo/types/env';
+
 declare global {
 	namespace App {
 		// interface Error {}
