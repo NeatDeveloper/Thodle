@@ -1,11 +1,6 @@
-import { Hono } from 'hono';
+import app from './app';
 
-const app = new Hono();
-
-app.get('/', async __context__ => {
-    return __context__.text('Hello, world!');
-});
-
+console.log(`The API service is deployed on http://localhost:${Bun.env.API_PORT}`);
 
 export default {
     port: Bun.env.API_PORT,
