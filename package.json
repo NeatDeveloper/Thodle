@@ -2,8 +2,8 @@
     "name": "Thodle",
     "private": true,
     "scripts": {
-        "build": "bun --bun turbo build --env-mode=loose",
-        "dev": "bun --bun turbo dev --env-mode=loose",
+        "build": "MODE=prod bun --bun turbo build --env-mode=loose",
+        "dev": "MODE=dev bun --bun turbo dev --env-mode=loose",
         "lint": "turbo lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "db:migrate": "bunx prisma migrate dev",

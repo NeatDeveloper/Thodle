@@ -6,24 +6,14 @@ const v1 = factory.createApp().basePath('/v1');
 
 
 v1.get('/', async __context__ => {
-    throw CreateException('BAD_GATEWAY', 'Опа, чирик...');
+    throw CreateException('UNAUTHORIZED', {
+        message: 'Опа, чирик...'
+    });
     return __context__.json({ message: 'Hello, world!' });
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-v1.put('/', async __context__ => {
+v1.post('/', async __context__ => {
     return __context__.json({ message: 'Hello, world!' });
 });
 

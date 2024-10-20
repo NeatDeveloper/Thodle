@@ -1,5 +1,8 @@
 declare module "bun" {
     interface Env {
+        // Options
+        MODE: 'dev' | 'prod';
+
         // APP options
         APP_NAME: string;
         APP_HOST: string;

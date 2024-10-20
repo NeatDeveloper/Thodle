@@ -1,7 +1,7 @@
 import '@repo/types/env';
+import '@repo/types/api';
+
 import type { HTTPException } from 'hono/http-exception';
-import type { ClientErrorStatusCode, ServerErrorStatusCode } from 'hono/utils/http-status';
-import type { StatusCodes } from 'http-status-codes';
 
 declare global {
     namespace APP {
@@ -11,12 +11,14 @@ declare global {
             };
         }
 
-        type CreateException = (
-            status: {
-                [NAME in keyof typeof StatusCodes]: typeof StatusCodes[NAME] extends ClientErrorStatusCode | ServerErrorStatusCode ? NAME : never;
-            }[keyof typeof StatusCodes],
-            message?: string
-        ) => HTTPException;
+
+        type CreateException = <ReturnResponse extends boolean = false>(
+            status: API.HTTPErrorCodes,
+            options?: {
+                response?: ReturnResponse;
+                message?: string;
+            }
+        ) => ReturnResponse extends true ? Response : HTTPException;
     }
 }
 
