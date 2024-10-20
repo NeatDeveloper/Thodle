@@ -6,8 +6,6 @@
             "helpers/*": ["./src/helpers/*"],
             "middlewares": ["./src/middlewares"],
             "middlewares/*": ["./src/middlewares/*"],
-            "exceptions": ["./src/exceptions"],
-            "exceptions/*": ["./src/exceptions/*"],
             "routes": ["./src/routes"],
             "routes/*": ["./src/routes/*"],
         }
