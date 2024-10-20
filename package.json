@@ -6,8 +6,6 @@
         "dev": "bun --bun turbo dev --env-mode=loose",
         "lint": "turbo lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-
-
         "db:migrate": "bunx prisma migrate dev",
         "db:deploy": "bunx prisma migrate deploy",
         "db:create-doc": "bunx prisma generate",
@@ -33,6 +31,7 @@
         "packages/*"
     ],
     "dependencies": {
+        "@hono/swagger-ui": "^0.4.1",
         "@prisma/client": "5.21.1",
         "@telegram-apps/sdk": "^2.5.1",
         "grammy": "^1.30.0",
