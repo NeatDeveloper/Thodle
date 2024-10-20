@@ -3,8 +3,10 @@ import { trimTrailingSlash } from 'hono/trailing-slash';
 import { cors } from 'hono/cors';
 import { bodyLimit } from 'hono/body-limit';
 
-import { factory, isMyOrigin } from './helpers';
+import { CreateException, factory, isMyOrigin } from './helpers';
 import routes from './routes';
+import { showRoutes } from 'hono/dev';
+import { csrf } from 'hono/csrf';
 
 const app = factory.createApp();
 
@@ -13,6 +15,8 @@ app.use(logger());
 
 app.use(trimTrailingSlash());
 
+app.use(csrf({ origin: isMyOrigin }));
+
 app.use(cors({
     origin: (origin, __context__) => isMyOrigin(origin) ? origin : undefined,
     credentials: true
@@ -20,11 +24,12 @@ app.use(cors({
 
 app.use(bodyLimit({
     maxSize: 50 * 1024,
-    onError: __context__ => __context__.json({ message: 'Large package size' }, 413)
+    onError: __context__ => CreateException('REQUEST_TOO_LONG', { response: true })
 }));
 
 
-
 app.route('/', routes);
+
+Bun.env.MODE === 'dev' && showRoutes(app);
 
 export default app;
