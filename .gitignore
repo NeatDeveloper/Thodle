@@ -3,3 +3,4 @@ node_modules
 .turbo
 bun.lockb
 database/migrations
+**/.vite
