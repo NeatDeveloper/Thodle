@@ -1,5 +1,9 @@
 declare module "bun" {
     interface Env {
+        // APP options
+        APP_NAME: string;
+        APP_HOST: string;
+
         // App ports
         API_PORT : number;
         DAPP_PORT: number;
