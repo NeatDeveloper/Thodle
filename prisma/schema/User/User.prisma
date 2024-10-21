@@ -4,7 +4,7 @@
 /// @namespace Пользователь
 model User {
     /// ID пользователя в базе данных
-    id String @id @default(uuid())
+    id String @id @default(uuid()) /// @zod.string.uuid()
 
     /// ID пользователя в телеграм
     tgID BigInt @unique @map("tg_id")
@@ -26,9 +26,9 @@ model User {
     amplua Amplua?
 
     /// Является ли пользователь ботом
-    isBot     Boolean  @map("is_bot")
+    isBot     Boolean @map("is_bot")
     /// Является ли пользователь премиум пользователем
-    isPremium Boolean  @map("is_premium")
+    isPremium Boolean @map("is_premium")
 
     /// Дата создания пользователя в нашей системе
     createdAt DateTime @default(now()) @map("created_at")

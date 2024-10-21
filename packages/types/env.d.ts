@@ -41,4 +41,4 @@ declare module 'bun' {
     }
 }
 
-export { };
+export {};
