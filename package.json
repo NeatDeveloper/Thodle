@@ -29,7 +29,7 @@
         "node": ">=20"
     },
     "prisma": {
-        "schema": "./database/schema"
+        "schema": "./prisma/schema"
     },
     "packageManager": "bun@1.1.30",
     "workspaces": [
@@ -38,7 +38,9 @@
     ],
     "dependencies": {
         "@hono/swagger-ui": "^0.4.1",
+        "@hono/zod-openapi": "^0.16.4",
         "@prisma/client": "5.21.1",
+        "@scalar/hono-api-reference": "^0.5.156",
         "@telegram-apps/sdk": "^2.5.1",
         "@typescript-eslint/eslint-plugin": "^8.10.0",
         "@typescript-eslint/parser": "^8.10.0",

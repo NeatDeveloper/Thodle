@@ -2,12 +2,24 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "paths": {
-            "helpers": ["./src/helpers"],
-            "helpers/*": ["./src/helpers/*"],
-            "middlewares": ["./src/middlewares"],
-            "middlewares/*": ["./src/middlewares/*"],
-            "routes": ["./src/routes"],
-            "routes/*": ["./src/routes/*"],
+            "helpers": [
+                "./src/helpers"
+            ],
+            "helpers/*": [
+                "./src/helpers/*"
+            ],
+            "middlewares": [
+                "./src/middlewares"
+            ],
+            "middlewares/*": [
+                "./src/middlewares/*"
+            ],
+            "routes": [
+                "./src/routes"
+            ],
+            "routes/*": [
+                "./src/routes/*"
+            ]
         }
     }
 }
