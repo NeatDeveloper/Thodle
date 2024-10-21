@@ -10,6 +10,10 @@
         "typescript": "^5.0.0"
     },
     "scripts": {
-        "dev": "bun --hot run ./src/index.ts"
+        "dev": "bun --hot run ./src/index.ts",
+        "lint": "eslint ."
+    },
+    "exports": {
+        "schemas": "./lib/schemas/index.ts"
     }
 }
