@@ -10,23 +10,27 @@ import { csrf } from 'hono/csrf';
 
 const app = factory.createApp();
 
-
 app.use(logger());
 
 app.use(trimTrailingSlash());
 
 app.use(csrf({ origin: isMyOrigin }));
 
-app.use(cors({
-    origin: (origin, __context__) => isMyOrigin(origin) ? origin : undefined,
-    credentials: true
-}));
+app.use(
+    cors({
+        origin: (origin, __context__) =>
+            isMyOrigin(origin) ? origin : undefined,
+        credentials: true,
+    })
+);
 
-app.use(bodyLimit({
-    maxSize: 50 * 1024,
-    onError: __context__ => CreateException('REQUEST_TOO_LONG', { response: true })
-}));
-
+app.use(
+    bodyLimit({
+        maxSize: 50 * 1024,
+        onError: (__context__) =>
+            CreateException('REQUEST_TOO_LONG', { response: true }),
+    })
+);
 
 app.route('/', routes);
 

@@ -7,7 +7,7 @@ export default ((status, options) => {
         statusText: options?.message || ReasonPhrases[status],
     });
 
-    if(options?.response) return response;
+    if (options?.response) return response;
 
     return new HTTPException(StatusCodes[status], { res: response });
 }) as APP.CreateException;
