@@ -4,5 +4,5 @@ import BotContext from '.';
 export namespace ContextDeclaration {
     type Base = BotContext;
 
-    interface Implement { }
+    interface Implement {}
 }
