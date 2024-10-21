@@ -1,12 +1,15 @@
 {
     "name": "@neatteam/thodle",
+    "version": "0.0.1-beta",
     "private": true,
+    "author": "Neat Team <NeatDeveloper@ya.ru> (http://neat-team.pro/)",
+    "description": "Thodle - сервис предоставления расписания",
+    "type": "module",
     "scripts": {
         "build": "MODE=prod bun --bun turbo build --env-mode=loose",
         "dev": "MODE=dev bun --bun turbo dev --env-mode=loose",
-        "lint": "turbo lint",
-        "format": "prettier --write \"**/*.{ts,js}\"",
-        "format-check": "prettier --check \"**/*.{ts,js}\"",
+        "format": "prettier --write \"**/*.{ts,js,svelte}\"",
+        "format-check": "prettier --check \"**/*.{ts,js,svelte}\"",
         "db:migrate": "bunx prisma migrate dev",
         "db:deploy": "bunx prisma migrate deploy",
         "db:create-doc": "bunx prisma generate",
@@ -22,8 +25,10 @@
         "prettier": "^3.3.3",
         "prisma": "5.21.1",
         "prisma-markdown": "^1.0.9",
-        "turbo": "^2.2.1",
-        "typescript": "^5.6.3"
+        "turbo": "^2.2.3",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.11.0",
+        "zod-prisma": "^0.5.4"
     },
     "engines": {
         "node": ">=20"
@@ -42,13 +47,17 @@
         "@prisma/client": "5.21.1",
         "@scalar/hono-api-reference": "^0.5.156",
         "@telegram-apps/sdk": "^2.5.1",
-        "@typescript-eslint/eslint-plugin": "^8.10.0",
-        "@typescript-eslint/parser": "^8.10.0",
+        "@typescript-eslint/eslint-plugin": "^8.11.0",
+        "@typescript-eslint/parser": "^8.11.0",
         "eslint-plugin-const-case": "^1.2.2",
         "grammy": "^1.30.0",
         "hono": "^4.6.5",
         "http-status-codes": "^2.3.0",
         "nodemon": "^3.1.7",
-        "svelte": "^5.0.2"
+        "prettier-plugin-svelte": "^3.2.7",
+        "prisma-trpc-generator": "^1.4.1",
+        "svelte": "^5.0.5",
+        "zod": "^3.23.8",
+        "zod-prisma-types": "^3.1.8"
     }
 }
