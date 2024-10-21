@@ -9,14 +9,14 @@ declare module 'bun' {
 
         // App ports
         API_PORT: number;
+        DOC_PORT: number;
         DAPP_PORT: number;
         BOT_PORT: number;
         SITE_PORT: number;
 
         // Telegram API options
         TELEGRAM_API_TOKEN: string;
-        TELEGRAM_ENDPOINT_PATH: string;
-        TELEGRAM_ENDPOINT_KEY: string;
+        TELEGRAM_SECRET_KEY: string;
 
         // JWT options
         JWT_ACCESS_KEY: string;
@@ -41,4 +41,4 @@ declare module 'bun' {
     }
 }
 
-export {};
+export { };
