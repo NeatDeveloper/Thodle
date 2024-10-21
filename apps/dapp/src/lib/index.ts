@@ -1,1 +1,7 @@
-// place files you want to import through the `$lib` alias in this folder.
+const firstName = 'Shahriori';
+
+const hello = (name: string) => {
+    return `Hello, ${name}!`;
+};
+
+console.log(hello(firstName));

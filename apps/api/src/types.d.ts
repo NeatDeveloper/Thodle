@@ -6,11 +6,8 @@ import type { HTTPException } from 'hono/http-exception';
 declare global {
     namespace APP {
         interface Context {
-            Variables: {
-
-            };
+            Variables: {};
         }
-
 
         type CreateException = <ReturnResponse extends boolean = false>(
             status: API.HTTPErrorCodes,
