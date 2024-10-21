@@ -4,10 +4,18 @@ generator client {
 }
 
 generator markdown {
-  provider = "prisma-markdown"
-  output   = "../../DatabaseSchema.md"
-  title    = "Thodle Bot"
-  previewFeatures = ["multiSchema"]
+    provider        = "prisma-markdown"
+    output          = "../DatabaseSchema.md"
+    title           = "Thodle Bot"
+    previewFeatures = ["multiSchema"]
+}
+
+generator zod {
+    provider                  = "zod-prisma-types"
+    output                    = "../schemas"
+    useMultipleFiles          = true
+    writeBarrelFiles          = true
+    createRelationValuesTypes = true
 }
 
 datasource db {
