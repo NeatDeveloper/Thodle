@@ -11,11 +11,11 @@ generator markdown {
 }
 
 generator zod {
-    provider = "zod-prisma-types"
-    output   = "../schemas"
-    // useMultipleFiles          = true
-    // writeBarrelFiles          = true
-    // createRelationValuesTypes = true
+    provider                  = "zod-prisma-types"
+    output                    = "../schemas"
+    useMultipleFiles          = true
+    writeBarrelFiles          = true
+    createRelationValuesTypes = true
 }
 
 datasource db {
