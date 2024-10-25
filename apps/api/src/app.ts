@@ -14,7 +14,7 @@ app.use(logger());
 
 app.use(trimTrailingSlash());
 
-app.use(csrf({ origin: isMyOrigin }));
+// app.use(csrf({ origin: isMyOrigin }));
 
 app.use(
     cors({

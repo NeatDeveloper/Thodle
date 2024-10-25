@@ -1,4 +1,5 @@
 import { Composer } from 'grammy';
+import { me } from 'grammy';
 
 const commands = new Composer<APP.Context>();
 
@@ -12,36 +13,7 @@ commands.command('start', async (__context__) => {
 3. 👨‍🏫 Языки программирования, 315(глав)
 4. 👨‍🏫 Информатика, 310(глав)`,
         {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        {
-                            text: 'Пн',
-                            callback_data: 's',
-                        },
-                        {
-                            text: 'Вт',
-                            callback_data: 's',
-                        },
-                        {
-                            text: 'Ср',
-                            callback_data: 's',
-                        },
-                        {
-                            text: 'Чт',
-                            callback_data: 's',
-                        },
-                        {
-                            text: 'Пт',
-                            callback_data: 's',
-                        },
-                        {
-                            text: 'Сб',
-                            callback_data: 's',
-                        },
-                    ],
-                ],
-            },
+            message_effect_id: ''
         }
     );
 });
