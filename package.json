@@ -56,7 +56,7 @@
         "nodemon": "^3.1.7",
         "prettier-plugin-svelte": "^3.2.7",
         "prisma-trpc-generator": "^1.4.1",
-        "svelte": "^5.1.0",
+        "svelte": "^5.1.2",
         "zod": "^3.23.8",
         "zod-prisma-types": "^3.1.8"
     }
