@@ -10,14 +10,6 @@ generator markdown {
     previewFeatures = ["multiSchema"]
 }
 
-generator zod {
-    provider                  = "zod-prisma-types"
-    output                    = "../schemas"
-    useMultipleFiles          = true
-    writeBarrelFiles          = true
-    createRelationValuesTypes = true
-}
-
 datasource db {
     provider     = "postgresql"
     url          = env("DATABASE_URL")
