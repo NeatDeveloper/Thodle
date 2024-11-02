@@ -1,5 +1,4 @@
 import { Composer } from 'grammy';
-import { me } from 'grammy';
 
 const commands = new Composer<APP.Context>();
 
