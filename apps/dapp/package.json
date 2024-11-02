@@ -4,7 +4,6 @@
     "private": true,
     "scripts": {
         "dev": "bun --bun vite dev",
-        "build": "bun --bun vite build",
         "preview": "vite preview",
         "test": "npm run test:integration && npm run test:unit",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
