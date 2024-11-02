@@ -11,7 +11,8 @@
     },
     "scripts": {
         "dev": "bun --hot run ./src/index.ts",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "build": "bun run ./build.ts"
     },
     "exports": {
         "./app": "./src/app.ts"
