@@ -10,11 +10,11 @@ import { csrf } from 'hono/csrf';
 
 const app = factory.createApp();
 
-app.use(logger());
+Bun.env.MODE === 'DEV' && app.use(logger());
 
 app.use(trimTrailingSlash());
 
-// app.use(csrf({ origin: isMyOrigin }));
+app.use(csrf({ origin: isMyOrigin }));
 
 app.use(
     cors({
@@ -34,6 +34,6 @@ app.use(
 
 app.route('/', routes);
 
-Bun.env.MODE === 'dev' && showRoutes(app);
+Bun.env.MODE === 'DEV' && showRoutes(app);
 
 export default app;

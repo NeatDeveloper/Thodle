@@ -1,7 +1,7 @@
 declare module 'bun' {
     interface Env {
         // Options
-        MODE: 'dev' | 'prod';
+        MODE: 'DEV' | 'PROD';
 
         // APP options
         APP_NAME: string;

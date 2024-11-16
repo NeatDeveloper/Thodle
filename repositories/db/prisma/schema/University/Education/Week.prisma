@@ -1,0 +1,38 @@
+/// Модель **Неделя**
+///
+/// Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
+/// а также, позволяет реализовать поддержку именования недель в конкретном университете.
+///
+/// Например: "Первая и Вторая", "Красная и Чёрная"
+/// @namespace СтруктураУниверситета
+model Week {
+    /// ID недели в университете
+    id Int @id @default(autoincrement())
+
+    /// Название недели в кокретном университете
+    title String
+    /// Порядок недели
+    count WeekCount
+    /// ID университета
+    university Int?
+
+    University University? @relation(fields: [university], references: [id])
+
+
+    /// Дата создания пользователя в нашей системе
+    createdAt DateTime @default(now()) @map("created_at")
+    /// Дата обновления пользователя в нашей системе
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@index([university])
+    @@map("Weeks")
+    @@schema("university")
+}
+
+/// @namespace UniversityStructure
+enum WeekCount {
+    FIRST  @map("week_count_first")
+    SECOND @map("week_count_second")
+
+    @@schema("university")
+}

@@ -20,7 +20,7 @@ model User {
     role UserRole @default(REGULAR)
 
     /// Выбраный им язык
-    lang Lang
+    lang String
 
     /// Модель, которая является входной точкой "в системе университета"
     amplua Amplua?
