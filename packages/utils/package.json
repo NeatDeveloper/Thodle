@@ -1,0 +1,17 @@
+{
+    "name": "@repo/utils",
+    "module": "src/index.ts",
+    "type": "module",
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "exports": {
+        "./crypto": "./crypto/index.ts",
+        "./crypto/*": "./crypto/*",
+        "./number": "./number/index.ts",
+        "./number/*": "./number/*"
+    }
+}

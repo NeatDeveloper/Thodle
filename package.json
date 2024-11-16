@@ -39,8 +39,7 @@
     "packageManager": "bun@1.1.30",
     "workspaces": [
         "apps/*",
-        "repositories/*",
-        "utils/*"
+        "packages/*"
     ],
     "dependencies": {
         "@hono/swagger-ui": "^0.4.1",
