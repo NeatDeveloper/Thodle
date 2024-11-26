@@ -1,0 +1,23 @@
+$hostName {
+	reverse_proxy http://localhost:$sitePort
+}
+
+bot.$hostName {
+	reverse_proxy http://localhost:$botPort
+}
+
+dapp.$hostName {
+	reverse_proxy http://localhost:$dappPort
+}
+
+doc.$hostName {
+	reverse_proxy http://localhost:$docPort
+}
+
+api.$hostName {
+	reverse_proxy http://localhost:$apiPort
+}
+
+admin.$hostName {
+	reverse_proxy http://localhost:$adminPort
+}

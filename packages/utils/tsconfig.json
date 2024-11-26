@@ -2,11 +2,17 @@
     "extends": "@repo/types/tsconfig.json",
     "compilerOptions": {
         "paths": {
-            "id": [
-                "crypto"
+            "crypto": [
+                "./crypto"
             ],
-            "id/*": [
-                "crypto/*"
+            "crypto/*": [
+                "./crypto/*"
+            ],
+            "string": [
+                "string"
+            ],
+            "string/*": [
+                "string/*"
             ],
             "number": [
                 "./number"

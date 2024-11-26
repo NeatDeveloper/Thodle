@@ -12,6 +12,8 @@
         "./crypto": "./crypto/index.ts",
         "./crypto/*": "./crypto/*",
         "./number": "./number/index.ts",
-        "./number/*": "./number/*"
+        "./number/*": "./number/*",
+        "./string": "./string/index.ts",
+        "./string/*": "./string/*"
     }
 }

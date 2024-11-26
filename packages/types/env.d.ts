@@ -5,6 +5,7 @@ declare module 'bun' {
 
         // APP options
         APP_NAME: string;
+        APP_IP: string;
         APP_HOST: string;
 
         // App ports
@@ -13,10 +14,12 @@ declare module 'bun' {
         DAPP_PORT: number;
         BOT_PORT: number;
         SITE_PORT: number;
+        ADMIN_PORT: number;
 
         // Telegram API options
         TELEGRAM_API_TOKEN: string;
         TELEGRAM_SECRET_KEY: string;
+        TELEGRAM_ENDPOINT: string;
 
         // JWT options
         JWT_ACCESS_KEY: string;
@@ -38,6 +41,12 @@ declare module 'bun' {
         DATABASE_SCHEMA: string;
 
         DATABASE_URL: string;
+
+        // Cacahe options
+        CACHE_NAME: string;
+        CACHE_USER: string;
+        CACHE_PASSWORD: string;
+        CACHE_PORT: number
     }
 }
 

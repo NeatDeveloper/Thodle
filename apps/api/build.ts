@@ -3,10 +3,7 @@ Bun.build({
     outdir: '../../prod/api',
     target: 'bun',
     format: 'esm',
-    sourcemap: 'linked',
+    sourcemap: 'external',
     minify: true,
-    drop: ["console", "debugger", "anyIdentifier.or.propertyAccess"],
-    banner: '// Hello',
-    footer: '// World!',
-    root: './src'
+    packages: 'bundle',
 })

@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "@repo/types/tsconfig.json",
     "compilerOptions": {
         "resolveJsonModule": true,
         "esModuleInterop": true,
@@ -10,6 +10,10 @@
             "commands/*": ["./src/commands/*"],
             "middlewares": ["./src/middlewares"],
             "middlewares/*": ["./src/middlewares/*"],
+            "context": ["./src/context"],
+            "context/*": ["./src/context/*"],
+            "src": ["./src"],
+            "src/*": ["./src/*"],
         }
     }
 }

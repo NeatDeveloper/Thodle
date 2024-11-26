@@ -1,12 +1,9 @@
 import { Bot } from 'grammy';
-import Context from './context';
 
 import { setMyCommands } from './configuration';
 import commands from 'commands';
 
-const bot = new Bot<APP.Context>(Bun.env.TELEGRAM_API_TOKEN, {
-    ContextConstructor: Context,
-});
+const bot = new Bot<APP.Context>(Bun.env.TELEGRAM_API_TOKEN);
 
 await setMyCommands(bot);
 

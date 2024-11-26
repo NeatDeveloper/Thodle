@@ -1,5 +1,5 @@
 import '@repo/types/env';
-import type { ContextDeclaration } from './context/declaration';
+import type { ContextDeclaration } from 'context/declaration';
 
 declare global {
     namespace APP {

@@ -11,3 +11,22 @@ services:
             - POSTGRES_DB=${DATABASE_NAME}
         ports:
             - "${DATABASE_PORT}:5432"
+
+    redis:
+        image: redis/redis-stack-server:latest
+        restart: always
+        container_name: ${CACHE_NAME}
+        ports:
+            - "${CACHE_PORT}:6379"
+        command:
+            - 'redis-server'
+            - '--loglevel warning'
+            - '--save 900 1'
+            - '--save 300 10'
+            - '--save 60 10000'
+            - '--maxmemory 1024mb'
+            - '--protected-mode yes'
+            - '--loadmodule /opt/redis-stack/lib/redisearch.so'
+            - '--loadmodule /opt/redis-stack/lib/rejson.so'
+            - '--maxmemory-policy noeviction'
+            - '--requirepass ${CACHE_PASSWORD}'
