@@ -175,7 +175,6 @@ erDiagram
   String username UK "nullable"
   UserRole role
   String lang
-  Boolean is_bot
   Boolean is_premium
   DateTime created_at
   DateTime updated_at
@@ -195,7 +194,6 @@ erDiagram
   - `username`: Имя пользователя пользователя в телеграм
   - `role`: Роль пользователя в системе
   - `lang`: Выбраный им язык
-  - `is_bot`: Является ли пользователь ботом
   - `is_premium`: Является ли пользователь премиум пользователем
   - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
@@ -262,12 +260,21 @@ erDiagram
   Int id PK
   Int discipline FK
 }
+"mailing_settings" {
+  String id PK
+  Boolean can_i_send
+}
+"settings" {
+  String id PK
+  BigInt tgID UK
+}
 "Curators" |o--|| "Amplua" : Amplua
 "GroupHeads" |o--|| "Amplua" : Amplua
 "Lectors" |o--|| "Amplua" : Amplua
 "LectorRanks" }o--|| "Lectors" : Lector
 "Student" |o--|| "Amplua" : user
 "Tutors" |o--|| "Amplua" : Amplua
+"mailing_settings" |o--|| "settings" : settings
 ```
 
 ### `Amplua`
@@ -343,3 +350,15 @@ erDiagram
 **Properties**
   - `id`: 
   - `discipline`: 
+
+### `mailing_settings`
+
+**Properties**
+  - `id`: 
+  - `can_i_send`: 
+
+### `settings`
+
+**Properties**
+  - `id`: 
+  - `tgID`: 

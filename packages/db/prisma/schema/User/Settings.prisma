@@ -1,0 +1,12 @@
+model Settings {
+    id   String @id
+    tgID BigInt @unique
+
+    user User @relation(fields: [id, tgID], references: [id, tgID])
+
+    mailing MailingSettings?
+
+    @@unique([id, tgID])
+    @@map("settings")
+    @@schema("user")
+}

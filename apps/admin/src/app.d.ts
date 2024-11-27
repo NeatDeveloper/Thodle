@@ -7,7 +7,14 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+
 	}
+    namespace CORE {
+        interface Meta {
+            name: string;
+            apiURL: string;
+        }
+    }
 }
 
 export {};

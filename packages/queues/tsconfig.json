@@ -1,0 +1,3 @@
+{
+    "extends": "@repo/types/tsconfig.json"
+}

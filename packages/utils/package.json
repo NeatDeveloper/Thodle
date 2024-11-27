@@ -14,6 +14,8 @@
         "./number": "./number/index.ts",
         "./number/*": "./number/*",
         "./string": "./string/index.ts",
-        "./string/*": "./string/*"
+        "./string/*": "./string/*",
+        "./other": "./other/index.ts",
+        "./other/*": "./other/*"
     }
 }

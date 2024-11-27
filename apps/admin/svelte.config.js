@@ -10,6 +10,18 @@ const config = {
             out: '../../prod/admin',
             port: process.env.ADMIN_PORT
         }),
+        files: {
+            lib: './lib',
+            routes: './template/routes',
+            appTemplate: './template/index.html',
+            errorTemplate: './template/error.html',
+        },
+        alias: {
+            lib: './lib',
+            stores: './lib/stores',
+            components: './src/components',
+            sections: './src/sections',
+        }
     },
     compilerOptions: {
         runes: true
