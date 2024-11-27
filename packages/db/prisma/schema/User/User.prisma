@@ -24,9 +24,8 @@ model User {
 
     /// Модель, которая является входной точкой "в системе университета"
     amplua Amplua?
+    settings Settings?
 
-    /// Является ли пользователь ботом
-    isBot     Boolean @map("is_bot")
     /// Является ли пользователь премиум пользователем
     isPremium Boolean @map("is_premium")
 

@@ -1,14 +1,12 @@
 import { factory } from 'helpers';
-import users from './users';
-import admin from './admin';
+import mailing from './mailing';
 
-const routes = factory.createApp().basePath('/');
+const routes = factory.createApp().basePath('/admin');
 
 routes.get('/', async __context__ => {
     return __context__.text('API сервиса Thodle')
 });
 
-routes.route('/', users);
-routes.route('/', admin);
+routes.route('/', mailing);
 
 export default routes;

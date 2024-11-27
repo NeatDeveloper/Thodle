@@ -8,6 +8,8 @@ import routes from './routes';
 import { showRoutes } from 'hono/dev';
 import { csrf } from 'hono/csrf';
 
+import queuesInit from '@repo/queues';
+
 const app = factory.createApp();
 
 Bun.env.MODE === 'DEV' && app.use(logger());
@@ -31,6 +33,14 @@ app.use(
             CreateException('REQUEST_TOO_LONG', { response: true }),
     })
 );
+
+const queues = queuesInit();
+
+app.use(async (__context__, next) => {
+    __context__.set('queues', queues);
+
+    await next();
+})
 
 app.route('/', routes);
 
