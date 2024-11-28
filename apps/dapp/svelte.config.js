@@ -14,6 +14,7 @@ export default {
         alias: {
             lib: './lib',
             stores: './lib/stores',
+            styles: './src/styles',
         },
 
         files: {

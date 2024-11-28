@@ -21,6 +21,7 @@ const config = {
             stores: './lib/stores',
             components: './src/components',
             sections: './src/sections',
+            styles: './src/styles',
         }
     },
     compilerOptions: {

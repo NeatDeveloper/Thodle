@@ -167,8 +167,9 @@ erDiagram
 ## Пользователь
 ```mermaid
 erDiagram
-"Users" {
+"users" {
   String id PK
+  String avatar "nullable"
   BigInt tg_id UK
   String last_name "nullable"
   String first_name "nullable"
@@ -181,13 +182,14 @@ erDiagram
 }
 ```
 
-### `Users`
+### `users`
 Модель **пользователя**
 
 Является основной моделью в базе данных, от которого мы наследуемся при работе с расписаниями
 
 **Properties**
   - `id`: ID пользователя в базе данных
+  - `avatar`: Аватарка пользователя
   - `tg_id`: ID пользователя в телеграм
   - `last_name`: Фамилия пользователя в телеграм
   - `first_name`: Имя пользователя в телеграм
@@ -260,13 +262,20 @@ erDiagram
   Int id PK
   Int discipline FK
 }
-"mailing_settings" {
-  String id PK
-  Boolean can_i_send
+"devices" {
+  Int id PK
+  String user_id FK
+  String ip "nullable"
+  String device "nullable"
+  String os "nullable"
 }
 "settings" {
   String id PK
   BigInt tgID UK
+}
+"mailing_settings" {
+  String id PK
+  Boolean can_i_send
 }
 "Curators" |o--|| "Amplua" : Amplua
 "GroupHeads" |o--|| "Amplua" : Amplua
@@ -351,14 +360,23 @@ erDiagram
   - `id`: 
   - `discipline`: 
 
-### `mailing_settings`
+### `devices`
 
 **Properties**
   - `id`: 
-  - `can_i_send`: 
+  - `user_id`: 
+  - `ip`: 
+  - `device`: 
+  - `os`: 
 
 ### `settings`
 
 **Properties**
   - `id`: 
   - `tgID`: 
+
+### `mailing_settings`
+
+**Properties**
+  - `id`: 
+  - `can_i_send`: 

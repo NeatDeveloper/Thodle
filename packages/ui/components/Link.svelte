@@ -1,0 +1,51 @@
+<script lang="ts">
+    import { page } from '$app/stores';
+    import type { Page } from '@sveltejs/kit';
+    import type { Snippet } from 'svelte';
+    import type { HTMLAnchorAttributes } from 'svelte/elements';
+
+    interface Props {
+        children: Snippet;
+        class?: string;
+        href?: string;
+        isActive?: boolean;
+        onactivate?: (link: HTMLAnchorElement) => any;
+        target?: HTMLAnchorAttributes['target'];
+    }
+
+    let {
+        children,
+        class: __class,
+        href = '#',
+        isActive = $bindable(false),
+        onactivate,
+        target,
+    }: Props = $props();
+
+    let link = $state<HTMLAnchorElement>();
+
+    const check = (pg: Page) => {
+        if (href === '/') {
+            if (pg.url.pathname === href) isActive = true;
+            else isActive = false;
+        } else if (pg.url.pathname.startsWith(href)) isActive = true;
+        else isActive = false;
+    };
+
+    page.subscribe(check);
+
+    $effect.root(() => {
+        check($page);
+
+        $effect(() => {
+            if (isActive === true && link) onactivate?.(link);
+        });
+    });
+</script>
+
+<a
+    bind:this={link}
+    class="link{__class ? ' ' + __class : ''}{isActive ? ' active' : ''}"
+    {target}
+    {href}>{@render children()}</a
+>

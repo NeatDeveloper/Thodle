@@ -1,14 +1,39 @@
 <script lang="ts">
-    import erudaInit from 'lib/eruda';
+    const { children, data } = $props();
+
+    if (browser) dev && import('lib/eruda').then((erudaInit) => erudaInit.default());
+
+    import '@repo/ui/reset';
+    import 'styles/index.scss';
+
     import { browser, dev } from '$app/environment';
-    import { MiniApp } from 'stores';
+    import { MiniApp, User } from 'stores';
+    import { Core } from '@repo/utils/stores';
 
-    const { children } = $props();
+    const miniapp = MiniApp.setMiniAppContext();
+    const core = Core.setCoreContext<App.Core>();
+    const user = User.setUserContext();
 
-    if (browser) {
-        dev && erudaInit();
-        const miniapp = MiniApp.setMiniAppContext();
-    }
+    core.meta = data;
+
+    miniapp.onready(async () => {
+        core.apiOptions = {
+            hooks: {
+                beforeRequest: [
+                    (request) => {
+                        request.headers.set(
+                            'Authorization',
+                            `tma ${miniapp.WebApp.initData}`
+                        );
+                    },
+                ],
+            },
+        };
+
+        user.api = core.api;
+
+        await user.init();
+    });
 </script>
 
 {@render children()}

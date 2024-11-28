@@ -3,12 +3,14 @@
     "module": "src/index.ts",
     "type": "module",
     "devDependencies": {
-        "@types/bun": "latest"
+        "@types/bun": "latest",
+        "@repo/utils": "*"
     },
     "peerDependencies": {
         "typescript": "^5.0.0"
     },
     "exports": {
-        ".": "./src/index.ts"
+        ".": "./src/index.ts",
+        "./user": "./src/user/index.ts"
     }
 }

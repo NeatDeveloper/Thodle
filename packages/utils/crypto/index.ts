@@ -1,7 +1,6 @@
-import { random } from 'number';
+import { random } from '../number';
 
 const CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
-
 
 export const generate = (length = 10, chars?: string) => {
     let charset = chars || CHARS;

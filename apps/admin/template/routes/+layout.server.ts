@@ -1,8 +1,6 @@
+import meta from '@repo/utils/meta';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async (): Promise<CORE.Meta> => {
-    return {
-        apiURL: 'https://api.thodle.tech',
-        name: 'Thodle Admin Panel'
-    };
+export const load: LayoutServerLoad = async () => {
+    return meta;
 };

@@ -1,9 +1,5 @@
-<svelte:head>
-    <title>Рассылка</title>
-</svelte:head>
-
 <script lang="ts">
-    import { Core } from 'stores';
+    import { Core } from '@repo/utils/stores';
 
     const core = Core.getCoreContext();
 

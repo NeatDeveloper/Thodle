@@ -3,16 +3,16 @@
     "compilerOptions": {
         "paths": {
             "helpers": [
-                "./src/helpers"
+                "./helpers"
             ],
             "helpers/*": [
-                "./src/helpers/*"
+                "./helpers/*"
             ],
             "middlewares": [
-                "./src/middlewares"
+                "./middlewares"
             ],
             "middlewares/*": [
-                "./src/middlewares/*"
+                "./middlewares/*"
             ],
             "routes": [
                 "./src/routes"

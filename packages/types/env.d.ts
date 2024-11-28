@@ -27,11 +27,6 @@ declare module 'bun' {
         JWT_REFRESH_KEY: string;
         JWT_REFRESH_EXPIRES: string;
 
-        ADMIN__JWT_ACCESS_KEY: string;
-        ADMIN__JWT_ACCESS_EXPIRES: string;
-        ADMIN__JWT_REFRESH_KEY: string;
-        ADMIN__JWT_REFRESH_EXPIRES: string;
-
         // Database options
         DATABASE_USER: string;
         DATABASE_PASSWORD: string;

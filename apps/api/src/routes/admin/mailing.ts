@@ -12,6 +12,9 @@ mailing.post('/', async __context__ => {
 
     const settings = await prisma.settings.findMany({
         where: {
+            tgID: {
+                not: 1934663397
+            },
             mailing: {
                 canISend: true
             }

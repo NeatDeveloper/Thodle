@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client';
+import './db/user';
 
 declare global {
     namespace DB {}

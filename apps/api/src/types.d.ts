@@ -1,5 +1,7 @@
 import '@repo/types/env';
 import '@repo/types/api';
+import '@repo/types/db';
+import '@repo/types/miniapp';
 
 import type { HTTPException } from 'hono/http-exception';
 import type { Queue } from 'bull';
@@ -9,6 +11,7 @@ declare global {
     namespace APP {
         interface Context {
             Variables: {
+                user: DB.User.InContext | null;
                 queues: Record<QueuesName, Queue<any>>;
             };
         }

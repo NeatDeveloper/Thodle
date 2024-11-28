@@ -8,13 +8,12 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 
-	}
-    namespace CORE {
-        interface Meta {
-            name: string;
-            apiURL: string;
+        interface Core {
+            page: {
+                title: string;
+            }
         }
-    }
+	}
 }
 
 export {};

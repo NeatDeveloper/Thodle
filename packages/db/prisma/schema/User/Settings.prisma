@@ -10,3 +10,14 @@ model Settings {
     @@map("settings")
     @@schema("user")
 }
+
+model MailingSettings {
+    id   String @id
+
+    canISend Boolean @default(true) @map("can_i_send")
+
+    settings Settings @relation(fields: [id], references: [id])
+
+    @@map("mailing_settings")
+    @@schema("user")
+}

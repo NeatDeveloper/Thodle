@@ -1,0 +1,18 @@
+:root {
+    --bg-color: #264653;
+    --bg-secondary-color: #2a9d8f;
+    --text-color: #ffffff;
+    --border-radius: 12px;
+    --link-color: #e9c46a;
+    --destructive-text-color: #e63946;
+}
+
+:root[data-theme=second] {
+    --bg-color: #1d3557;
+    --bg-secondary-color: #457b9d;
+}
+
+:root[data-theme=third] {
+    --bg-color: #1d3557;
+    --bg-secondary-color: #457b9d;
+}

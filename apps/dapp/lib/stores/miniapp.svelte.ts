@@ -1,3 +1,4 @@
+import { browser } from "$app/environment";
 import { getContext, setContext } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 
@@ -11,37 +12,46 @@ class MiniApp {
     mobPlatforms = ['android', 'ios']
 
     constructor() {
-        if(window.Telegram.WebApp) {
-            this.#_ = window.Telegram;
-            this.#_.WebApp.disableVerticalSwipes();
-            this.#_.WebApp.ready();
-            this.#_.WebApp.expand();
+        if(browser) {
+            if(window.Telegram.WebApp) {
+                this.#_ = window.Telegram;
 
-            this.isLoad = true;
+                this.#setup();
 
-            this.#setProperties([]);
-
-            if(this.mobPlatforms.includes(this.#_.WebApp.platform)) {
-                this.#_.WebApp.Gyroscope.start({ refresh_rate: 20 })
+                this.isLoad = true;
             }
-
         }
 
 
         $effect.root(() => {
             $effect(() => {
+                document.body.dataset.colorScheme = this.#_.WebApp.colorScheme
+                document.body.dataset.theme = 'default'
+            });
+
+            $effect(() => {
                 this.#queue;
 
-                if(this.isLoad) {
-                    this.#lounchingPendings()
-                }
+                if(this.isLoad) this.#lounchingPendings();
             })
         })
     }
 
+    #setup = () => {
+        if(this.#_.WebApp.isVerticalSwipesEnabled) this.#_.WebApp.disableVerticalSwipes();
+        if(!this.#_.WebApp.isExpanded) this.#_.WebApp.expand();
+        this.#_.WebApp.ready();
+
+        this.#setProperties([]);
+
+        if(this.mobPlatforms.includes(this.#_.WebApp.platform) && +this.#_.WebApp.version >= 8.0 && !this.#_.WebApp.isFullscreen) {
+            this.#_.WebApp.requestFullscreen();
+        }
+    }
+
     #queue = new SvelteMap<string, QueueCallback>();
 
-    onmount = (callback: QueueCallback) => {
+    onready = (callback: QueueCallback) => {
         this.#queue.set(crypto.randomUUID(), callback);
     }
 

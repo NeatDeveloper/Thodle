@@ -1,1 +1,1 @@
-export * as Core from './core.svelte';
+export * as Me from './me.svelte';

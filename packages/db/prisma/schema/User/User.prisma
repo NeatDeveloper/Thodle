@@ -4,7 +4,10 @@
 /// @namespace Пользователь
 model User {
     /// ID пользователя в базе данных
-    id String @id @default(uuid()) /// @zod.string.uuid()
+    id String @id @default(cuid()) /// @zod.string.cuid()
+
+    /// Аватарка пользователя
+    avatar String?
 
     /// ID пользователя в телеграм
     tgID BigInt @unique @map("tg_id")
@@ -17,14 +20,17 @@ model User {
     username  String? @unique
 
     /// Роль пользователя в системе
-    role UserRole @default(REGULAR)
+    role UserRole @default(R_0)
 
     /// Выбраный им язык
     lang String
 
     /// Модель, которая является входной точкой "в системе университета"
-    amplua Amplua?
+    amplua   Amplua?
+    // Настройки пользователя
     settings Settings?
+    // Устройства пользователя
+    devices Device[]
 
     /// Является ли пользователь премиум пользователем
     isPremium Boolean @map("is_premium")
@@ -35,13 +41,15 @@ model User {
     updatedAt DateTime @updatedAt @map("updated_at")
 
     @@unique([id, tgID])
-    @@map("Users")
+    @@map("users")
     @@schema("user")
 }
 
 enum UserRole {
-    REGULAR @map("role_regular")
-    ADMIN   @map("role_admin")
+    R_0 @map("role_regular")
+    R_1 @map("role_increase")
+    R_2 @map("role_supervisor")
+    R_3 @map("role_admin")
 
     @@map("UserRoles")
     @@schema("user")

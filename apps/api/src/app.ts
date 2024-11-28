@@ -3,7 +3,7 @@ import { trimTrailingSlash } from 'hono/trailing-slash';
 import { cors } from 'hono/cors';
 import { bodyLimit } from 'hono/body-limit';
 
-import { CreateException, factory, isMyOrigin } from './helpers';
+import { CreateException, factory, isMyOrigin } from '../helpers';
 import routes from './routes';
 import { showRoutes } from 'hono/dev';
 import { csrf } from 'hono/csrf';
@@ -44,6 +44,8 @@ app.use(async (__context__, next) => {
 
 app.route('/', routes);
 
+
 Bun.env.MODE === 'DEV' && showRoutes(app);
+
 
 export default app;

@@ -1,0 +1,26 @@
+body {
+    padding: 10px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh; width: 100vw;
+    font-family: "Source Code Pro", monospace;
+}
+
+
+#content {
+    width: 100%; height: 100%;
+    display: grid;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar content"
+    ;
+    gap: 15px;
+    grid-template-columns: clamp(180px, 25%, 250px) 2fr;
+    grid-template-rows: 50px 1fr;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}

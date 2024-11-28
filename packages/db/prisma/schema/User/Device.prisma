@@ -1,0 +1,15 @@
+model Device {
+    id Int @id @default(autoincrement())
+
+    userID   String @map("user_id")
+
+    ip     String?
+    device String?
+    os     String?
+
+    user User @relation(fields: [userID], references: [id])
+
+    @@map("devices")
+    @@schema("user")
+    @@index([userID])
+}
