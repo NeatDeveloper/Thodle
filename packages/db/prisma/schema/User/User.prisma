@@ -6,24 +6,8 @@ model User {
     /// ID пользователя в базе данных
     id String @id @default(cuid()) /// @zod.string.cuid()
 
-    /// Аватарка пользователя
-    avatar String?
-
-    /// ID пользователя в телеграм
-    tgID BigInt @unique @map("tg_id")
-
-    /// Фамилия пользователя в телеграм
-    lastName  String? @map("last_name")
-    /// Имя пользователя в телеграм
-    firstName String? @map("first_name")
-    /// Имя пользователя пользователя в телеграм
-    username  String? @unique
-
     /// Роль пользователя в системе
     role UserRole @default(R_0)
-
-    /// Выбраный им язык
-    lang String
 
     /// Модель, которая является входной точкой "в системе университета"
     amplua   Amplua?
@@ -32,16 +16,18 @@ model User {
     // Устройства пользователя
     devices Device[]
 
+    // Профиль пользователя
+    profile Profile?
+
     /// Является ли пользователь премиум пользователем
     isPremium Boolean @map("is_premium")
 
-    /// Дата создания пользователя в нашей системе
-    createdAt DateTime @default(now()) @map("created_at")
     /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+    /// Дата создания пользователя в нашей системе
+    createdAt DateTime @default(now()) @map("created_at")
 
-    @@unique([id, tgID])
-    @@map("users")
+    @@map("Users")
     @@schema("user")
 }
 

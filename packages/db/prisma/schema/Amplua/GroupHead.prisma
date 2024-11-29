@@ -1,23 +1,21 @@
 model GroupHead {
-    id   String @id
-    tgID BigInt @unique
+    id String @id
 
-    group Int
-    level GroupHeadLevel
+    group Int?
+    role  GroupHeadRole
 
-    Group  Group  @relation(fields: [group], references: [id])
-    Amplua Amplua @relation(fields: [id, tgID], references: [id, tgID])
+    Group  Group?  @relation(fields: [group], references: [id])
+    Amplua Amplua @relation(fields: [id], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@unique([id, tgID])
     @@index([group])
     @@map("GroupHeads")
     @@schema("amplua")
 }
 
-enum GroupHeadLevel {
+enum GroupHeadRole {
     PRIMARY   @map("group_head_level_primary")
     SECONDARY @map("group_head_level_secondary")
 

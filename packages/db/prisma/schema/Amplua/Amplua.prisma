@@ -1,10 +1,7 @@
 model Amplua {
     id   String @id
-    tgID BigInt @unique
 
-    user User @relation(fields: [id, tgID], references: [id, tgID])
-
-    amplua AmpluaEnum[] @default([UNDEFINED])
+    role AmpluaRole[] @default([UNDEFINED])
 
     student   Student?
     groupHead GroupHead?
@@ -12,21 +9,22 @@ model Amplua {
     tutor     Tutor?
     lector    Lector?
 
+    User User @relation(fields: [id], references: [id], onDelete: Cascade)
+
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@unique([id, tgID])
     @@map("Amplua")
     @@schema("amplua")
 }
 
-enum AmpluaEnum {
-    UNDEFINED  @map("amplua_undefined")
-    STUDENT    @map("amplua_student")
-    CURATOR    @map("amplua_curator")
-    GROUP_HEAD @map("amplua_group_head")
-    LECTOR     @map("amplua_lector")
-    TUTOR      @map("amplua_tutor")
+enum AmpluaRole {
+    UNDEFINED  @map("amplua_role_undefined")
+    STUDENT    @map("amplua_role_student")
+    CURATOR    @map("amplua_role_curator")
+    GROUP_HEAD @map("amplua_role_group_head")
+    LECTOR     @map("amplua_role_lector")
+    TUTOR      @map("amplua_role_tutor")
 
     @@map("AmpluaEnum")
     @@schema("amplua")

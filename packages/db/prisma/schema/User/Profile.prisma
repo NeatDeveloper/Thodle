@@ -1,0 +1,32 @@
+model Profile {
+    id String @id @default(cuid())
+
+    /// Аватар пользователя
+    avatar String?
+
+    /// Дата последнего обновления аватара пользователя
+    avatarUpdatedAt DateTime @map("avatar_updated_at")
+
+    /// ID пользователя в телеграм
+    tgID BigInt @unique @map("tg_id")
+
+    /// Фамилия пользователя в телеграм
+    lastName  String? @map("last_name")
+    /// Имя пользователя в телеграм
+    firstName String? @map("first_name")
+    /// Имя пользователя пользователя в телеграм
+    username  String? @unique
+
+    /// Выбраный им язык
+    lang String
+
+    user User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    /// Дата обновления профиля пользователя в нашей системе
+    updatedAt DateTime @updatedAt @map("updated_at")
+    /// Дата создания профиля пользователя в нашей системе
+    createdAt DateTime @default(now()) @map("created_at")
+
+    @@map("Profiles")
+    @@schema("user")
+}

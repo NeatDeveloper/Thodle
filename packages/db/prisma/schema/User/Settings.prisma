@@ -1,13 +1,11 @@
 model Settings {
     id   String @id
-    tgID BigInt @unique
 
-    user User @relation(fields: [id, tgID], references: [id, tgID])
+    user User @relation(fields: [id], references: [id], onDelete: Cascade)
 
     mailing MailingSettings?
 
-    @@unique([id, tgID])
-    @@map("settings")
+    @@map("Settings")
     @@schema("user")
 }
 
@@ -18,6 +16,6 @@ model MailingSettings {
 
     settings Settings @relation(fields: [id], references: [id])
 
-    @@map("mailing_settings")
+    @@map("MailingSettings")
     @@schema("user")
 }

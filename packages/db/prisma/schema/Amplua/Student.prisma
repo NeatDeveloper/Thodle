@@ -1,16 +1,14 @@
 model Student {
-    id   String @id
-    tgID BigInt @unique
+    id String @id
 
-    user Amplua @relation(fields: [id, tgID], references: [id, tgID])
-
-    Group Group? @relation(fields: [group], references: [id])
     group Int?
+
+    Amplua Amplua @relation(fields: [id], references: [id], onDelete: Cascade)
+    Group  Group? @relation(fields: [group], references: [id])
 
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@unique([id, tgID])
     @@index([group])
     @@schema("amplua")
 }

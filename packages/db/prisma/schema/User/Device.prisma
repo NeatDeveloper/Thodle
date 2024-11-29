@@ -7,9 +7,9 @@ model Device {
     device String?
     os     String?
 
-    user User @relation(fields: [userID], references: [id])
+    user User @relation(fields: [userID], references: [id], onDelete: Cascade)
 
-    @@map("devices")
+    @@map("Devices")
     @@schema("user")
     @@index([userID])
 }

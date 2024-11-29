@@ -4,10 +4,8 @@ model LectorRank {
     title        String @unique
     shortVariant String @unique @map("short_variant")
 
-    Lector   Lector @relation(fields: [lectorId], references: [id])
-    lectorId String
+    lectors Lector[]
 
     @@schema("amplua")
-    @@index([lectorId])
     @@map("LectorRanks")
 }

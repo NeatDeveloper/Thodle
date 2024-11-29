@@ -47,8 +47,10 @@ erDiagram
 }
 "Groups" {
   Int id PK
-  Int group_year
+  String name UK
+  String curator FK "nullable"
   Int faculity FK
+  Int group_year
   DateTime created_at
   DateTime updated_at
 }
@@ -144,8 +146,10 @@ erDiagram
 
 **Properties**
   - `id`: ID группы в университете
-  - `group_year`: 
+  - `name`: 
+  - `curator`: 
   - `faculity`: 
+  - `group_year`: 
   - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
 
@@ -167,38 +171,26 @@ erDiagram
 ## Пользователь
 ```mermaid
 erDiagram
-"users" {
+"Users" {
   String id PK
-  String avatar "nullable"
-  BigInt tg_id UK
-  String last_name "nullable"
-  String first_name "nullable"
-  String username UK "nullable"
   UserRole role
-  String lang
   Boolean is_premium
-  DateTime created_at
   DateTime updated_at
+  DateTime created_at
 }
 ```
 
-### `users`
+### `Users`
 Модель **пользователя**
 
 Является основной моделью в базе данных, от которого мы наследуемся при работе с расписаниями
 
 **Properties**
   - `id`: ID пользователя в базе данных
-  - `avatar`: Аватарка пользователя
-  - `tg_id`: ID пользователя в телеграм
-  - `last_name`: Фамилия пользователя в телеграм
-  - `first_name`: Имя пользователя в телеграм
-  - `username`: Имя пользователя пользователя в телеграм
   - `role`: Роль пользователя в системе
-  - `lang`: Выбраный им язык
   - `is_premium`: Является ли пользователь премиум пользователем
-  - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
+  - `created_at`: Дата создания пользователя в нашей системе
 
 
 ## default
@@ -206,29 +198,24 @@ erDiagram
 erDiagram
 "Amplua" {
   String id PK
-  BigInt tgID UK
-  AmpluaEnum amplua
+  AmpluaRole role
   DateTime created_at
   DateTime updated_at
 }
 "Curators" {
   String id PK
-  BigInt tgID UK
-  Int group FK
-  DateTime created_at
   DateTime updated_at
+  DateTime created_at
 }
 "GroupHeads" {
   String id PK
-  BigInt tgID UK
-  Int group FK
-  GroupHeadLevel level
+  Int group FK "nullable"
+  GroupHeadRole role
   DateTime created_at
   DateTime updated_at
 }
 "Lectors" {
   String id PK
-  BigInt tgID UK
   String last_name
   String first_name
   String surname
@@ -242,56 +229,68 @@ erDiagram
   Int id PK
   String title UK
   String short_variant UK
-  String lectorId FK
 }
 "Student" {
   String id PK
-  BigInt tgID UK
   Int group FK "nullable"
   DateTime created_at
   DateTime updated_at
 }
 "Tutors" {
   String id PK
-  BigInt tgID UK
-  Int group FK
-  DateTime created_at
+  Int group FK "nullable"
   DateTime updated_at
+  DateTime created_at
 }
 "Schedule" {
   Int id PK
   Int discipline FK
 }
-"devices" {
+"Devices" {
   Int id PK
   String user_id FK
   String ip "nullable"
   String device "nullable"
   String os "nullable"
 }
-"settings" {
+"Profiles" {
   String id PK
-  BigInt tgID UK
+  String avatar "nullable"
+  DateTime avatar_updated_at
+  BigInt tg_id UK
+  String last_name "nullable"
+  String first_name "nullable"
+  String username UK "nullable"
+  String lang
+  DateTime updated_at
+  DateTime created_at
 }
-"mailing_settings" {
+"Settings" {
+  String id PK
+}
+"MailingSettings" {
   String id PK
   Boolean can_i_send
+}
+"_LectorToLectorRank" {
+  String A FK
+  String B FK
 }
 "Curators" |o--|| "Amplua" : Amplua
 "GroupHeads" |o--|| "Amplua" : Amplua
 "Lectors" |o--|| "Amplua" : Amplua
-"LectorRanks" }o--|| "Lectors" : Lector
-"Student" |o--|| "Amplua" : user
+"Student" |o--|| "Amplua" : Amplua
 "Tutors" |o--|| "Amplua" : Amplua
-"mailing_settings" |o--|| "settings" : settings
+"MailingSettings" |o--|| "Settings" : settings
+"_LectorToLectorRank" }o--|| "Lectors" : Lector
+"_LectorToLectorRank" }o--|| "LectorRanks" : LectorRank
 ```
 
 ### `Amplua`
 
 **Properties**
   - `id`: 
-  - `tgID`: 
-  - `amplua`: 
+  - `role`: 
   - `created_at`: 
   - `updated_at`: 
 
@@ -299,18 +298,15 @@ erDiagram
 
 **Properties**
   - `id`: 
-  - `tgID`: 
-  - `group`: 
-  - `created_at`: 
   - `updated_at`: 
+  - `created_at`: 
 
 ### `GroupHeads`
 
 **Properties**
   - `id`: 
-  - `tgID`: 
   - `group`: 
-  - `level`: 
+  - `role`: 
   - `created_at`: 
   - `updated_at`: 
 
@@ -318,7 +314,6 @@ erDiagram
 
 **Properties**
   - `id`: 
-  - `tgID`: 
   - `last_name`: 
   - `first_name`: 
   - `surname`: 
@@ -334,13 +329,11 @@ erDiagram
   - `id`: 
   - `title`: 
   - `short_variant`: 
-  - `lectorId`: 
 
 ### `Student`
 
 **Properties**
   - `id`: 
-  - `tgID`: 
   - `group`: 
   - `created_at`: 
   - `updated_at`: 
@@ -349,10 +342,9 @@ erDiagram
 
 **Properties**
   - `id`: 
-  - `tgID`: 
   - `group`: 
-  - `created_at`: 
   - `updated_at`: 
+  - `created_at`: 
 
 ### `Schedule`
 
@@ -360,7 +352,7 @@ erDiagram
   - `id`: 
   - `discipline`: 
 
-### `devices`
+### `Devices`
 
 **Properties**
   - `id`: 
@@ -369,14 +361,34 @@ erDiagram
   - `device`: 
   - `os`: 
 
-### `settings`
+### `Profiles`
 
 **Properties**
   - `id`: 
-  - `tgID`: 
+  - `avatar`: Аватар пользователя
+  - `avatar_updated_at`: Дата последнего обновления аватара пользователя
+  - `tg_id`: ID пользователя в телеграм
+  - `last_name`: Фамилия пользователя в телеграм
+  - `first_name`: Имя пользователя в телеграм
+  - `username`: Имя пользователя пользователя в телеграм
+  - `lang`: Выбраный им язык
+  - `updated_at`: Дата обновления профиля пользователя в нашей системе
+  - `created_at`: Дата создания профиля пользователя в нашей системе
 
-### `mailing_settings`
+### `Settings`
+
+**Properties**
+  - `id`: 
+
+### `MailingSettings`
 
 **Properties**
   - `id`: 
   - `can_i_send`: 
+
+### `_LectorToLectorRank`
+Pair relationship table between [Lectors](#Lectors) and [LectorRanks](#LectorRanks)
+
+**Properties**
+  - `A`: 
+  - `B`: 

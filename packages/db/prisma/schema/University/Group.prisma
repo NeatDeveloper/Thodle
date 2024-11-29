@@ -9,14 +9,17 @@ model Group {
     /// ID группы в университете
     id Int @id @default(autoincrement())
 
-    curator    Curator?
+    name String @unique
+
+    curator String?
+    faculity Int
     groupHeads GroupHead[]
     students   Student[]
     tutor      Tutor?
 
     groupYear Int @map("group_year")
 
-    faculity Int
+    Curator    Curator? @relation(fields: [curator], references: [id])
     Faculity Faculity @relation(fields: [faculity], references: [id])
 
     /// Дата создания пользователя в нашей системе
@@ -27,4 +30,5 @@ model Group {
     @@map("Groups")
     @@schema("university")
     @@index([faculity])
+    @@index([curator])
 }
