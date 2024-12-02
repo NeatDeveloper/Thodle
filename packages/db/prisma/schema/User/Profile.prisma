@@ -4,9 +4,6 @@ model Profile {
     /// Аватар пользователя
     avatar String?
 
-    /// Дата последнего обновления аватара пользователя
-    avatarUpdatedAt DateTime @map("avatar_updated_at")
-
     /// ID пользователя в телеграм
     tgID BigInt @unique @map("tg_id")
 
@@ -20,7 +17,13 @@ model Profile {
     /// Выбраный им язык
     lang String
 
+    /// Является ли пользователь премиум пользователем
+    isPremium Boolean @map("is_premium")
+
     user User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    /// Дата последнего обновления аватара пользователя
+    avatarUpdatedAt DateTime? @map("avatar_updated_at")
 
     /// Дата обновления профиля пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")

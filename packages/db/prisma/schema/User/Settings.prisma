@@ -1,21 +1,40 @@
 model Settings {
-    id   String @id
+    id String @id
 
     user User @relation(fields: [id], references: [id], onDelete: Cascade)
 
-    mailing MailingSettings?
+    mailing  MailingSettings?
+    schedule ScheduleSettings?
+
+    updatedAt DateTime @updatedAt @map("updated_at")
+    createdAt DateTime @default(now()) @map("created_at")
 
     @@map("Settings")
     @@schema("user")
 }
 
 model MailingSettings {
-    id   String @id
+    id String @id
 
     canISend Boolean @default(true) @map("can_i_send")
 
-    settings Settings @relation(fields: [id], references: [id])
+    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("MailingSettings")
+    @@schema("user")
+}
+
+model ScheduleSettings {
+    id String @id
+
+    shortLessonName Boolean @default(false) @map("short_lesson_name")
+
+    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("ScheduleSettings")
     @@schema("user")
 }

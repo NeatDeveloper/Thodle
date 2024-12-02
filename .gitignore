@@ -2,7 +2,7 @@ node_modules
 .env
 .turbo
 bun.lockb
-repositories/db/prisma/migrations
-repositories/db/prisma/schemas
+packages/db/prisma/migrations
+packages/db/prisma/schemas
 **/.vite
 prod

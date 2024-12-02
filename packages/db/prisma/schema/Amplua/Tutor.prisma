@@ -1,7 +1,7 @@
 model Tutor {
     id String @id
 
-    group Int? @unique
+    group String? @unique
 
     Group  Group? @relation(fields: [group], references: [id])
     Amplua Amplua @relation(fields: [id], references: [id], onDelete: Cascade)

@@ -7,28 +7,53 @@
 /// @namespace СтруктураУниверситета
 model Group {
     /// ID группы в университете
-    id Int @id @default(autoincrement())
+    id String @id @default(cuid())
 
     name String @unique
 
-    curator String?
-    faculity Int
+    curator    String?
+    faculity   Int
     groupHeads GroupHead[]
     students   Student[]
     tutor      Tutor?
 
-    groupYear Int @map("group_year")
+    year      Int
+    subGroups SubGroup[]
 
-    Curator    Curator? @relation(fields: [curator], references: [id])
+    Curator  Curator? @relation(fields: [curator], references: [id])
     Faculity Faculity @relation(fields: [faculity], references: [id])
 
     /// Дата создания пользователя в нашей системе
-    createdAt  DateTime @default(now()) @map("created_at")
+    createdAt DateTime @default(now()) @map("created_at")
     /// Дата обновления пользователя в нашей системе
-    updatedAt  DateTime @updatedAt @map("updated_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@map("Groups")
-    @@schema("university")
     @@index([faculity])
     @@index([curator])
+    @@map("Groups")
+    @@schema("university")
+}
+
+model SubGroup {
+    id Int @id @default(autoincrement())
+    name String
+
+    groupID String @map("group_id")
+
+    order SubGroupOrder
+
+    students Student[]
+    Group    Group     @relation(fields: [groupID], references: [id])
+
+    @@index([groupID])
+    @@map("SubGroups")
+    @@schema("university")
+}
+
+enum SubGroupOrder {
+    FIRST  @map("subgroup_order_first")
+    SECOND @map("subgroup_order_second")
+
+    @@map("SubGroupOrders")
+    @@schema("university")
 }

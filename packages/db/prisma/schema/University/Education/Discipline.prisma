@@ -7,7 +7,10 @@ model Discipline {
     id Int @id @default(autoincrement())
 
     /// Название дисциплины
-    title String
+    name String
+
+    shortName String? @map("short_name")
+
     /// ID факультета
     faculity Int?
 

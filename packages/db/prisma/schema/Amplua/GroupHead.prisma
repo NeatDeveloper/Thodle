@@ -1,8 +1,8 @@
 model GroupHead {
     id String @id
 
-    group Int?
-    role  GroupHeadRole
+    group String?
+    role  GroupHeadRank
 
     Group  Group?  @relation(fields: [group], references: [id])
     Amplua Amplua @relation(fields: [id], references: [id], onDelete: Cascade)
@@ -15,10 +15,10 @@ model GroupHead {
     @@schema("amplua")
 }
 
-enum GroupHeadRole {
-    PRIMARY   @map("group_head_level_primary")
-    SECONDARY @map("group_head_level_secondary")
+enum GroupHeadRank {
+    PRIMARY   @map("group_head_rank_primary")
+    SECONDARY @map("group_head_rank_secondary")
 
-    @@map("GroupHeadLevels")
+    @@map("GroupHeadRanks")
     @@schema("amplua")
 }

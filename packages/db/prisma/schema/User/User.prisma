@@ -19,9 +19,6 @@ model User {
     // Профиль пользователя
     profile Profile?
 
-    /// Является ли пользователь премиум пользователем
-    isPremium Boolean @map("is_premium")
-
     /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
     /// Дата создания пользователя в нашей системе

@@ -18,7 +18,7 @@ erDiagram
 "Buildings" {
   Int id PK
   String title
-  String non_verbal_name "nullable"
+  String short_name "nullable"
   String address
   Int university FK
   DateTime created_at
@@ -26,7 +26,8 @@ erDiagram
 }
 "Disciplines" {
   Int id PK
-  String title
+  String name
+  String short_name "nullable"
   Int faculity FK "nullable"
   DateTime created_at
   DateTime updated_at
@@ -37,20 +38,12 @@ erDiagram
   DateTime created_at
   DateTime updated_at
 }
-"Weeks" {
-  Int id PK
-  String title
-  WeekCount count
-  Int university FK "nullable"
-  DateTime created_at
-  DateTime updated_at
-}
 "Groups" {
-  Int id PK
+  String id PK
   String name UK
   String curator FK "nullable"
   Int faculity FK
-  Int group_year
+  Int year
   DateTime created_at
   DateTime updated_at
 }
@@ -63,12 +56,20 @@ erDiagram
   DateTime created_at
   DateTime updated_at
 }
+"Weeks" {
+  Int id PK
+  String title
+  WeekCount count
+  Int university FK "nullable"
+  DateTime created_at
+  DateTime updated_at
+}
 "Auditoriums" }o--|| "Buildings" : Building
 "Buildings" }o--|| "Universities" : University
 "Disciplines" }o--o| "Facilities" : Faculity
 "Facilities" }o--|| "Universities" : University
-"Weeks" }|--o| "Universities" : University
 "Groups" }o--|| "Facilities" : Faculity
+"Weeks" }|--o| "Universities" : University
 ```
 
 ### `Auditoriums`
@@ -91,7 +92,7 @@ erDiagram
 **Properties**
   - `id`: ID университета в базе данных
   - `title`: Название корпуса
-  - `non_verbal_name`: Внегласное название корпуса
+  - `short_name`: Внегласное название корпуса
   - `address`: Адрес(улица) на котором находится корпус
   - `university`: ID университета, к которому корпус привязан
   - `created_at`: Дата создания пользователя в нашей системе
@@ -104,7 +105,8 @@ erDiagram
 
 **Properties**
   - `id`: ID дисциплины в базе данных
-  - `title`: Название дисциплины
+  - `name`: Название дисциплины
+  - `short_name`: 
   - `faculity`: ID факультета
   - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
@@ -117,6 +119,37 @@ erDiagram
 **Properties**
   - `id`: ID университета в базе данных
   - `university`: ID университета
+  - `created_at`: Дата создания пользователя в нашей системе
+  - `updated_at`: Дата обновления пользователя в нашей системе
+
+### `Groups`
+Модель **Неделя**
+
+Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
+а также, позволяет реализовать поддержку именования недель в конкретном университете.
+
+Например: "Первая и Вторая", "Красная и Чёрная"
+
+**Properties**
+  - `id`: ID группы в университете
+  - `name`: 
+  - `curator`: 
+  - `faculity`: 
+  - `year`: 
+  - `created_at`: Дата создания пользователя в нашей системе
+  - `updated_at`: Дата обновления пользователя в нашей системе
+
+### `Universities`
+Модель **Университета**
+
+Точка входа для описания структуры университета. Тут содержатся основные его данные, для нормальной работы всего приложения
+
+**Properties**
+  - `id`: ID университета в базе данных
+  - `name`: Название университета в сокращенном варианте
+  - `full_name`: Название университета
+  - `city`: Город, где университет находится
+  - `study_time`: Массив, где хранятся время когда проходят учебные процессы
   - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
 
@@ -136,37 +169,6 @@ erDiagram
   - `created_at`: Дата создания пользователя в нашей системе
   - `updated_at`: Дата обновления пользователя в нашей системе
 
-### `Groups`
-Модель **Неделя**
-
-Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
-а также, позволяет реализовать поддержку именования недель в конкретном университете.
-
-Например: "Первая и Вторая", "Красная и Чёрная"
-
-**Properties**
-  - `id`: ID группы в университете
-  - `name`: 
-  - `curator`: 
-  - `faculity`: 
-  - `group_year`: 
-  - `created_at`: Дата создания пользователя в нашей системе
-  - `updated_at`: Дата обновления пользователя в нашей системе
-
-### `Universities`
-Модель **Университета**
-
-Точка входа для описания структуры университета. Тут содержатся основные его данные, для нормальной работы всего приложения
-
-**Properties**
-  - `id`: ID университета в базе данных
-  - `name`: Название университета в сокращенном варианте
-  - `full_name`: Название университета
-  - `city`: Город, где университет находится
-  - `study_time`: Массив, где хранятся время когда проходят учебные процессы
-  - `created_at`: Дата создания пользователя в нашей системе
-  - `updated_at`: Дата обновления пользователя в нашей системе
-
 
 ## Пользователь
 ```mermaid
@@ -174,7 +176,6 @@ erDiagram
 "Users" {
   String id PK
   UserRole role
-  Boolean is_premium
   DateTime updated_at
   DateTime created_at
 }
@@ -188,7 +189,6 @@ erDiagram
 **Properties**
   - `id`: ID пользователя в базе данных
   - `role`: Роль пользователя в системе
-  - `is_premium`: Является ли пользователь премиум пользователем
   - `updated_at`: Дата обновления пользователя в нашей системе
   - `created_at`: Дата создания пользователя в нашей системе
 
@@ -209,8 +209,8 @@ erDiagram
 }
 "GroupHeads" {
   String id PK
-  Int group FK "nullable"
-  GroupHeadRole role
+  String group FK "nullable"
+  GroupHeadRank role
   DateTime created_at
   DateTime updated_at
 }
@@ -230,21 +230,28 @@ erDiagram
   String title UK
   String short_variant UK
 }
-"Student" {
+"Students" {
   String id PK
-  Int group FK "nullable"
+  String group FK "nullable"
+  Int sub_group FK "nullable"
   DateTime created_at
   DateTime updated_at
 }
 "Tutors" {
   String id PK
-  Int group FK "nullable"
+  String group FK "nullable"
   DateTime updated_at
   DateTime created_at
 }
 "Schedule" {
   Int id PK
   Int discipline FK
+}
+"SubGroups" {
+  Int id PK
+  String name
+  String group_id FK
+  SubGroupOrder order
 }
 "Devices" {
   Int id PK
@@ -256,21 +263,30 @@ erDiagram
 "Profiles" {
   String id PK
   String avatar "nullable"
-  DateTime avatar_updated_at
   BigInt tg_id UK
   String last_name "nullable"
   String first_name "nullable"
   String username UK "nullable"
   String lang
+  Boolean is_premium
+  DateTime avatar_updated_at "nullable"
   DateTime updated_at
   DateTime created_at
 }
 "Settings" {
   String id PK
+  DateTime updated_at
+  DateTime created_at
 }
 "MailingSettings" {
   String id PK
   Boolean can_i_send
+  DateTime updated_at
+}
+"ScheduleSettings" {
+  String id PK
+  Boolean short_lesson_name
+  DateTime updated_at
 }
 "_LectorToLectorRank" {
   String A FK
@@ -279,9 +295,11 @@ erDiagram
 "Curators" |o--|| "Amplua" : Amplua
 "GroupHeads" |o--|| "Amplua" : Amplua
 "Lectors" |o--|| "Amplua" : Amplua
-"Student" |o--|| "Amplua" : Amplua
+"Students" }o--o| "SubGroups" : SubGroup
+"Students" |o--|| "Amplua" : Amplua
 "Tutors" |o--|| "Amplua" : Amplua
 "MailingSettings" |o--|| "Settings" : settings
+"ScheduleSettings" |o--|| "Settings" : settings
 "_LectorToLectorRank" }o--|| "Lectors" : Lector
 "_LectorToLectorRank" }o--|| "LectorRanks" : LectorRank
 ```
@@ -330,11 +348,12 @@ erDiagram
   - `title`: 
   - `short_variant`: 
 
-### `Student`
+### `Students`
 
 **Properties**
   - `id`: 
   - `group`: 
+  - `sub_group`: 
   - `created_at`: 
   - `updated_at`: 
 
@@ -352,6 +371,14 @@ erDiagram
   - `id`: 
   - `discipline`: 
 
+### `SubGroups`
+
+**Properties**
+  - `id`: 
+  - `name`: 
+  - `group_id`: 
+  - `order`: 
+
 ### `Devices`
 
 **Properties**
@@ -366,12 +393,13 @@ erDiagram
 **Properties**
   - `id`: 
   - `avatar`: Аватар пользователя
-  - `avatar_updated_at`: Дата последнего обновления аватара пользователя
   - `tg_id`: ID пользователя в телеграм
   - `last_name`: Фамилия пользователя в телеграм
   - `first_name`: Имя пользователя в телеграм
   - `username`: Имя пользователя пользователя в телеграм
   - `lang`: Выбраный им язык
+  - `is_premium`: Является ли пользователь премиум пользователем
+  - `avatar_updated_at`: Дата последнего обновления аватара пользователя
   - `updated_at`: Дата обновления профиля пользователя в нашей системе
   - `created_at`: Дата создания профиля пользователя в нашей системе
 
@@ -379,12 +407,22 @@ erDiagram
 
 **Properties**
   - `id`: 
+  - `updated_at`: 
+  - `created_at`: 
 
 ### `MailingSettings`
 
 **Properties**
   - `id`: 
   - `can_i_send`: 
+  - `updated_at`: 
+
+### `ScheduleSettings`
+
+**Properties**
+  - `id`: 
+  - `short_lesson_name`: 
+  - `updated_at`: 
 
 ### `_LectorToLectorRank`
 Pair relationship table between [Lectors](#Lectors) and [LectorRanks](#LectorRanks)

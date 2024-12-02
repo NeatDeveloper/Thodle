@@ -12,12 +12,15 @@ model University {
     fullName String @unique @map("full_name")
 
     /// Город, где университет находится
-    city      String
+    city String
+
     /// Массив, где хранятся время когда проходят учебные процессы
     /// @minItems 5
     studyTime Json   @map("study_time")
+
     /// Связь с моделью Week для определения названий недель в конкретном университете
     /// @minItems 2
+    /// @maxItems 2
     weeks     Week[]
 
     /// Факультеты, которые относятся к данному университету

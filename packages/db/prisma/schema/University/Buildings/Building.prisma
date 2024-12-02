@@ -9,7 +9,7 @@ model Building {
     /// Название корпуса
     title      String
     /// Внегласное название корпуса
-    nonVerbalName String? @map("non_verbal_name")
+    shortName String? @map("short_name")
     /// Адрес(улица) на котором находится корпус
     address    String
     /// ID университета, к которому корпус привязан
