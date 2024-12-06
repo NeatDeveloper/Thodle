@@ -1,7 +1,9 @@
 import './db/user';
 
 declare global {
-    namespace DB {}
+    namespace DB {
+        type OmitAnotherFields<T> = Omit<T, 'id' | 'updatedAt' | 'createdAt'>;
+    }
 }
 
 export {};

@@ -1,4 +1,4 @@
-import { getContext, setContext } from "svelte";
+import { getContext as getSvelteContext, setContext as setSvelteContext } from "svelte";
 import { api } from '../other';
 import type { Options } from "ky";
 
@@ -20,8 +20,8 @@ class Core<T> {
 
 export const
     CORE_KEY = Symbol('CORE_KEY'),
-    setCoreContext = <T>(initAppData?: T) => setContext(CORE_KEY, new Core<T>(initAppData)),
-    getCoreContext = <T>(): ReturnType<typeof setCoreContext<T>> => getContext(CORE_KEY);
+    setContext = <T>(initAppData?: T) => setSvelteContext(CORE_KEY, new Core<T>(initAppData)),
+    getContext = <T>(): ReturnType<typeof setContext<T>> => getSvelteContext(CORE_KEY);
 
 
 export interface Meta {

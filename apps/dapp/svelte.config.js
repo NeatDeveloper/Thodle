@@ -15,6 +15,8 @@ export default {
             lib: './lib',
             stores: './lib/stores',
             styles: './src/styles',
+            sections: './src/sections',
+            components: './src/components',
         },
 
         files: {

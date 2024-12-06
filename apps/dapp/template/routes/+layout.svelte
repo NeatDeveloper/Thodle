@@ -1,22 +1,46 @@
 <script lang="ts">
     const { children, data } = $props();
 
-    if (browser) dev && import('lib/eruda').then((erudaInit) => erudaInit.default());
-
     import '@repo/ui/reset';
     import 'styles/index.scss';
 
-    import { browser, dev } from '$app/environment';
-    import { MiniApp, User } from 'stores';
+    import { dev } from '$app/environment';
+    import { Admin, MiniApp, UI, User } from 'stores';
     import { Core } from '@repo/utils/stores';
+    import { page } from '$app/stores';
 
-    const miniapp = MiniApp.setMiniAppContext();
-    const core = Core.setCoreContext<App.Core>();
-    const user = User.setUserContext();
+    const miniapp = MiniApp.setContext(),
+        core = Core.setContext<App.Core>(),
+        user = User.setContext(),
+        admin = Admin.setContext(),
+        ui = UI.setContext();
+
+    page.subscribe((pg) => {
+        miniapp.page = pg;
+    });
 
     core.meta = data;
 
+    user.onready = async () => {
+        if (+user.role?.split('_')[1] > 1) {
+            admin.isAdmin = true;
+            admin.init(miniapp);
+        }
+
+        if (miniapp.fullscreen.available) {
+            miniapp.setFullscreen(user.settings?.fullscreen);
+        }
+
+        ui.setTheme(user.settings.theme.theme);
+        ui.setSchema(user.settings.theme.schema);
+    };
+
     miniapp.onready(async () => {
+        if (dev && miniapp.mobPlatforms.includes(miniapp.WebApp.platform)) {
+            const eruda = (await import('lib/eruda')).default;
+            eruda();
+        }
+
         core.apiOptions = {
             hooks: {
                 beforeRequest: [
@@ -32,8 +56,70 @@
 
         user.api = core.api;
 
+        ui.updateVars();
+
+        if (ui.schema === 'auto')
+            miniapp.WebApp.onEvent('themeChanged', () => {
+                ui.setAppSchema(miniapp.WebApp.colorScheme);
+            });
+
+        miniapp.mainButtonParams = {
+            is_visible: true,
+            text: 'Расписание',
+        };
+
+        miniapp.WebApp.MainButton.onClick(() => goto('/schedule'));
+
         await user.init();
     });
+
+    ui.onupdate = (theme) => {
+        miniapp.WebApp.setBottomBarColor(
+            (theme
+                ? theme.bottomBarBgColor
+                : miniapp.WebApp.themeParams.bottom_bar_bg_color) || '#ff00ff'
+        );
+        miniapp.WebApp.setHeaderColor(
+            (theme
+                ? theme.headerBgColor
+                : miniapp.WebApp.themeParams.header_bg_color) || '#ff00ff'
+        );
+        miniapp.WebApp.setBackgroundColor(
+            (theme
+                ? theme.headerBgColor
+                : miniapp.WebApp.themeParams.bg_color) || '#ff00ff'
+        );
+
+        miniapp.mainButtonParams.color = theme
+            ? theme.buttonBgColor
+            : miniapp.WebApp.themeParams.button_color;
+    };
+
+    miniapp.onfullscreen = () => {
+        ui.updateVars();
+    };
+
+    import { Nav, Header } from 'sections';
+    import { goto } from '$app/navigation';
+    import { Loader } from 'components';
 </script>
 
-{@render children()}
+<Loader show={!user.isReady} />
+
+{#if user.isReady}
+    <!-- content here -->
+    {#if miniapp.fullscreen.active}
+        <Header />
+    {/if}
+    <main class="content">
+        {@render children()}
+    </main>
+    <Nav />
+{/if}
+
+<style lang="scss">
+    // .content {
+    //     height: 100vh;
+    //     overflow-y: scroll;
+    // }
+</style>

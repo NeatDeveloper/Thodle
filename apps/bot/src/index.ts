@@ -26,4 +26,5 @@ Bun.serve({
         }
         return new Response("Обработка запросов Telegram!");
     },
+
 });

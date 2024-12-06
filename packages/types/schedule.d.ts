@@ -1,4 +1,4 @@
-import type { LessonType, WeekCount } from "@prisma/client";
+import type { LessonType, SubGroupOrder, WeekCount } from "@prisma/client";
 
 declare global {
     namespace Schedule {
@@ -13,7 +13,9 @@ declare global {
             type: LessonType;
             name: string;
             shortName: string;
+            time: string;
             point: string;
+            lector: string;
         }
 
         interface LessonForAllGroups extends LessonBase {
@@ -24,7 +26,9 @@ declare global {
         interface LessonNotForAllGroups {
             forAllGroups: false;
             order: number;
-            lessons: LessonBase[];
+            lessons: (LessonBase & {
+                group: SubGroupOrder;
+            })[];
         }
 
         type Lesson = LessonForAllGroups | LessonNotForAllGroups;

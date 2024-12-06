@@ -1,10 +1,13 @@
 model Settings {
     id String @id
 
-    user User @relation(fields: [id], references: [id], onDelete: Cascade)
+    User User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    fullscreen Boolean @default(true)
 
     mailing  MailingSettings?
     schedule ScheduleSettings?
+    theme    ThemeSettings?
 
     updatedAt DateTime @updatedAt @map("updated_at")
     createdAt DateTime @default(now()) @map("created_at")
@@ -16,11 +19,9 @@ model Settings {
 model MailingSettings {
     id String @id
 
-    canISend Boolean @default(true) @map("can_i_send")
+    isPossible Boolean @default(true) @map("isPossible")
 
     settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
-
-    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("MailingSettings")
     @@schema("user")
@@ -33,8 +34,18 @@ model ScheduleSettings {
 
     settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
 
-    updatedAt DateTime @updatedAt @map("updated_at")
-
     @@map("ScheduleSettings")
+    @@schema("user")
+}
+
+model ThemeSettings {
+    id String @id
+
+    theme String @default("Default")
+    schema String @default("dark")
+
+    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    @@map("ThemeSettings")
     @@schema("user")
 }

@@ -1,20 +1,141 @@
 <script lang="ts">
-    import { MiniApp, User } from 'stores';
+    import { Admin, MiniApp, User } from 'stores';
+    import { Avatar, Schedule } from 'components';
+    import { Icon, Link } from '@repo/ui/components';
 
-    const miniapp = MiniApp.getMiniAppContext();
-    const user = User.getUserContext();
+    const miniapp = MiniApp.getContext(),
+        user = User.getContext(),
+        admin = Admin.getContext();
+
+    const schedule: Schedule.Day = {
+        week: 'FIRST',
+        dayOrder: 0,
+        weekName: 'Красная неделя',
+        lessons: [
+            {
+                forAllGroups: true,
+                order: 0,
+                name: 'Математический анализ',
+                point: '410(глав)',
+                shortName: 'Мат. анализ',
+                type: 'LECTURE',
+                lector: 'Артисевич А. Е.',
+                time: '',
+            },
+            {
+                forAllGroups: true,
+                name: 'Физика',
+                order: 1,
+                point: '401(глав)',
+                shortName: 'Физика',
+                type: 'PRACTICE',
+                lector: 'Хокон Р. М.',
+                time: '',
+            },
+            {
+                forAllGroups: true,
+                name: 'История Россия',
+                order: 2,
+                point: '710(эконом)',
+                shortName: 'История России',
+                type: 'LECTURE',
+                lector: 'проф. Малышева Е. М.',
+                time: '',
+            },
+            {
+                forAllGroups: true,
+                name: 'Иностранный язык',
+                order: 3,
+                point: '315(глав)',
+                shortName: 'Ин. яз',
+                type: 'PRACTICE',
+                lector: 'доц. Читало Л. Р.',
+                time: '',
+            },
+        ],
+    };
 </script>
 
-<svelte:head>
-    <title>DAPP сервис</title>
-</svelte:head>
+<article class="home">
+    <section class="top">
+        <div class="girlyanda"></div>
+        <div class="top-controls">
+            <Link href="/settings">
+                <Icon name="settings" />
+            </Link>
+            <h2 class="top-group">ИБ 2024 | 1 курс</h2>
+            {#if user.isReady}
+                <Avatar
+                    src={user.profile.avatar || ''}
+                    alt={user.profile.username || user.profile.firstName || ''}
+                    size={20}
+                />
+            {/if}
+        </div>
+    </section>
 
-<main class="root">
-<pre>
-{JSON.stringify(user.user, null, 4)}
-</pre>
-</main>
+    <Schedule {schedule} />
+</article>
 
 <style lang="scss">
+    .top {
+        position: relative;
+        background-color: var(--bg-color);
+        padding: 10px;
+        padding-top: 14px;
+        padding-right: 25px;
 
+        .girlyanda {
+            position: absolute;
+            top: -8px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-image: url(./girlyanda.gif);
+            background-position: 0 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        &-group {
+            position: relative;
+            font-size: 2rem;
+        }
+
+        &-controls {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            :global .link {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                width: 34px;
+                aspect-ratio: 1;
+                &::before {
+                    content: '';
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background-color: var(--accent-color);
+                    opacity: 0.1;
+                }
+
+                svg {
+                    width: 70%;
+                    aspect-ratio: 1;
+                    stroke: var(--accent-color);
+                    fill: none;
+                }
+            }
+        }
+    }
 </style>

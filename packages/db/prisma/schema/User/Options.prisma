@@ -1,0 +1,14 @@
+
+model Meta {
+    id String @id
+
+    isBlocked           Boolean @default(false) @map("is_blocked")
+    isViewWelcomeScreen Boolean @default(false) @map("is_view_welcome_screen")
+
+    User User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("Metas")
+    @@schema("user")
+}

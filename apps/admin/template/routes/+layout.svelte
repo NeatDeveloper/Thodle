@@ -9,7 +9,7 @@
 	import { page } from '$app/stores';
 	import { pages } from 'lib';
 
-    const core = Core.setCoreContext<App.Core>({
+    const core = Core.setContext<App.Core>({
         page: {
             title: ''
         }

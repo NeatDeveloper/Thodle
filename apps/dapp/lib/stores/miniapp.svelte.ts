@@ -1,15 +1,24 @@
-import { browser } from "$app/environment";
-import { getContext, setContext } from "svelte";
+import { browser, dev } from "$app/environment";
+import { beforeNavigate, goto } from "$app/navigation";
+import type { Page } from "@sveltejs/kit";
+import { getContext as getSvelteContext, setContext as setSvelteContext } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 
 type QueueCallback = () => any;
 
-class MiniApp {
+export class MiniApp {
     #_ = $state() as Telegram;
 
     isLoad = $state.raw(false);
 
-    mobPlatforms = ['android', 'ios']
+    mobPlatforms = ['android', 'ios'];
+
+    fullscreen = $state({
+        active: false,
+        available: false
+    });
+
+    page = $state() as Page;
 
     constructor() {
         if(browser) {
@@ -22,12 +31,28 @@ class MiniApp {
             }
         }
 
+        beforeNavigate(nav => {
+            this.#_.WebApp.HapticFeedback.impactOccurred('rigid')
+        })
+
 
         $effect.root(() => {
+
             $effect(() => {
-                document.body.dataset.colorScheme = this.#_.WebApp.colorScheme
-                document.body.dataset.theme = 'default'
+                this.fullscreen;
+                this.#updateSchema();
             });
+
+            $effect(() => {
+                if(this.fullscreen.active) document.documentElement.dataset.fullscreen = '';
+                else document.documentElement.removeAttribute('data-fullscreen');
+            });
+
+            $effect(() => {
+                if(this.mainButtonParams.is_visible || this.secondaryButtonParams.is_visible)
+                    document.documentElement.dataset.buttonShow = '';
+                else document.documentElement.removeAttribute('data-button-show');
+            })
 
             $effect(() => {
                 this.#queue;
@@ -37,16 +62,100 @@ class MiniApp {
         })
     }
 
+    #updateSchema = () => {
+        if(this.#_.WebApp.colorScheme === 'dark') {
+            document.documentElement.dataset.schemaDark = '';
+            document.documentElement.removeAttribute('data-schema-light');
+        } else {
+            document.documentElement.dataset.schemaLight = '';
+            document.documentElement.removeAttribute('data-schema-dark');
+        }
+    }
+
     #setup = () => {
         if(this.#_.WebApp.isVerticalSwipesEnabled) this.#_.WebApp.disableVerticalSwipes();
-        if(!this.#_.WebApp.isExpanded) this.#_.WebApp.expand();
+
+        // if(!this.#_.WebApp.isExpanded) this.#_.WebApp.expand();
+
+        this.#_.WebApp.onEvent('themeChanged', this.#updateSchema);
+
         this.#_.WebApp.ready();
 
         this.#setProperties([]);
 
-        if(this.mobPlatforms.includes(this.#_.WebApp.platform) && +this.#_.WebApp.version >= 8.0 && !this.#_.WebApp.isFullscreen) {
-            this.#_.WebApp.requestFullscreen();
+        this.fullscreen.active = this.#_.WebApp.isFullscreen;
+        this.fullscreen.available = this.mobPlatforms.includes(this.#_.WebApp.platform) && +this.#_.WebApp.version >= 8.0;
+
+        this.#setupMainButton(this.#_.WebApp.MainButton);
+        this.#setupSettingsButton(this.#_.WebApp.SettingsButton);
+        this.#setupSeondaryButton(this.#_.WebApp.SecondaryButton);
+        this.#setupBackButton(this.#_.WebApp.BackButton);
+
+        if(!dev) this.#_.WebApp.enableClosingConfirmation();
+    }
+
+    setFullscreen = (status: boolean) => {
+        if(!this.fullscreen.available) return;
+
+        if(status) this.#_.WebApp.requestFullscreen();
+        else this.#_.WebApp.exitFullscreen();
+
+        this.fullscreen.active = status;
+    }
+
+    toggleFullscreen = async (next: (status: boolean) => Promise<boolean>): Promise<boolean> => {
+        if(!this.fullscreen.available) {
+            return false;
         }
+
+        if(this.fullscreen.active) {
+            this.#_.WebApp.exitFullscreen();
+            this.fullscreen.active = false;
+        } else {
+            this.#_.WebApp.requestFullscreen();
+            this.fullscreen.active = true;
+        }
+
+        if(next) this.fullscreen.active = await next(this.fullscreen.active);
+
+        this.onfullscreen();
+
+        return true;
+    }
+
+    onfullscreen = () => {}
+
+    mainButtonParams = $state<MainButtonParams>({});
+
+    #setupMainButton = (button: Telegram['WebApp']['MainButton']) => {
+        $effect(() => {
+            this.mainButtonParams;
+            button.setParams(this.mainButtonParams);
+        });
+    }
+
+    #setupSettingsButton = (button: Telegram['WebApp']['SettingsButton']) => {
+        button.onClick(() => goto('/settings'));
+        button.show();
+    }
+
+    secondaryButtonParams = $state<MainButtonParams>({});
+
+    #setupSeondaryButton = (button: Telegram['WebApp']['SecondaryButton']) => {
+        $effect(() => {
+            button.setParams(this.secondaryButtonParams);
+        });
+    }
+
+    #setupBackButton = (button: Telegram['WebApp']['BackButton']) => {
+        button.onClick(() => history.back());
+
+        $effect(() => {
+            if(this.page) {
+                if(this.page.url.pathname != '/') button.show();
+                else button.hide();
+            }
+        });
     }
 
     #queue = new SvelteMap<string, QueueCallback>();
@@ -67,10 +176,6 @@ class MiniApp {
         return this.#_.WebApp.initDataUnsafe.user;
     }
 
-    get SecondaryButton() {
-        return this.#_.WebApp.SecondaryButton;
-    }
-
     #setProperties = (omit: (keyof Telegram)[]) => {
         for(const key in this.#_) {
             if(!omit.includes(key as keyof Telegram)) {
@@ -86,5 +191,5 @@ class MiniApp {
 
 export const
     MINIAPP_KEY = Symbol('MINIAPP_KEY'),
-    setMiniAppContext = () => setContext(MINIAPP_KEY, new MiniApp() as MiniApp & Telegram),
-    getMiniAppContext = (): ReturnType<typeof setMiniAppContext> => getContext(MINIAPP_KEY);
+    setContext = () => setSvelteContext(MINIAPP_KEY, new MiniApp() as MiniApp & Telegram),
+    getContext = (): ReturnType<typeof setContext> => getSvelteContext(MINIAPP_KEY);

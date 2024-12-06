@@ -11,7 +11,7 @@ declare global {
     namespace APP {
         interface Context {
             Variables: {
-                user: DB.User.InContext | null;
+                user: DB.User.InContext;
                 queues: Record<QueuesName, Queue<any>>;
             };
         }

@@ -3,55 +3,32 @@ import type { Prisma } from '@prisma/client';
 import { generate } from '@repo/utils/crypto';
 
 export default {
-    create: async (data: Prisma.UserCreateInput) => {
+    create: async (data: Prisma.ProfileCreateInput) => {
         try {
             const user = await prisma.user.create({
                 data: {
-                    ...data,
-                    id: generate(12)
-                },
-                include: {
-                    _count: true,
+                    id: generate(12),
+                    role: 'R_0',
                     amplua: {
-                        select: {
-                            curator: true,
-                            groupHead: true,
-                            lector: true,
-                            role: true,
-                            student: true,
-                            tutor: true
-                        }
+                        create: { }
                     },
-                    devices: {
-                        select: {
-                            os: true,
-                            ip: true,
-                            device: true
-                        }
+                    meta: {
+                        create: {}
                     },
                     profile: {
-                        select: {
-                            avatar: true,
-                            isPremium: true,
-                            firstName: true,
-                            lang: true,
-                            lastName: true,
-                            tgID: true,
-                            username: true
-                        }
+                        create: data
                     },
                     settings: {
-                        select: {
+                        create: {
                             mailing: {
-                                select: {
-                                    canISend: true
-                                }
+                                create: {}
                             },
                             schedule: {
-                                select: {
-                                    shortLessonName: true
-                                }
+                                create: {}
                             },
+                            theme: {
+                                create: {}
+                            }
                         }
                     }
                 }
@@ -78,51 +55,7 @@ export default {
 
             const user = await prisma.user.findFirst({
                 where,
-                include: {
-                    _count: true,
-                    amplua: {
-                        select: {
-                            curator: true,
-                            groupHead: true,
-                            lector: true,
-                            role: true,
-                            student: true,
-                            tutor: true
-                        }
-                    },
-                    devices: {
-                        select: {
-                            os: true,
-                            ip: true,
-                            device: true
-                        }
-                    },
-                    profile: {
-                        select: {
-                            avatar: true,
-                            isPremium: true,
-                            firstName: true,
-                            lang: true,
-                            lastName: true,
-                            tgID: true,
-                            username: true
-                        }
-                    },
-                    settings: {
-                        select: {
-                            mailing: {
-                                select: {
-                                    canISend: true
-                                }
-                            },
-                            schedule: {
-                                select: {
-                                    shortLessonName: true
-                                }
-                            },
-                        }
-                    }
-                }
+                include: {}
             });
 
             return user;

@@ -1,6 +1,6 @@
 generator client {
     provider        = "prisma-client-js"
-    previewFeatures = ["fullTextSearchPostgres", "multiSchema", "prismaSchemaFolder"]
+    previewFeatures = ["fullTextSearchPostgres", "multiSchema", "prismaSchemaFolder", "omitApi"]
 }
 
 generator markdown {

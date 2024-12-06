@@ -1,3 +1,4 @@
+
 model Profile {
     id String @id @default(cuid())
 
@@ -20,10 +21,7 @@ model Profile {
     /// Является ли пользователь премиум пользователем
     isPremium Boolean @map("is_premium")
 
-    user User @relation(fields: [id], references: [id], onDelete: Cascade)
-
-    /// Дата последнего обновления аватара пользователя
-    avatarUpdatedAt DateTime? @map("avatar_updated_at")
+    User User @relation(fields: [id], references: [id], onDelete: Cascade)
 
     /// Дата обновления профиля пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")

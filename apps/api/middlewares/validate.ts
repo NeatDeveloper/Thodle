@@ -1,11 +1,9 @@
-import { factory } from '../helpers';
+import { factory, UpdateAvatar } from 'helpers';
 import { verify } from '@repo/utils/telegram';
 import User from '@repo/db/user';
 
 export default factory.createMiddleware(async (__context__, next) => {
     const [authType, authData = ''] = (__context__.req.header('Authorization') || '').split(' ');
-
-    __context__.set('user', null);
 
     if (authType === 'tma') {
         const result = verify(authData);
@@ -15,7 +13,11 @@ export default factory.createMiddleware(async (__context__, next) => {
         else {
             const user = await User.findUnique(result.id);
 
-            if(user) __context__.set('user', user);
+            if(user) {
+                __context__.set('user', user);
+
+                if(result.photo_url) await UpdateAvatar(user, result.photo_url);
+            }
 
             await next();
         }

@@ -15,5 +15,7 @@
 
 <section class="students">
     Студенты
-    { JSON.stringify(students, null, 4) }
+<pre>
+{ JSON.stringify(students, null, 4) }
+</pre>
 </section>

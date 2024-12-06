@@ -1,7 +1,7 @@
 /// Модель **пользователя**
 ///
 /// Является основной моделью в базе данных, от которого мы наследуемся при работе с расписаниями
-/// @namespace Пользователь
+
 model User {
     /// ID пользователя в базе данных
     id String @id @default(cuid()) /// @zod.string.cuid()
@@ -14,10 +14,13 @@ model User {
     // Настройки пользователя
     settings Settings?
     // Устройства пользователя
-    devices Device[]
+    devices  Device[]
 
     // Профиль пользователя
     profile Profile?
+
+    /// Системные параматеры
+    meta Meta?
 
     /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")

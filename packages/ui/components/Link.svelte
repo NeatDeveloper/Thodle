@@ -49,3 +49,11 @@
     {target}
     {href}>{@render children()}</a
 >
+
+
+<style lang="scss">
+    .link {
+        color: inherit;
+        text-decoration: none;
+    }
+</style>

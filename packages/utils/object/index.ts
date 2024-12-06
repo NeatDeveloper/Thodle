@@ -11,7 +11,7 @@ export type Serialize<T> =
 
 export const
     parse = <T>(str: string) => JSON.parse(str) as T,
-    serialize = <T extends object>(object: T): Serialize<T> => parse(stringify(object))
+    serialize = <T extends object>(object: T | T[]): T extends object[] ? Serialize<T[]> : Serialize<T> => parse(stringify(object))
 
 
 export default {

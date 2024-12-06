@@ -1,3 +1,4 @@
+
 model Amplua {
     id   String @id
 
