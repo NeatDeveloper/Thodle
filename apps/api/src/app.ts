@@ -9,10 +9,13 @@ import { showRoutes } from 'hono/dev';
 import { csrf } from 'hono/csrf';
 
 import queuesInit from '@repo/queues';
+import openapi from './openapi';
+import { getMode } from '@repo/utils/env';
 
+const MODE = getMode();
 const app = factory.createApp();
 
-Bun.env.MODE === 'DEV' && app.use(logger());
+MODE === 'DEV' && app.use(logger());
 
 app.use(trimTrailingSlash());
 
@@ -42,10 +45,11 @@ app.use(async (__context__, next) => {
     await next();
 })
 
+app.route('/', openapi);
 app.route('/', routes);
 
 
-Bun.env.MODE === 'DEV' && showRoutes(app);
+MODE === 'DEV' && showRoutes(app);
 
 
 export default app;

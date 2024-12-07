@@ -32,9 +32,10 @@
 
     #{$class} {
         padding: 15px 0 5px;
+        transition: all .2s ease;
 
         &[type=rounded] {
-            padding: 10px;
+            padding: 15px 10px 5px;
 
             #{$class} {
                 &-content {
@@ -55,6 +56,7 @@
             padding: 0 10px;
             font-size: 1.6rem;
             margin-bottom: 12px;
+            transition: all .2s ease;
         }
 
         &-content {

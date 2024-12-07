@@ -1,10 +1,13 @@
 import { webhookCallback } from 'grammy';
 import bot from './bot';
+import { getTelegram } from '@repo/utils/env';
+
+const telegram = getTelegram();
 
 await bot.init();
 
 const handleUpdate = webhookCallback(bot, 'std/http', {
-    secretToken: Bun.env.TELEGRAM_SECRET_KEY
+    secretToken: telegram.TELEGRAM_SECRET_KEY
 });
 
 Bun.serve({
@@ -16,9 +19,9 @@ Bun.serve({
 
         if (
             req.method === 'POST' &&
-            url.pathname == `/${process.env.TELEGRAM_ENDPOINT}` &&
+            url.pathname == `/${telegram.TELEGRAM_ENDPOINT}` &&
             XTelegramBotApiSecretToken &&
-            XTelegramBotApiSecretToken === process.env.TELEGRAM_SECRET_KEY
+            XTelegramBotApiSecretToken === telegram.TELEGRAM_SECRET_KEY
         ) try {
             return handleUpdate(req);
         } catch {

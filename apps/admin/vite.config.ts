@@ -1,5 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
+import { getPorts } from '@repo/utils/env';
+
+const ports = getPorts();
 
 export default defineConfig({
     plugins: [sveltekit()],
@@ -7,7 +10,7 @@ export default defineConfig({
         include: ['src/**/*.{test,spec}.{js,ts}'],
     },
     server: {
-        port: Bun.env.ADMIN_PORT,
+        port: ports.ADMIN_PORT,
     },
     css: {
         preprocessorOptions: {

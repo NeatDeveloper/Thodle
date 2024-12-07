@@ -1,9 +1,12 @@
+import { getCache } from '@repo/utils/env';
 import type { QueueOptions } from 'bull';
+
+const cache = getCache();
 
 export default {
     redis: {
-        password: Bun.env.CACHE_PASSWORD,
-        port: Bun.env.CACHE_PORT,
+        password: cache.CACHE_PASSWORD,
+        port: cache.CACHE_PORT,
         db: 0
     },
     limiter: {

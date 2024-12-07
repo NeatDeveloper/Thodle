@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount, untrack } from 'svelte';
     import { getContext } from './context.svelte';
 
     interface Props {
@@ -8,14 +9,24 @@
 
     const { key, value }: Props = $props();
 
+    let option = $state<HTMLButtonElement>();
+
     const context = getContext();
+
+    $effect(() => {
+        if(key === context._.current && option) {
+            context._.currentElem = option;
+        }
+    })
 </script>
 
 <button
+    bind:this={option}
     class="option"
     current={key == context._.current}
     onclick={() => {
-        context.click(key);
+        context._.current = key;
+        context.onupdate(key);
     }}
 >
     {value}
@@ -29,10 +40,11 @@
         padding: 4px 6px;
         letter-spacing: 4%;
         transition: var(--select-transition);
+        position: relative;
+        text-align: center;
 
         &[current=true] {
             color: var(--select-text-current-color);
-            background-color: var(--select-accent-color);
         }
     }
 </style>

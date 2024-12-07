@@ -3,10 +3,12 @@
     import { page } from '$app/stores';
     import { Icon, Link } from '@repo/ui/components';
     import { slide } from 'svelte/transition';
-    import { MiniApp } from 'stores';
+    import { MiniApp, User } from 'stores';
+    import { date } from '@repo/utils/other'
 
     let show = $state.raw(true);
     const miniapp = MiniApp.getContext();
+    const user = User.getContext();
 
     const unvisibles = ['/settings'];
     const blockPathnames = ['/university', '/group'];
@@ -31,18 +33,18 @@
             href: '/',
         },
         {
-            icon: 'calendar',
+            icon: 'calendar2',
             title: 'Расписание',
             href: '/schedule',
         },
         {
             icon: 'building',
-            title: 'Университет',
+            title: 'АГУ',
             href: '/university',
         },
         {
             icon: 'people',
-            title: 'Группа',
+            title: 'ИБ 2024',
             href: '/group',
         },
     ];
@@ -53,6 +55,7 @@
         class="nav"
         out:slide={{ duration: 100, delay: 0 }}
         in:slide={{ duration: 200, delay: 200 }}
+        class:navRounded={user.settings.miniapp.rounded}
     >
         <ul class="nav-list">
             {#each links as link, i (i)}
@@ -63,6 +66,9 @@
                             ? 'block'
                             : ''}
                     >
+                            {#if link.title === 'Расписание'}
+                                <span class="nav-item_date">{ date().format('D') }</span>
+                            {/if}
                         <Icon name={link.icon} />
                         {link.title}
                     </Link>
@@ -87,6 +93,25 @@
 
         &-item {
             width: 100%;
+
+            :global &_date {
+                position: absolute;
+                top: 11px; left: 50%;
+                translate: -50% 0;
+                font-size: .9rem;
+                text-align: center;
+            }
+        }
+
+        &.navRounded {
+            bottom: 11px; left: 8px;
+            width: calc(100% - 16px);
+            padding: 5px;
+            border-radius: 10px;
+
+            .nav-list {
+                gap: 6px;
+            }
         }
 
         &-list {

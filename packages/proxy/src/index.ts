@@ -1,15 +1,18 @@
 import { insert } from '@repo/utils/string';
+import { getApp, getPorts } from '@repo/utils/env';
 
+const
+    ports = getPorts(),
+    app = getApp();
 
 try {
     const FormatedConfig = insert(await Bun.file(`${import.meta.dirname}/Caddyfile`).text(), {
-        hostName: Bun.env.APP_HOST,
-        sitePort: Bun.env.SITE_PORT,
-        botPort: Bun.env.BOT_PORT,
-        dappPort: Bun.env.DAPP_PORT,
-        docPort: Bun.env.DOC_PORT,
-        apiPort: Bun.env.API_PORT,
-        adminPort: Bun.env.ADMIN_PORT,
+        hostName: app.APP_HOST,
+        sitePort: ports.SITE_PORT,
+        botPort: ports.BOT_PORT,
+        dappPort: ports.DAPP_PORT,
+        apiPort: ports.API_PORT,
+        adminPort: ports.ADMIN_PORT,
     });
 
     const response = await fetch('http://localhost:2019/load', {

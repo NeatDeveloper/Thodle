@@ -152,11 +152,13 @@ erDiagram
 "MiniappSettings" {
   String id PK
   Boolean fullscreen
-  ToastPositions toast_position
-  Boolean rounded_settings
+  ToastPosition toast_position
   Boolean rounded
-  String theme
-  String schema
+  Boolean rounded_settings
+  Boolean rounded_schedule
+  ThemePresset presset
+  MiniappTheme theme
+  MiniappSchema schema
 }
 "MailingSettings" {
   String id PK
@@ -396,8 +398,10 @@ erDiagram
   - `id`: 
   - `fullscreen`: 
   - `toast_position`: 
-  - `rounded_settings`: 
   - `rounded`: 
+  - `rounded_settings`: 
+  - `rounded_schedule`: 
+  - `presset`: 
   - `theme`: 
   - `schema`: 
 

@@ -7,16 +7,22 @@
     }
 
     let { checked = $bindable(false), update }: Props = $props();
+
+    let anim = $state(false);
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <label for={id} class="switch" onclick={() => {
     checked = !checked;
+    anim = true;
+    setTimeout(() => {
+        anim = false;
+    }, 250);
     update?.(checked);
 }}>
     <input type="checkbox" bind:checked />
-    <span class="switch-slider"></span>
+    <span class="switch-slider" class:anim={anim}></span>
 </label>
 
 <style lang="scss">
@@ -48,7 +54,7 @@
             transition: all .2s ease-in;
             border-radius: 34px;
 
-            &:before {
+            &::before {
                 position: absolute;
                 content: '';
                 height: 18px;
@@ -59,6 +65,12 @@
                 transition: all .1s ease-in;
                 border-radius: 50%;
             }
+
+            &.anim {
+                &::before {
+                    animation: anim .2s ease;
+                }
+            }
         }
         input:checked + &-slider {
             background-color: var(--toggle-accent-color);
@@ -67,9 +79,18 @@
         input:focus + &-slider {
             box-shadow: 0 0 1px var(--toggle-accent-color);
         }
-
-        input:checked + &-slider:before {
+        input:checked + &-slider::before {
             transform: translateX(20px);
+        }
+    }
+
+    @keyframes anim {
+        from {
+            scale: 1 1;
+        } 50% {
+            scale: 1 .94;
+        } to {
+            scale: 1 1;
         }
     }
 </style>

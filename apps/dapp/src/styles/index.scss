@@ -25,6 +25,10 @@
     }
 }
 
+* {
+    transition: background .2s ease;
+}
+
 body {
     background-color: var(--secondary-bg-color);
     color: var(--text-color);

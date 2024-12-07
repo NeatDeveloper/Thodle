@@ -1,4 +1,9 @@
+import { getApp, getTelegram } from "@repo/utils/env";
 import botAPI from "src/api";
+
+const
+    app = getApp(),
+    telegram = getTelegram();
 
 try {
     const deleteRes = await botAPI.deleteWebhook({
@@ -7,10 +12,10 @@ try {
 
     if(deleteRes) console.log('Webhook endpoint was deleted!');
 
-    const setResult = await botAPI.setWebhook(`https://bot.${Bun.env.APP_HOST}/${Bun.env.TELEGRAM_ENDPOINT}`, {
+    const setResult = await botAPI.setWebhook(`https://bot.${new URL(app.APP_HOST).hostname}/${telegram.TELEGRAM_ENDPOINT}`, {
         drop_pending_updates: true,
-        ip_address: Bun.env.APP_IP,
-        secret_token: Bun.env.TELEGRAM_SECRET_KEY,
+        ip_address: app.APP_IP,
+        secret_token: telegram.TELEGRAM_SECRET_KEY,
         allowed_updates: ['message']
     });
 

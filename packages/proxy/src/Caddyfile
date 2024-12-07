@@ -10,10 +10,6 @@ dapp.$hostName {
 	reverse_proxy http://localhost:$dappPort
 }
 
-doc.$hostName {
-	reverse_proxy http://localhost:$docPort
-}
-
 api.$hostName {
 	reverse_proxy http://localhost:$apiPort
 }

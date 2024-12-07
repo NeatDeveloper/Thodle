@@ -8,16 +8,19 @@
         title?: string;
         class?: string;
         start?: string;
+        toPrev?: boolean;
     }
 
-    const { icon, children, title, class: __class, start }: Props = $props();
+    const { icon, children, title, class: __class, start, toPrev }: Props = $props();
 </script>
 
-<div class="block{__class ? ` ${__class}` : ''}" {start}>
+<div class="block{__class ? ` ${__class}` : ''}" {start} {toPrev}>
     {#if title}
         <div class="block_title">
             {#if icon}
                 <Icon name={icon} class="block_icon" />
+            {:else}
+                <div class="icon"></div>
             {/if}
 
             {title}
@@ -51,6 +54,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        &[toPrev] {
+            border-top: none;
+            padding-top: 4px;
         }
 
         &[start] {

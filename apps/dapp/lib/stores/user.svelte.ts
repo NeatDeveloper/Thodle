@@ -2,6 +2,7 @@ import type { KyInstance } from "ky";
 import type { Page } from "@sveltejs/kit";
 import { getContext as getSvelteContext, setContext as setSvelteContext } from "svelte";
 import { beforeNavigate } from "$app/navigation";
+import type { SettingsSchema, SettingsRequest } from '@repo/schemas';
 
 class User {
     api = $state() as KyInstance;
@@ -46,98 +47,17 @@ class User {
         }
     }
 
-    toggleFullscreen = async (status: boolean) => {
-        const response = await this.api.patch('student/settings', {
-            json: {
-                miniapp: {
-                    fullscreen: status
-                }
-            },
+    updateSettings = async <T extends SettingsSchema>(update: T) => {
+        const response = await this.api.patch<SettingsRequest>('student/settings', {
+            json: update
         });
 
-        if (response.status !== 200) status = !status;
+        if(response.status === 200) {
+            const data = await response.json();
 
-        this.#_.settings.miniapp.fullscreen = status;
-
-        return status;
-    }
-    toggleRounded = async (status: boolean) => {
-        const response = await this.api.patch('student/settings', {
-            json: {
-                miniapp: {
-                    rounded: status
-                }
-            },
-        });
-
-        if (response.status !== 200) status = !status;
-
-        this.#_.settings.miniapp.rounded = status;
-
-        return status;
-    }
-    toggleRoundedSettings = async (status: boolean) => {
-        const response = await this.api.patch('student/settings', {
-            json: {
-                miniapp: {
-                    roundedSettings: status
-                }
-            },
-        });
-
-        if (response.status !== 200) status = !status;
-
-        this.#_.settings.miniapp.roundedSettings = status;
-
-        return status;
-    }
-
-    toggleMailingPossible = async (active: boolean) => {
-        const response = await this.api.patch('student/settings', {
-            json: {
-                mailing: {
-                    isPossible: active
-                }
-            },
-        });
-
-        if (response.status !== 200) active = !active;
-
-        this.#_.settings.mailing.isPossible = active;
-
-        return active;
-    }
-
-    updateTheme = async (theme: string, schema: string) => {
-        const response = await this.api.patch('student/settings', {
-            json: {
-                miniapp: {
-                    theme, schema
-                }
-            }
-        })
-
-        if (response.status === 200) {
-            this.user.settings.miniapp.theme = theme;
-            this.user.settings.miniapp.schema = schema;
-
-            return true;
-        }
-
-        return false;
-    }
-
-    updateToastsPosition = async (position: string) => {
-        const response = await this.api.patch('student/settings', {
-            json: {
-                miniapp: {
-                    toastPosition: position
-                }
-            }
-        })
-
-        if (response.status === 200) {
-            this.user.settings.miniapp.toastPosition = position as 'T';
+            if(data.miniapp) this.#_.settings.miniapp = data.miniapp;
+            if(data.mailing) this.#_.settings.mailing = data.mailing;
+            if(data.schedule) this.#_.settings.schedule = data.schedule;
 
             return true;
         }

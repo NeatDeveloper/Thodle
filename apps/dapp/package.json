@@ -33,7 +33,8 @@
         "@repo/types": "*",
         "@app/api": "*",
         "@repo/adapter": "*",
-        "@repo/ui": "*"
+        "@repo/ui": "*",
+        "@repo/schemas": "*"
     },
     "type": "module"
 }

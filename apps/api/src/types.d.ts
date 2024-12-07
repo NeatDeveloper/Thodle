@@ -1,4 +1,3 @@
-import '@repo/types/env';
 import '@repo/types/api';
 import '@repo/types/db';
 import '@repo/types/miniapp';
@@ -11,7 +10,7 @@ declare global {
     namespace APP {
         interface Context {
             Variables: {
-                user: DB.User.InContext;
+                user: DB.User.InApiContext;
                 queues: Record<QueuesName, Queue<any>>;
             };
         }

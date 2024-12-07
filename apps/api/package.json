@@ -5,7 +5,9 @@
     "devDependencies": {
         "@types/bun": "latest",
         "@repo/types": "*",
-        "@repo/utils": "*"
+        "@repo/utils": "*",
+        "@repo/schemas": "*",
+        "@repo/queues": "*"
     },
     "peerDependencies": {
         "typescript": "^5.0.0"

@@ -17,12 +17,16 @@ model Settings {
 model MiniappSettings {
     id String @id
 
-    fullscreen      Boolean        @default(false)
-    toastPosition   ToastPositions @default(T) @map("toast_position")
-    roundedSettings Boolean        @default(false) @map("rounded_settings")
-    rounded         Boolean        @default(true)
-    theme           String         @default("Default")
-    schema          String         @default("dark")
+    fullscreen      Boolean       @default(false)
+    toastPosition   ToastPosition @default(Top) @map("toast_position")
+
+    rounded         Boolean       @default(true)
+    roundedSettings Boolean       @default(false) @map("rounded_settings")
+    roundedSchedule Boolean       @default(false) @map("rounded_schedule")
+
+    presset         ThemePresset  @default(Thodle)
+    theme           MiniappTheme  @default(Device)
+    schema          MiniappSchema @default(Dark)
 
     settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
 
@@ -30,13 +34,39 @@ model MiniappSettings {
     @@schema("user")
 }
 
-enum ToastPositions {
-    T  @map("toast_position_t")
-    B  @map("toast_position_b")
-    TL @map("toast_position_tl")
-    TR @map("toast_position_tr")
-    BR @map("toast_position_br")
-    BL @map("toast_position_bl")
+enum MiniappTheme {
+    Device @map("theme_device")
+    Thodle  @map("theme_thodle")
+    Mint    @map("theme_mint")
+
+    @@map("MiniappThemes")
+    @@schema("user")
+}
+
+enum MiniappSchema {
+    Auto  @map("schema_auto")
+    Light @map("schema_light")
+    Dark  @map("schema_dark")
+
+    @@map("MiniappSchemas")
+    @@schema("user")
+}
+
+enum ThemePresset {
+    Custom @map("theme_presset_custom")
+    Thodle @map("theme_presset_thodle")
+
+    @@map("ThemePressets")
+    @@schema("user")
+}
+
+enum ToastPosition {
+    Top @map("toast_position_top")
+    TopLeft @map("toast_position_topleft")
+    TopRight @map("toast_position_topright")
+    Bottom @map("toast_position_bottom")
+    BottomLeft @map("toast_position_bottomleft")
+    BottomRight @map("toast_position_bottomright")
 
     @@map("ToastsPosition")
     @@schema("user")

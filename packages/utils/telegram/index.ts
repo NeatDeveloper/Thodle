@@ -1,4 +1,7 @@
 import { createHmac, type BinaryLike } from 'node:crypto';
+import { getTelegram } from '../env';
+
+const telegram = getTelegram();
 
 export const
     verify = (data: string): WebAppUser | null => {
@@ -12,7 +15,7 @@ export const
 
         const
             SECRET_KEY = createHmac('sha256', 'WebAppData')
-                .update(Bun.env.TELEGRAM_API_TOKEN)
+                .update(telegram.TELEGRAM_API_TOKEN)
                 .digest() as unknown as BinaryLike,
 
             dataCheckString = Array.from(parsedData.entries())

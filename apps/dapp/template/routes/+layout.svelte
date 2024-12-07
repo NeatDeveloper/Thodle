@@ -26,11 +26,6 @@
     core.meta = data;
 
     user.onUpdateSettings = () => {
-        toasts.push({
-            title: 'Настройки обновлены',
-            status: 'success'
-        });
-
         ui.setTheme(user.settings.miniapp.theme);
         ui.setSchema(user.settings.miniapp.schema as 'dark' | 'light' | 'auto');
         ui.setAppSchema(miniapp.WebApp.colorScheme);
@@ -79,7 +74,7 @@
         });
 
         miniapp.mainButtonParams = {
-            is_visible: true,
+            is_visible: false,
             text: 'Расписание',
         };
 

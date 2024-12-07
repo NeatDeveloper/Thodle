@@ -1,17 +1,16 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
+import { getPorts } from '@repo/utils/env';
+
+const ports = getPorts();
 
 export default defineConfig({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     plugins: [sveltekit()],
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}'],
     },
     server: {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        port: Bun.env.SITE_PORT,
+        port: ports.SITE_PORT,
     },
     cacheDir: './.vite',
 });
