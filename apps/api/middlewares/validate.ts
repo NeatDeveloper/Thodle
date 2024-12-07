@@ -11,7 +11,15 @@ export default factory.createMiddleware(async (__context__, next) => {
         if (!result) await next();
 
         else {
-            const user = await User.findUnique(result.id);
+            let user = await User.findUnique(result.id);
+
+            if(!user) user = await User.create({
+                lastName: result.last_name,
+                firstName: result.first_name,
+                isPremium: !!result.is_premium,
+                lang: result.language_code || 'ru',
+                tgID: result.id,
+            });
 
             if(user) {
                 __context__.set('user', user);

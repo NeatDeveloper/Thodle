@@ -12,7 +12,7 @@ export default {
                     amplua: {
                         create: { }
                     },
-                    meta: {
+                    options: {
                         create: {}
                     },
                     profile: {
@@ -26,8 +26,8 @@ export default {
                             schedule: {
                                 create: {}
                             },
-                            theme: {
-                                create: {}
+                            miniapp: {
+                                create: { }
                             }
                         }
                     }

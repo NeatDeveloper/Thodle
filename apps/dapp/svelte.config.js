@@ -17,6 +17,7 @@ export default {
             styles: './src/styles',
             sections: './src/sections',
             components: './src/components',
+            pages: './src/pages',
         },
 
         files: {

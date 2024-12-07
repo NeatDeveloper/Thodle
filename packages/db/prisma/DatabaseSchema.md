@@ -126,7 +126,7 @@ erDiagram
   String device "nullable"
   String os "nullable"
 }
-"Metas" {
+"Options" {
   String id PK
   Boolean is_blocked
   Boolean is_view_welcome_screen
@@ -146,9 +146,17 @@ erDiagram
 }
 "Settings" {
   String id PK
-  Boolean fullscreen
   DateTime updated_at
   DateTime created_at
+}
+"MiniappSettings" {
+  String id PK
+  Boolean fullscreen
+  ToastPositions toast_position
+  Boolean rounded_settings
+  Boolean rounded
+  String theme
+  String schema
 }
 "MailingSettings" {
   String id PK
@@ -157,11 +165,6 @@ erDiagram
 "ScheduleSettings" {
   String id PK
   Boolean short_lesson_name
-}
-"ThemeSettings" {
-  String id PK
-  String theme
-  String schema
 }
 "Users" {
   String id PK
@@ -194,12 +197,12 @@ erDiagram
 "SubGroups" }o--|| "Groups" : Group
 "Weeks" }|--o| "Universities" : University
 "Devices" }o--|| "Users" : User
-"Metas" |o--|| "Users" : User
+"Options" |o--|| "Users" : User
 "Profiles" |o--|| "Users" : User
 "Settings" |o--|| "Users" : User
+"MiniappSettings" |o--|| "Settings" : settings
 "MailingSettings" |o--|| "Settings" : settings
 "ScheduleSettings" |o--|| "Settings" : settings
-"ThemeSettings" |o--|| "Settings" : settings
 "_LectorToLectorRank" }o--|| "Lectors" : Lector
 "_LectorToLectorRank" }o--|| "LectorRanks" : LectorRank
 ```
@@ -358,7 +361,7 @@ erDiagram
   - `device`: 
   - `os`: 
 
-### `Metas`
+### `Options`
 
 **Properties**
   - `id`: 
@@ -384,9 +387,19 @@ erDiagram
 
 **Properties**
   - `id`: 
-  - `fullscreen`: 
   - `updated_at`: 
   - `created_at`: 
+
+### `MiniappSettings`
+
+**Properties**
+  - `id`: 
+  - `fullscreen`: 
+  - `toast_position`: 
+  - `rounded_settings`: 
+  - `rounded`: 
+  - `theme`: 
+  - `schema`: 
 
 ### `MailingSettings`
 
@@ -399,13 +412,6 @@ erDiagram
 **Properties**
   - `id`: 
   - `short_lesson_name`: 
-
-### `ThemeSettings`
-
-**Properties**
-  - `id`: 
-  - `theme`: 
-  - `schema`: 
 
 ### `Users`
 

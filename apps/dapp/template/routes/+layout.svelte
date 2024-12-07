@@ -8,18 +8,33 @@
     import { Admin, MiniApp, UI, User } from 'stores';
     import { Core } from '@repo/utils/stores';
     import { page } from '$app/stores';
+    import { ToastsStore, Toasts } from '@repo/ui/components';
 
-    const miniapp = MiniApp.setContext(),
-        core = Core.setContext<App.Core>(),
-        user = User.setContext(),
-        admin = Admin.setContext(),
-        ui = UI.setContext();
+    const
+        miniapp = MiniApp.setContext(),
+        core    = Core.setContext<App.Core>(),
+        user    = User.setContext(),
+        admin   = Admin.setContext(),
+        ui      = UI.setContext(),
+        toasts = ToastsStore.setContext();
 
     page.subscribe((pg) => {
         miniapp.page = pg;
+        user.page = pg;
     });
 
     core.meta = data;
+
+    user.onUpdateSettings = () => {
+        toasts.push({
+            title: 'Настройки обновлены',
+            status: 'success'
+        });
+
+        ui.setTheme(user.settings.miniapp.theme);
+        ui.setSchema(user.settings.miniapp.schema as 'dark' | 'light' | 'auto');
+        ui.setAppSchema(miniapp.WebApp.colorScheme);
+    }
 
     user.onready = async () => {
         if (+user.role?.split('_')[1] > 1) {
@@ -28,11 +43,12 @@
         }
 
         if (miniapp.fullscreen.available) {
-            miniapp.setFullscreen(user.settings?.fullscreen);
+            miniapp.setFullscreen(user.settings.miniapp.fullscreen);
         }
 
-        ui.setTheme(user.settings.theme.theme);
-        ui.setSchema(user.settings.theme.schema);
+        ui.setTheme(user.settings.miniapp.theme);
+        ui.setSchema(user.settings.miniapp.schema as 'dark' | 'light' | 'auto');
+        ui.setAppSchema(miniapp.WebApp.colorScheme);
     };
 
     miniapp.onready(async () => {
@@ -58,10 +74,9 @@
 
         ui.updateVars();
 
-        if (ui.schema === 'auto')
-            miniapp.WebApp.onEvent('themeChanged', () => {
-                ui.setAppSchema(miniapp.WebApp.colorScheme);
-            });
+        miniapp.WebApp.onEvent('themeChanged', () => {
+            ui.setAppSchema(miniapp.WebApp.colorScheme);
+        });
 
         miniapp.mainButtonParams = {
             is_visible: true,
@@ -105,6 +120,7 @@
 </script>
 
 <Loader show={!user.isReady} />
+<Toasts />
 
 {#if user.isReady}
     <!-- content here -->

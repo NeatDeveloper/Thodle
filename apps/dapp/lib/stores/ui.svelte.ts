@@ -23,19 +23,17 @@ type SchemaKeys = |
 
 type Theme = Record<SchemaKeys, `#${string}`>;
 
-type ThemeNames = 'Thodle' | 'Mint';
-
 type Schema = 'dark' | 'light' | 'auto';
 
 interface iUI {
     schema: Schema;
     appSchema: Telegram['WebApp']['colorScheme']
     themes: ({
-        name: ThemeNames;
+        name: string;
         light: Theme;
         dark: Theme;
     })[];
-    theme: ThemeNames | 'Default';
+    theme: string | 'Default';
 }
 
 class UI {
@@ -175,7 +173,7 @@ class UI {
 
     onupdate = (theme?: Theme) => {}
 
-    setTheme = (theme: ThemeNames) => {
+    setTheme = (theme: string) => {
         this.#_.theme = theme;
     }
 

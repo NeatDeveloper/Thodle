@@ -1,5 +1,5 @@
 
-model Meta {
+model Options {
     id String @id
 
     isBlocked           Boolean @default(false) @map("is_blocked")
@@ -9,6 +9,6 @@ model Meta {
 
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@map("Metas")
+    @@map("Options")
     @@schema("user")
 }

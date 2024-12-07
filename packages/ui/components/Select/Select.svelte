@@ -18,7 +18,9 @@
 
     const context = setContext();
     if (onupdate) context.onupdate = onupdate;
-    context._.current = current;
+    $effect(() => {
+        context._.current = current;
+    })
 </script>
 
 <div class="select" {type}>
@@ -30,6 +32,7 @@
 <style lang="scss">
 
     .select {
+        --select-transition: all .2s linear;
         --select-text-color: inherit;
         --select-bg-color: #232e3c;
         --select-border-radius: 6px;

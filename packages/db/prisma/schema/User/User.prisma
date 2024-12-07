@@ -20,7 +20,7 @@ model User {
     profile Profile?
 
     /// Системные параматеры
-    meta Meta?
+    options Options?
 
     /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")

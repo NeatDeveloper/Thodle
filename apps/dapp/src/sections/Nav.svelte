@@ -26,22 +26,22 @@
 
     const links = [
         {
-            icon: 'home',
+            icon: 'house-door',
             title: 'Главная',
             href: '/',
         },
         {
-            icon: 'schedule',
+            icon: 'calendar',
             title: 'Расписание',
             href: '/schedule',
         },
         {
-            icon: 'university',
+            icon: 'building',
             title: 'Университет',
             href: '/university',
         },
         {
-            icon: 'users',
+            icon: 'people',
             title: 'Группа',
             href: '/group',
         },
@@ -107,7 +107,7 @@
                 font-size: 1.2rem;
                 color: var(--accent-color);
                 &.block {
-                    opacity: 0.6;
+                    opacity: 0.4;
                 }
 
                 // background-color: rgba(black, .05);
@@ -129,14 +129,12 @@
 
                 svg {
                     width: 20px;
-                    aspect-ratio: 1;
-                    stroke: var(--accent-color);
-                    fill: none;
+                    fill: var(--accent-color);
                 }
 
                 &.active {
                     svg {
-                        stroke: var(--text-color);
+                        fill: var(--text-color);
                     }
                     color: var(--text-color);
                     &::before {

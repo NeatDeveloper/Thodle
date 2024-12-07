@@ -58,10 +58,9 @@
 
 <article class="home">
     <section class="top">
-        <div class="girlyanda"></div>
         <div class="top-controls">
             <Link href="/settings">
-                <Icon name="settings" />
+                <Icon name="gear" />
             </Link>
             <h2 class="top-group">ИБ 2024 | 1 курс</h2>
             {#if user.isReady}
@@ -82,21 +81,8 @@
         position: relative;
         background-color: var(--bg-color);
         padding: 10px;
-        padding-top: 14px;
-        padding-right: 25px;
-
-        .girlyanda {
-            position: absolute;
-            top: -8px;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            background-image: url(./girlyanda.gif);
-            background-position: 0 0;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
+        // padding-top: 14px;
+        // padding-right: 25px;
         &-group {
             position: relative;
             font-size: 2rem;
@@ -116,6 +102,7 @@
                 border-radius: 50%;
                 width: 34px;
                 aspect-ratio: 1;
+
                 &::before {
                     content: '';
 
@@ -130,10 +117,8 @@
                 }
 
                 svg {
-                    width: 70%;
-                    aspect-ratio: 1;
-                    stroke: var(--accent-color);
-                    fill: none;
+                    width: 60%;
+                    fill: var(--accent-color);
                 }
             }
         }

@@ -21,11 +21,15 @@
 
 <style lang="scss">
     .switch {
+        --toggle-accent-color: var(--accent-color, #2196f3);
+        --toggle-point-color: white;
+        --toggle-bg-color: var(---secondary-bg-color, #ccc);
+        --toggle-transition: background-color .2s linear;
 
         position: relative;
         display: inline-block;
-        width: 50px;
-        height: 28px;
+        width: 46px;
+        height: 26px;
 
         input {
             opacity: 0;
@@ -40,28 +44,28 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: var(--toggle-bg-color);
             transition: all .2s ease-in;
             border-radius: 34px;
 
             &:before {
                 position: absolute;
                 content: '';
-                height: 20px;
-                width: 20px;
+                height: 18px;
+                width: 18px;
                 left: 4px;
                 bottom: 4px;
-                background-color: white;
+                background-color: var(--toggle-point-color);
                 transition: all .1s ease-in;
                 border-radius: 50%;
             }
         }
         input:checked + &-slider {
-            background-color: var(--bg-color, #2196f3);
+            background-color: var(--toggle-accent-color);
         }
 
         input:focus + &-slider {
-            box-shadow: 0 0 1px var(--bg-color, #2196f3);
+            box-shadow: 0 0 1px var(--toggle-accent-color);
         }
 
         input:checked + &-slider:before {

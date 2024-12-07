@@ -1,3 +1,4 @@
+import '@repo/types/index';
 import '@repo/types/env';
 import '@repo/types/miniapp';
 import '@repo/types/db';

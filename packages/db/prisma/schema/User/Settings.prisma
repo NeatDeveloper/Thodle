@@ -3,16 +3,42 @@ model Settings {
 
     User User @relation(fields: [id], references: [id], onDelete: Cascade)
 
-    fullscreen Boolean @default(true)
-
     mailing  MailingSettings?
     schedule ScheduleSettings?
-    theme    ThemeSettings?
+    miniapp  MiniappSettings?
 
     updatedAt DateTime @updatedAt @map("updated_at")
     createdAt DateTime @default(now()) @map("created_at")
 
     @@map("Settings")
+    @@schema("user")
+}
+
+model MiniappSettings {
+    id String @id
+
+    fullscreen      Boolean        @default(false)
+    toastPosition   ToastPositions @default(T) @map("toast_position")
+    roundedSettings Boolean        @default(false) @map("rounded_settings")
+    rounded         Boolean        @default(true)
+    theme           String         @default("Default")
+    schema          String         @default("dark")
+
+    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    @@map("MiniappSettings")
+    @@schema("user")
+}
+
+enum ToastPositions {
+    T  @map("toast_position_t")
+    B  @map("toast_position_b")
+    TL @map("toast_position_tl")
+    TR @map("toast_position_tr")
+    BR @map("toast_position_br")
+    BL @map("toast_position_bl")
+
+    @@map("ToastsPosition")
     @@schema("user")
 }
 
@@ -35,17 +61,5 @@ model ScheduleSettings {
     settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
 
     @@map("ScheduleSettings")
-    @@schema("user")
-}
-
-model ThemeSettings {
-    id String @id
-
-    theme String @default("Default")
-    schema String @default("dark")
-
-    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
-
-    @@map("ThemeSettings")
     @@schema("user")
 }

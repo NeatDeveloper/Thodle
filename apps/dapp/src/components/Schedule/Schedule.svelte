@@ -1,28 +1,26 @@
 <script lang="ts">
     import { date } from "@repo/utils/other";
     import Lesson from "./Lesson.svelte";
+    import { Section } from 'components';
+    import { User } from "stores";
 
     interface Props {
         schedule: Schedule.Day;
     };
 
+    const user = User.getContext();
+
     const { schedule }: Props = $props();
 </script>
 
-<section class="schedule section">
-    <h3 class="schedule_title section_title">Расписание({date().format('D MMMM')})</h3>
-    <ul class="schedule-list section-items">
-        {#each schedule.lessons as lesson}
-            <Lesson {lesson} />
-        {/each}
-    </ul>
-</section>
+<Section type={user.settings.miniapp.rounded ? 'rounded' : 'default'}>
+    {#snippet title()}
+        Расписание({date().format('D MMMM')})
+    {/snippet}
 
-<style lang="scss">
-    .schedule {
-        &-list {
-            padding-bottom: 0;
-            padding-top: 0;
-        }
-    }
-</style>
+    {#each schedule.lessons as lesson, _(_)}
+        <Section.Block>
+            <Lesson {lesson} />
+        </Section.Block>
+    {/each}
+</Section>

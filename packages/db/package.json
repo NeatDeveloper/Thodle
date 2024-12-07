@@ -4,7 +4,8 @@
     "type": "module",
     "devDependencies": {
         "@types/bun": "latest",
-        "@repo/utils": "*"
+        "@repo/utils": "*",
+        "@repo/types": "*"
     },
     "peerDependencies": {
         "typescript": "^5.0.0"

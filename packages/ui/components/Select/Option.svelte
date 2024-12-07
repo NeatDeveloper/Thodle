@@ -28,6 +28,7 @@
         border-radius: calc(var(--select-border-radius) * .8);
         padding: 4px 6px;
         letter-spacing: 4%;
+        transition: var(--select-transition);
 
         &[current=true] {
             color: var(--select-text-current-color);

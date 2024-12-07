@@ -12,20 +12,25 @@ mailing.post('/', async __context__ => {
 
     const settings = await prisma.settings.findMany({
         where: {
-            tgID: {
-                not: 1934663397
-            },
             mailing: {
-                canISend: true
+                isPossible: true
             }
         },
         select: {
-            tgID: true
+            User: {
+                select: {
+                    profile: {
+                        select: {
+                            tgID: true
+                        }
+                    }
+                }
+            }
         }
     });
 
 
-    const ids = settings.map(setting => setting.tgID);
+    const ids = settings.map(setting => setting.User.profile?.tgID);
 
     const mailing = __context__.get('queues').mailing;
 
