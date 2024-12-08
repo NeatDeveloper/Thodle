@@ -3,7 +3,7 @@ import { trimTrailingSlash } from 'hono/trailing-slash';
 import { cors } from 'hono/cors';
 import { bodyLimit } from 'hono/body-limit';
 
-import { CreateException, factory, isMyOrigin } from '../helpers';
+import { CreateException, factory, isMyOrigin } from 'helpers';
 import routes from './routes';
 import { showRoutes } from 'hono/dev';
 import { csrf } from 'hono/csrf';
@@ -12,10 +12,10 @@ import queuesInit from '@repo/queues';
 import openapi from './openapi';
 import { getMode } from '@repo/utils/env';
 
-const MODE = getMode();
+const mode = getMode();
 const app = factory.createApp();
 
-MODE === 'DEV' && app.use(logger());
+mode.MODE === 'DEV' && app.use(logger());
 
 app.use(trimTrailingSlash());
 
@@ -45,11 +45,11 @@ app.use(async (__context__, next) => {
     await next();
 })
 
-app.route('/', openapi);
 app.route('/', routes);
+app.route('/', openapi);
 
 
-MODE === 'DEV' && showRoutes(app);
+mode.MODE === 'DEV' && showRoutes(app);
 
 
 export default app;

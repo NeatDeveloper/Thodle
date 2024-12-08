@@ -4,7 +4,7 @@
     import { Icon, Link } from '@repo/ui/components';
     import { slide } from 'svelte/transition';
     import { MiniApp, User } from 'stores';
-    import { date } from '@repo/utils/other'
+    import { date } from '@repo/utils/other';
 
     let show = $state.raw(true);
     const miniapp = MiniApp.getContext();
@@ -48,27 +48,47 @@
             href: '/group',
         },
     ];
+
+    let carret = $state({
+        left: 0,
+        width: 0,
+        height: 0,
+        top: 0
+    });
+
+    let nav = $state<HTMLElement>();
 </script>
 
 {#if show}
     <nav
+    bind:this={nav}
         class="nav"
         out:slide={{ duration: 100, delay: 0 }}
         in:slide={{ duration: 200, delay: 200 }}
-        class:navRounded={user.settings.miniapp.rounded}
     >
+    <div class="nav_carret" style="--left: {carret.left}px;--width: {carret.width}px;--height: {carret.height}px;"></div>
+
         <ul class="nav-list">
             {#each links as link, i (i)}
                 <li class="nav-item">
                     <Link
+                        onactivate={link => {
+                            const rect = link.getBoundingClientRect()
+                            carret.left = rect.x - (nav?.getBoundingClientRect().left || 0);
+                            carret.width = rect.width;
+                            carret.top = rect.top;
+                            carret.height = rect.height;
+                        }}
                         href={link.href}
                         class={blockPathnames.includes(link.href)
                             ? 'block'
                             : ''}
                     >
-                            {#if link.title === 'Расписание'}
-                                <span class="nav-item_date">{ date().format('D') }</span>
-                            {/if}
+                        {#if link.title === 'Расписание'}
+                            <span class="nav-item_date"
+                                >{date().format('D')}</span
+                            >
+                        {/if}
                         <Icon name={link.icon} />
                         {link.title}
                     </Link>
@@ -81,6 +101,8 @@
 <style lang="scss">
     $class: '.nav';
 
+
+
     #{$class} {
         position: absolute;
         bottom: 0;
@@ -91,26 +113,28 @@
 
         background-color: var(--bottom-bar-bg-color);
 
+        &_carret {
+            position: absolute;
+            top: var(--top); left: (var(--left));
+            width: var(--width);
+            height: var(--height);
+            background-color: var(--accent-color);
+            opacity: .2;
+            border-radius: 8px;
+            transition: all .2s ease;
+
+        }
+
         &-item {
             width: 100%;
 
             :global &_date {
                 position: absolute;
-                top: 11px; left: 50%;
+                top: 11px;
+                left: 50%;
                 translate: -50% 0;
-                font-size: .9rem;
+                font-size: 0.9rem;
                 text-align: center;
-            }
-        }
-
-        &.navRounded {
-            bottom: 11px; left: 8px;
-            width: calc(100% - 16px);
-            padding: 5px;
-            border-radius: 10px;
-
-            .nav-list {
-                gap: 6px;
             }
         }
 
@@ -162,10 +186,24 @@
                         fill: var(--text-color);
                     }
                     color: var(--text-color);
-                    &::before {
-                        opacity: 0.2;
-                    }
+                    // &::before {
+                    //     opacity: 0.2;
+                    // }
                 }
+            }
+        }
+    }
+
+    :global :root[data-rounded] {
+        .nav {
+            bottom: 11px;
+            left: 10px;
+            width: calc(100% - 20px);
+            padding: 5px;
+            border-radius: 10px;
+
+            .nav-list {
+                gap: 6px;
             }
         }
     }

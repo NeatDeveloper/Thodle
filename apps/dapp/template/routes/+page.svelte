@@ -123,4 +123,15 @@
             }
         }
     }
+
+
+    :global :root[data-rounded] {
+        .top {
+            top: 8px;
+            left: 10px;
+            width: calc(100% - 20px);
+            padding: 5px;
+            border-radius: 10px;
+        }
+    }
 </style>

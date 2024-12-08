@@ -12,7 +12,7 @@ routes.get('/', async __context__ => {
     return __context__.text('API сервиса Thodle. Количество пользователей: ' + usersCount);
 });
 
-routes.route('/', admin);
 routes.route('/', student);
+routes.route('/', admin);
 
 export default routes;

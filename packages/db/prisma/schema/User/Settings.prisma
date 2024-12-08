@@ -50,9 +50,6 @@ model MiniappSettings {
     /// Скругления интерфейса настроек
     roundedSettings Boolean @default(false) @map("rounded_settings")
 
-    /// Скругления интерфейса расписаний
-    roundedSchedule Boolean @default(true) @map("rounded_schedule")
-
     /// Параметры внешнего вида приложений
     ///
     /// Варианты | Значения

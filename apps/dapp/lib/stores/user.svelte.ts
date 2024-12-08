@@ -6,7 +6,7 @@ import type { SettingsSchema, SettingsRequest } from '@repo/schemas';
 
 class User {
     api = $state() as KyInstance;
-    #_ = $state() as DB.User.MiniApp;
+    #_ = $state() as DB.User.DTO;
     page = $state() as Page;
     user = $derived(this.#_);
     isReady = $state.raw(false);
@@ -15,12 +15,6 @@ class User {
         $effect.root(() => {
             $inspect(this.#_);
         });
-
-        beforeNavigate(async nav => {
-            if(nav.to?.url.pathname === '/settings') {
-                await this.getSettings();
-            }
-        })
     }
 
     onready = async () => { }
@@ -47,27 +41,30 @@ class User {
         }
     }
 
-    updateSettings = async <T extends SettingsSchema>(update: T) => {
-        const response = await this.api.patch<SettingsRequest>('student/settings', {
+    updateSettings = async <T extends SettingsSchema>(update: T): Promise<T | null> => {
+        const response = await this.api.patch<Partial<SettingsRequest>>('student/settings', {
             json: update
         });
 
         if(response.status === 200) {
-            const data = await response.json();
+            const data = await response.json<T>();
 
-            if(data.miniapp) this.#_.settings.miniapp = data.miniapp;
-            if(data.mailing) this.#_.settings.mailing = data.mailing;
-            if(data.schedule) this.#_.settings.schedule = data.schedule;
+            this.#_.settings = {
+                ...this.#_.settings,
+                ...data
+            };
 
-            return true;
+            this.onUpdateSettings()
+
+            return data;
         }
 
-        return false;
+        return null;
     }
 
-    #setProperties = (omit: (keyof DB.User.MiniApp)[]) => {
+    #setProperties = (omit: (keyof DB.User.DTO)[]) => {
         for (const key in this.#_) {
-            if (!omit.includes(key as keyof DB.User.MiniApp)) {
+            if (!omit.includes(key as keyof DB.User.DTO)) {
                 Object.defineProperty(this, key, {
                     get() {
                         return this.#_[key];
@@ -81,5 +78,5 @@ class User {
 
 export const
     USER_KEY = Symbol('USER_KEY'),
-    setContext = () => setSvelteContext(USER_KEY, new User() as User & DB.User.MiniApp),
+    setContext = () => setSvelteContext(USER_KEY, new User() as User & DB.User.DTO),
     getContext = (): ReturnType<typeof setContext> => getSvelteContext(USER_KEY);

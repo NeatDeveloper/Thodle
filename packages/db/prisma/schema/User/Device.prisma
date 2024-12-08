@@ -5,24 +5,21 @@
 /// @namespace User
 /// @erd User
 model Device {
-    /// Уникальный идентификатор
-    id Int @id @default(autoincrement())
-
     /// Уникальный идентификатор пользователя
-    userID   String @map("user_id")
+    user String
 
     /// IP адресс, если удалось получить
-    ip     String?
+    ip String?
 
     /// Название устройства, если удалось получить
-    device String?
+    device String
 
     /// Название операционной системы, если удалось получить
-    os     String?
+    os String?
 
-    User User @relation(fields: [userID], references: [id], onDelete: Cascade)
+    User User @relation(fields: [user], references: [id], onDelete: Cascade)
 
+    @@id([user, device])
     @@map("Devices")
     @@schema("user")
-    @@index([userID])
 }

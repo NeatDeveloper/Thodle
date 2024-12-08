@@ -1,12 +1,12 @@
-<script lang="ts">
+<script lang="ts" generics="T">
     import { type Snippet } from 'svelte';
     import { setContext } from './context.svelte';
 
     interface Props {
         type?: 'default' | 'row';
-        current: string;
+        current: T;
         children: Snippet<[]>;
-        onupdate?: (key: string) => Promise<void>;
+        onupdate?: (key: T) => Promise<void>;
     }
 
     let {
@@ -16,7 +16,7 @@
         onupdate,
     }: Props = $props();
 
-    const context = setContext();
+    const context = setContext<T>();
 
     context._.current = current;
 

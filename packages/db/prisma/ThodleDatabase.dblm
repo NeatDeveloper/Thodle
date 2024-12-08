@@ -305,12 +305,15 @@ Table Weeks {
 }
 
 Table Devices {
-  id Int [pk, increment, note: 'Уникальный идентификатор']
-  userID String [not null, note: 'Уникальный идентификатор пользователя']
+  user String [not null, note: 'Уникальный идентификатор пользователя']
   ip String [note: 'IP адресс, если удалось получить']
-  device String [note: 'Название устройства, если удалось получить']
+  device String [not null, note: 'Название устройства, если удалось получить']
   os String [note: 'Название операционной системы, если удалось получить']
   User Users [not null]
+
+  indexes {
+    (user, device) [pk]
+  }
 
   Note: 'Модель **Устройство**
 
@@ -323,7 +326,7 @@ Table Devices {
 Table Options {
   id String [pk, note: 'Уникальный идентификатор пользователя']
   isBlocked Boolean [not null, default: false, note: 'Предназначен для показа статуса блокировки пользователя в системе']
-  isViewWelcomeScreen Boolean [not null, default: false, note: 'Увидел ли пользователь приветственное окно в мини приложении']
+  heSawWelcomeScreen Boolean [not null, default: false, note: 'Увидел ли пользователь приветственное окно в мини приложении']
   User Users [not null]
 
   Note: 'Модель **Опции**
@@ -378,7 +381,6 @@ Table MiniappSettings {
   toastPosition ToastPosition [not null, default: 'Top', note: 'Позиционирование тостов(мини уведомлений)']
   rounded Boolean [not null, default: true, note: 'Скругления интерфейса']
   roundedSettings Boolean [not null, default: false, note: 'Скругления интерфейса настроек']
-  roundedSchedule Boolean [not null, default: true, note: 'Скругления интерфейса расписаний']
   preset ThemePreset [not null, default: 'Thodle', note: 'Параметры внешнего вида приложений
 
 Варианты | Значения
@@ -576,7 +578,7 @@ Ref: SubGroups.groupID > Groups.id
 
 Ref: Weeks.university > Universities.id
 
-Ref: Devices.userID > Users.id [delete: Cascade]
+Ref: Devices.user > Users.id [delete: Cascade]
 
 Ref: Options.id - Users.id [delete: Cascade]
 

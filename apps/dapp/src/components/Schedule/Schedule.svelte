@@ -13,9 +13,9 @@
     const { schedule }: Props = $props();
 </script>
 
-<Section type={user.settings.miniapp.rounded ? 'rounded' : 'default'}>
+<Section type="rounded">
     {#snippet title()}
-        Расписание({date().format('D MMMM')})
+        Сегодня({date().format('D MMMM')})
     {/snippet}
 
     {#each schedule.lessons as lesson, _(_)}

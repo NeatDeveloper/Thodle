@@ -11,21 +11,15 @@ export const userInclude = {
     amplua: {
         omit,
         include: {
-            curator: {
-                omit: {
-                    createdAt: true,
-                    updatedAt: true,
-                }
-            },
-            groupHead: { omit },
-            lector: { omit },
-            student: { omit },
-            tutor: { omit }
+            curator: true,
+            groupHead: true,
+            lector: true,
+            student: true,
+            tutor: true
         }
     },
     options: {
         omit: {
-            updatedAt: true,
             id: true
         }
     },
@@ -52,7 +46,7 @@ export const userInclude = {
     }
 }
 
-const checkResult = async (user: DB.User.MiniApp | null): Promise<DB.User.MiniApp | null> => {
+const checkResult = async (user: DB.User.DTO | null): Promise<DB.User.DTO | null> => {
     if(!user) return user;
 
     if(!user?.settings) {

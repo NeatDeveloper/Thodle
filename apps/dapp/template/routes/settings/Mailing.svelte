@@ -6,7 +6,8 @@
     const user = User.getContext();
 </script>
 
-<Section type={user.settings.miniapp.roundedSettings ? 'rounded' : 'default'}>
+<Section type={!user.settings.miniapp.rounded ? 'default' :
+            user.settings.miniapp.roundedSettings ? 'rounded' : 'default'}>
     {#snippet title()}
         Рассылка
     {/snippet}
@@ -17,7 +18,13 @@
     >
         <Toggle
             checked={user.settings.mailing.isPossible}
-            update={user.toggleMailingPossible}
+            update={async isPossible => {
+                await user.updateSettings({
+                    mailing: {
+                        isPossible
+                    }
+                })
+            }}
         />
     </Section.Block>
 
