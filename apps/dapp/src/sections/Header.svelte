@@ -1,26 +1,40 @@
 <script lang="ts">
-    import { page } from "$app/stores";
+    import { page } from '$app/stores';
 
     let title = $derived.by<string>(() => {
         const titles = {
             '/': 'Главная',
             '/week': 'Расписание',
-            '/settings': 'Настройки'
-        }
+            '/settings': 'Настройки',
+        };
         return titles[$page.url.pathname as keyof typeof titles] || 'Thodle';
     });
 </script>
 
 <header class="header">
-    <h2>{ title }</h2>
+    <h2>{title}</h2>
 </header>
 
 <style lang="scss">
+    :global :root[data-rounded] {
+        .header {
+            top: 4px;
+            left: 8px;
+            width: calc(100% - 16px);
+            padding: 5px;
+            border-radius: 10px;
+        }
+    }
     .header {
         display: flex;
         position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(
+            var(--tg-safe-area-inset-top) +
+                var(--tg-content-safe-area-inset-top)
+        );
         padding-bottom: 14px;
         background-color: var(--header-bg-color);
 

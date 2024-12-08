@@ -1,7 +1,7 @@
 import { setContext as setSvelteContext, getContext as getSvelteContext } from "svelte";
 
-export interface Select {
-    current: string;
+export interface Select<T> {
+    current: T;
     currentElem?: HTMLElement;
     selectElem?: HTMLElement;
     selectRect?: DOMRect;
@@ -10,9 +10,9 @@ export interface Select {
     elemObzerver?: ResizeObserver;
 }
 
-class Context {
-    _ = $state<Select>({
-        current: '',
+class Context<T> {
+    _ = $state<Select<T>>({
+        current: '' as T,
     });
 
     sizeObserver = (elem?: HTMLElement, select = false) => {
@@ -41,11 +41,11 @@ class Context {
         });
     }
 
-    onupdate = async (key: string) => { }
+    onupdate = async (key: T) => { }
 }
 
 
 export const
     KEY = Symbol('SELECT_CONTEXT'),
-    setContext = () => setSvelteContext(KEY, new Context()),
-    getContext = (): ReturnType<typeof setContext> => getSvelteContext(KEY);
+    setContext = <T>() => setSvelteContext(KEY, new Context<T>()),
+    getContext = <T>(): ReturnType<typeof setContext<T>> => getSvelteContext(KEY);

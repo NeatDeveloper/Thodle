@@ -71,6 +71,7 @@
             padding: 5px 10px 0;
             color: var(--hint-color);
             font-size: 1.3rem;
+            transition: all .2s ease;
         }
     }
 </style>

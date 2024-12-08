@@ -1,17 +1,16 @@
-<script lang="ts">
-    import { onMount, untrack } from 'svelte';
+<script lang="ts" generics="T">
     import { getContext } from './context.svelte';
 
     interface Props {
-        key: string;
-        value: string;
+        key: T;
+        value: any;
     }
 
     const { key, value }: Props = $props();
 
     let option = $state<HTMLButtonElement>();
 
-    const context = getContext();
+    const context = getContext<T>();
 
     $effect(() => {
         if(key === context._.current && option) {

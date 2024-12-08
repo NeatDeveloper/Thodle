@@ -12,7 +12,7 @@ model Options {
     isBlocked           Boolean @default(false) @map("is_blocked")
 
     /// Увидел ли пользователь приветственное окно в мини приложении
-    isViewWelcomeScreen Boolean @default(false) @map("is_view_welcome_screen")
+    heSawWelcomeScreen Boolean @default(false) @map("he_saw_welcome_screen")
 
     User User @relation(fields: [id], references: [id], onDelete: Cascade)
 

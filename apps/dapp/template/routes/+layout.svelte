@@ -10,12 +10,11 @@
     import { page } from '$app/stores';
     import { ToastsStore, Toasts } from '@repo/ui/components';
 
-    const
-        miniapp = MiniApp.setContext(),
-        core    = Core.setContext<App.Core>(),
-        user    = User.setContext(),
-        admin   = Admin.setContext(),
-        ui      = UI.setContext(),
+    const miniapp = MiniApp.setContext(),
+        core = Core.setContext<App.Core>(),
+        user = User.setContext(),
+        admin = Admin.setContext(),
+        ui = UI.setContext(),
         toasts = ToastsStore.setContext();
 
     page.subscribe((pg) => {
@@ -25,11 +24,36 @@
 
     core.meta = data;
 
-    user.onUpdateSettings = () => {
-        ui.setTheme(user.settings.miniapp.theme);
-        ui.setSchema(user.settings.miniapp.schema as 'dark' | 'light' | 'auto');
-        ui.setAppSchema(miniapp.WebApp.colorScheme);
-    }
+    const updateTheme = () => {
+        if (user.settings.miniapp.preset === 'Thodle') {
+            ui.setTheme('Thodle');
+            user.settings.miniapp.rounded = true;
+            user.settings.miniapp.roundedSettings = false;
+            user.settings.miniapp.toastPosition = 'Top';
+        } else {
+            ui.setTheme(user.settings.miniapp.theme);
+            ui.setSchema(user.settings.miniapp.schema);
+            ui.setAppSchema(
+                miniapp.WebApp.colorScheme === 'dark' ? 'Dark' : 'Light'
+            );
+        }
+
+        if (user.settings.miniapp.rounded) {
+            document.documentElement.dataset.rounded = '';
+
+            if (user.settings.miniapp.roundedSettings)
+                document.documentElement.dataset.roundedSettings = '';
+            else
+                document.documentElement.removeAttribute(
+                    'data-rounded-settings'
+                );
+        } else {
+            document.documentElement.removeAttribute('data-rounded-settings');
+            document.documentElement.removeAttribute('data-rounded');
+        }
+    };
+
+    user.onUpdateSettings = updateTheme;
 
     user.onready = async () => {
         if (+user.role?.split('_')[1] > 1) {
@@ -37,13 +61,10 @@
             admin.init(miniapp);
         }
 
-        if (miniapp.fullscreen.available) {
+        if (miniapp.fullscreen.available)
             miniapp.setFullscreen(user.settings.miniapp.fullscreen);
-        }
 
-        ui.setTheme(user.settings.miniapp.theme);
-        ui.setSchema(user.settings.miniapp.schema as 'dark' | 'light' | 'auto');
-        ui.setAppSchema(miniapp.WebApp.colorScheme);
+        updateTheme();
     };
 
     miniapp.onready(async () => {
@@ -70,7 +91,9 @@
         ui.updateVars();
 
         miniapp.WebApp.onEvent('themeChanged', () => {
-            ui.setAppSchema(miniapp.WebApp.colorScheme);
+            ui.setAppSchema(
+                miniapp.WebApp.colorScheme === 'dark' ? 'Dark' : 'Light'
+            );
         });
 
         miniapp.mainButtonParams = {

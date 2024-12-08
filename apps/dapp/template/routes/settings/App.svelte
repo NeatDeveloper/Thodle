@@ -8,14 +8,17 @@
         ui = UI.getContext();
 </script>
 
-<Section type={user.settings.miniapp.roundedSettings ? 'rounded' : 'default'}>
+<Section
+    type={!user.settings.miniapp.rounded ? 'default' :
+            user.settings.miniapp.roundedSettings ? 'rounded' : 'default'}
+>
     {#snippet title()}
         Приложение
     {/snippet}
 
     {@render pressets()}
 
-    {#if user.settings.miniapp.presset !== 'Custom'}
+    {#if user.settings.miniapp.preset == 'Custom'}
         {@render theme()}
 
         {#if ui.theme !== 'Device'}
@@ -24,11 +27,11 @@
 
         {@render rounded()}
 
+        {@render toasts()}
+
         {#if miniapp.fullscreen.available}
             {@render fullscreen()}
         {/if}
-
-        {@render toasts()}
     {/if}
 
     {#snippet description()}
@@ -37,15 +40,18 @@
 </Section>
 
 {#snippet pressets()}
-    <Section.Block icon="back" title="Прессеты" toPrev>
-        <Select type="row" current={user.settings.miniapp.presset} onupdate={async key => {
-            console.log(key)
-            await user.updateSettings({
-                miniapp: {
-                    presset: key as 'Custom'
-                }
-            })
-        }}>
+    <Section.Block icon="back" title="Пресеты" toPrev>
+        <Select
+            type="row"
+            current={user.settings.miniapp.preset}
+            onupdate={async (preset) => {
+                await user.updateSettings({
+                    miniapp: {
+                        preset,
+                    },
+                });
+            }}
+        >
             <Select.Option key="Thodle" value="Thodle" />
             <Select.Option key="Custom" value="Свой" />
         </Select>
@@ -60,12 +66,18 @@
     >
         <Toggle
             checked={miniapp.fullscreen.active}
-            update={async (status) => {
-                miniapp.setFullscreen(await user.updateSettings({
+            update={async (fullscreen) => {
+                const result = await user.updateSettings({
                     miniapp: {
-                        fullscreen: status
-                    }
-                }));
+                        fullscreen,
+                    },
+                });
+
+                if (result) {
+                    miniapp.setFullscreen(result.miniapp.fullscreen);
+                } else {
+                    miniapp.fullscreen.active = !fullscreen;
+                }
             }}
         />
     </Section.Block>
@@ -73,22 +85,42 @@
 
 {#snippet rounded()}
     <Section.Block
-        icon="calendar"
-        title="Скругления"
+        title="В интерфейсе"
         class="rounded{user.settings.miniapp.rounded ? ' iconRound' : ''}"
-        start="Структура"
+        start="Скругления"
     >
         <Toggle
             checked={user.settings.miniapp.rounded}
-            update={async status => {
+            update={async (rounded) => {
                 await user.updateSettings({
                     miniapp: {
-                        rounded: status
-                    }
-                })
+                        rounded,
+                    },
+                });
             }}
         />
     </Section.Block>
+
+    {#if user.settings.miniapp.rounded}
+        <Section.Block
+            icon="calendar"
+            title="В настройках"
+            class="rounded{user.settings.miniapp.roundedSettings
+                ? ' iconRound'
+                : ''}"
+        >
+            <Toggle
+                checked={user.settings.miniapp.roundedSettings}
+                update={async (roundedSettings) => {
+                    await user.updateSettings({
+                        miniapp: {
+                            roundedSettings,
+                        },
+                    });
+                }}
+            />
+        </Section.Block>
+    {/if}
 {/snippet}
 
 {#snippet toasts()}
@@ -98,17 +130,17 @@
             .miniapp.rounded
             ? ' iconRound'
             : ''}"
-        start="Уведомления"
+        start="Структура"
     >
         <Select
             type="row"
             current={user.settings.miniapp.toastPosition}
-            onupdate={async (key) => {
+            onupdate={async (toastPosition) => {
                 await user.updateSettings({
                     miniapp: {
-                        toastPosition: key as 'Top'
-                    }
-                })
+                        toastPosition,
+                    },
+                });
             }}
         >
             <Select.Option key="Top" value="Верху" />
@@ -122,13 +154,13 @@
         <Select
             type="row"
             current={ui.theme}
-            onupdate={async (key) => {
-                ui.setTheme(key);
+            onupdate={async (theme) => {
+                ui.setTheme(theme);
                 await user.updateSettings({
                     miniapp: {
-                        theme: ui.theme as 'Thodle'
-                    }
-                })
+                        theme,
+                    },
+                });
             }}
         >
             <Select.Option key="Device" value="Устройство" />
@@ -140,22 +172,23 @@
 
 {#snippet schema()}
     {@const iconName: IconName =
-        ui.schema === 'auto'
+        ui.schema === 'Auto'
             ? 'circle-half'
-            : ui.schema === 'dark'
+            : ui.schema === 'Dark'
               ? 'moon-stars'
               : 'sun'}
     <Section.Block icon={iconName} title="Схема" toPrev>
         <Select
             type="row"
             current={ui.schema}
-            onupdate={async (key) => {
-                ui.setSchema(key as 'auto');
+            onupdate={async (schema) => {
+                ui.setSchema(schema);
+
                 await user.updateSettings({
                     miniapp: {
-                        schema: ui.schema as 'Dark'
-                    }
-                })
+                        schema,
+                    },
+                });
             }}
         >
             <Select.Option key="Auto" value="Авто" />

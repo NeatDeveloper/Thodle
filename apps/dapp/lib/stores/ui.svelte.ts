@@ -23,28 +23,27 @@ type SchemaKeys = |
 
 type Theme = Record<SchemaKeys, `#${string}`>;
 
-type Schema = 'dark' | 'light' | 'auto';
 
 interface iUI {
-    schema: Schema;
-    appSchema: Telegram['WebApp']['colorScheme']
+    schema: DB.UI.Schema;
+    appSchema: 'Dark' | 'Light',
     themes: ({
-        name: string;
-        light: Theme;
-        dark: Theme;
+        name: DB.UI.Theme;
+        Light: Theme;
+        Dark: Theme;
     })[];
-    theme: string | 'Default';
+    theme: DB.UI.Theme;
 }
 
 class UI {
     #_ = $state<iUI>({
-        schema: 'dark',
+        schema: 'Dark',
         theme: 'Thodle',
-        appSchema: 'dark',
+        appSchema: 'Dark',
         themes: [
             {
                 name: 'Thodle',
-                dark: {
+                Dark: {
                     accentColor: '#6ab3f2',
                     bgColor: '#17212b',
                     textColor: '#f5f5f5',
@@ -61,7 +60,7 @@ class UI {
                     subtitleTextColor: '#708599',
                     destructiveTextColor: '#ec3942'
                 },
-                light: {
+                Light: {
                     accentColor: '#168dcd',
                     bgColor: '#ffffff',
                     textColor: '#000000',
@@ -81,7 +80,7 @@ class UI {
             },
             {
                 name: 'Mint',
-                dark: {
+                Dark: {
                     accentColor: '#2F5A5A',
                     bgColor: '#1E1E1E',
                     textColor: '#f5f5f5',
@@ -98,7 +97,7 @@ class UI {
                     subtitleTextColor: '#708599',
                     destructiveTextColor: '#ec3942'
                 },
-                light: {
+                Light: {
                     accentColor: '#2F5A5A',
                     bgColor: '#D4F2E3',
                     textColor: '#000000',
@@ -136,7 +135,7 @@ class UI {
         const theme = this.#_.themes.find(schema => schema.name == this.#_.theme);
 
         if (theme) {
-            const schema = this.#_.schema === 'auto' ? this.#_.appSchema : this.#_.schema;
+            const schema = this.#_.schema === 'Auto' ? this.#_.appSchema : this.#_.schema;
 
             document.documentElement.style.setProperty('--bg-color', theme[schema].bgColor);
             document.documentElement.style.setProperty('--accent-color', theme[schema].accentColor);
@@ -173,7 +172,7 @@ class UI {
 
     onupdate = (theme?: Theme) => {}
 
-    setTheme = (theme: string) => {
+    setTheme = (theme: DB.UI.Theme) => {
         this.#_.theme = theme;
     }
 
@@ -181,10 +180,10 @@ class UI {
         return this.#_.themes.map(theme => theme.name);
     }
 
-    setSchema = (schema: Schema) => {
+    setSchema = (schema: DB.UI.Schema) => {
         this.#_.schema = schema;
     }
-    setAppSchema = (schema: Telegram['WebApp']['colorScheme']) => {
+    setAppSchema = (schema: "Dark" | 'Light') => {
         this.#_.appSchema = schema;
     }
 

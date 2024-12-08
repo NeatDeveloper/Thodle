@@ -7,7 +7,7 @@ const
 
 try {
     const FormatedConfig = insert(await Bun.file(`${import.meta.dirname}/Caddyfile`).text(), {
-        hostName: app.APP_HOST,
+        hostName: new URL(app.APP_HOST).hostname,
         sitePort: ports.SITE_PORT,
         botPort: ports.BOT_PORT,
         dappPort: ports.DAPP_PORT,
@@ -24,7 +24,7 @@ try {
     });
 
     if (response.status == 200) console.log('Proxy server upgrade!')
-    else console.log("It's not upgrade!")
+    else console.log(await response.text())
 
 } catch {
     console.log('Ошибка при обновлении Caddyfile');

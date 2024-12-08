@@ -11,63 +11,63 @@ const APP_NAME = `${app.APP_NAME} Documentation`;
 const opanapi = new OpenAPIHono();
 
 
-const settingsRoute = createRoute({
-    method: 'patch',
-    path: '/student/settings',
-    request: {
-        body: {
-            content: {
-                "application/json": {
-                    schema: settingsSchema
-                }
-            }
-        }
-    },
-    responses: {
-        200: {
-            schema: settingsRequest,
-            description: 'Description'
-        }
-    }
-});
+// const settingsRoute = createRoute({
+//     method: 'patch',
+//     path: '/student/settings',
+//     request: {
+//         body: {
+//             content: {
+//                 "application/json": {
+//                     schema: settingsSchema
+//                 }
+//             }
+//         }
+//     },
+//     responses: {
+//         200: {
+//             schema: settingsRequest,
+//             description: 'Description'
+//         }
+//     }
+// });
 
-const meRoute = createRoute({
-    method: 'patch',
-    path: '/student/me',
-    request: {
-        body: {
-            content: {
-                "application/json": {
-                    schema: {
-                        initData: z.string()
-                    }
-                }
-            }
-        }
-    },
-    responses: {
-        200: {
-            content: {
-                'application/json': {
-                    schema: z.object({
-                        lastName: z.string()
-                    })
-                }
-            },
-            description: 'Description'
-        }
-    }
-})
+// const meRoute = createRoute({
+//     method: 'patch',
+//     path: '/student/me',
+//     request: {
+//         body: {
+//             content: {
+//                 "application/json": {
+//                     schema: {
+//                         initData: z.string()
+//                     }
+//                 }
+//             }
+//         }
+//     },
+//     responses: {
+//         200: {
+//             content: {
+//                 'application/json': {
+//                     schema: z.object({
+//                         lastName: z.string()
+//                     })
+//                 }
+//             },
+//             description: 'Description'
+//         }
+//     }
+// })
 
-opanapi.openapi(settingsRoute, (c) => {
-    return c.json({
-    })
-})
-opanapi.openapi(meRoute, (c) => {
-    return c.json({
-        lastName: 'LastName'
-    })
-})
+// opanapi.openapi(settingsRoute, (c) => {
+//     return c.json({
+//     })
+// })
+// opanapi.openapi(meRoute, (c) => {
+//     return c.json({
+//         lastName: 'LastName'
+//     })
+// })
 
 
 opanapi.doc(`/openapi.json`, {

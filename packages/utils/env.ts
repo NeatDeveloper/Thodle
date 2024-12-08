@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 const ENV_SCHEMA = z.object({
     MODE: z.enum(['PROD', 'DEV']),
+    EDITION: z.enum(['DEV', 'BETA', 'PROD']),
 
     // APP options
     APP_NAME: z.string(),
@@ -82,7 +83,8 @@ const TELEGRAM = ENV_SCHEMA.pick({
 });
 
 const MODE = ENV_SCHEMA.pick({
-    MODE: true
+    MODE: true,
+    EDITION: true
 })
 
 
@@ -91,4 +93,4 @@ export const getPorts = () => PORTS.parse(Bun.env);
 export const getApp = () => APP.parse(Bun.env);
 export const getDatabase = () => DATABASE.parse(Bun.env);
 export const getCache = () => CACHE.parse(Bun.env);
-export const getMode = () => MODE.parse(Bun.env).MODE;
+export const getMode = () => MODE.parse(Bun.env);

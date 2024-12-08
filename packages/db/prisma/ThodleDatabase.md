@@ -355,16 +355,15 @@ erDiagram
 ```mermaid
 erDiagram
 "Devices" {
-  Int id PK
-  String user_id FK
+  String user FK
   String ip "nullable"
-  String device "nullable"
+  String device
   String os "nullable"
 }
 "Options" {
   String id PK
   Boolean is_blocked
-  Boolean is_view_welcome_screen
+  Boolean he_saw_welcome_screen
 }
 "Profiles" {
   String id PK
@@ -389,7 +388,6 @@ erDiagram
   ToastPosition toast_position
   Boolean rounded
   Boolean rounded_settings
-  Boolean rounded_schedule
   ThemePreset preset
   MiniappTheme theme
   MiniappSchema schema
@@ -423,8 +421,7 @@ erDiagram
 Предназначен для реализации минимальной статистики пользователей сервиса
 
 **Properties**
-  - `id`: Уникальный идентификатор
-  - `user_id`: Уникальный идентификатор пользователя
+  - `user`: Уникальный идентификатор пользователя
   - `ip`: IP адресс, если удалось получить
   - `device`: Название устройства, если удалось получить
   - `os`: Название операционной системы, если удалось получить
@@ -437,7 +434,7 @@ erDiagram
 **Properties**
   - `id`: Уникальный идентификатор пользователя
   - `is_blocked`: Предназначен для показа статуса блокировки пользователя в системе
-  - `is_view_welcome_screen`: Увидел ли пользователь приветственное окно в мини приложении
+  - `he_saw_welcome_screen`: Увидел ли пользователь приветственное окно в мини приложении
 
 ### `Profiles`
 Модель **Профиль**
@@ -477,7 +474,6 @@ erDiagram
   - `toast_position`: Позиционирование тостов(мини уведомлений)
   - `rounded`: Скругления интерфейса
   - `rounded_settings`: Скругления интерфейса настроек
-  - `rounded_schedule`: Скругления интерфейса расписаний
   - `preset`
     > Параметры внешнего вида приложений
     > 
