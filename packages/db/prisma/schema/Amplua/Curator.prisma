@@ -6,10 +6,10 @@
 /// @namespace Amplua
 /// @erd Amplua
 model Curator {
-    /// Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
+    /// Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Амплуа*)
     id String @id
 
-    /// Курируемые им группы
+    /// Группы под его контролем
     groups Group[]
     Amplua Amplua  @relation(fields: [id], references: [id], onDelete: Cascade)
 
