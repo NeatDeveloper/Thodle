@@ -101,8 +101,6 @@
 <style lang="scss">
     $class: '.nav';
 
-
-
     #{$class} {
         position: absolute;
         bottom: 0;
