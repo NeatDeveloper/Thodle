@@ -12,10 +12,10 @@ model Student {
     /// Уникальный идентификатор студента
     studentID String @unique @map("student_id")
 
-    /// Ссылка на группу, в которой пользователь находится
+    /// Ссылка на группу, в которой находится пользователь
     group String?
 
-    /// Ссылка на подгруппу, в которой пользователь находится
+    /// Ссылка на подгруппу, в которой находится пользователь
     subGroup Int? @map("sub_group")
 
     SubGroup SubGroup? @relation(fields: [subGroup], references: [id])
