@@ -16,15 +16,6 @@
 </header>
 
 <style lang="scss">
-    :global :root[data-rounded] {
-        .header {
-            top: 4px;
-            left: 8px;
-            width: calc(100% - 16px);
-            padding: 5px;
-            border-radius: 10px;
-        }
-    }
     .header {
         display: flex;
         position: absolute;
