@@ -15,20 +15,20 @@ model Group {
     shortName String @unique @map("short_name")
 
     /// Ссылка на куратора
-    curator    String?
+    curator String?
 
     /// Ссылка на факультет
-    faculity   Int
+    faculity Int
 
     /// Ссылка на тьютора
-    tutor      String?
+    tutor String?
 
-    /// Год образования
-    year      Int
+    /// Год создания группы
+    year Int
 
     groupHeads GroupHead[]
     students   Student[]
-    subGroups SubGroup[]
+    subGroups  SubGroup[]
 
     Curator  Curator? @relation(fields: [curator], references: [id])
     Faculity Faculity @relation(fields: [faculity], references: [id])
@@ -55,7 +55,7 @@ model Group {
 /// @erd University
 model SubGroup {
     /// Уникальный идентификатор подгруппы
-    id   Int    @id @default(autoincrement())
+    id Int @id @default(autoincrement())
 
     /// Название подгруппы
     name String
@@ -63,12 +63,12 @@ model SubGroup {
     /// Уникальный идентификатор группы
     groupID String @map("group_id")
 
-    /// Порядок подгруппы(Первая, вторая)
+    /// Номер подгруппы(Первая, вторая)
     order SubGroupOrder
 
     students Student[]
 
-    Group    Group     @relation(fields: [groupID], references: [id])
+    Group Group @relation(fields: [groupID], references: [id])
 
     @@index([groupID])
     @@map("SubGroups")
