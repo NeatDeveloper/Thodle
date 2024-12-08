@@ -1,15 +1,19 @@
+/// Модель **Тьютор**
+///
+/// Профиль тьютора
+///
+///
+/// @namespace Amplua
+/// @erd Amplua
 model Tutor {
+    /// Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
     id String @id
 
-    group String? @unique
+    /// Группы, в которых пользователь является тьютором
+    groups  Group[]
 
-    Group  Group? @relation(fields: [group], references: [id])
     Amplua Amplua @relation(fields: [id], references: [id], onDelete: Cascade)
 
-    updatedAt DateTime @updatedAt @map("updated_at")
-    createdAt DateTime @default(now()) @map("created_at")
-
-    @@index([group])
     @@map("Tutors")
     @@schema("amplua")
 }

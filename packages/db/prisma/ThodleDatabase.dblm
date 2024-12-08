@@ -1,0 +1,591 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Amplua {
+  id String [pk, note: 'Уникальный идентификатор пользователя']
+  role AmpluaRole[] [not null, note: 'Роли пользователя в рамках учреждения
+
+Варианты | Значения
+-------|--------
+**UNDEFINED** | Неизвестен. Установлен по умолчанию, поскольку есть вероятность, что человек какое то время будет привязан к группе
+**STUDENT** | Студент
+**CURATOR** | Куратор
+**GROUP_HEAD** | Староста
+**LECTOR** | Преподаватель
+**TUTOR** | Тьютор(высока вероятность что по итогу не реализуем)']
+  student Students [note: 'Ссылка на профиль студента']
+  groupHead GroupHeads [note: 'Ссылка на профиль старосты']
+  curator Curators [note: 'Ссылка на профиль куратора']
+  tutor Tutors [note: 'Ссылка на профиль тьютора']
+  lector Lectors [note: 'Ссылка на профиль преподавателя']
+  User Users [not null]
+  createdAt DateTime [default: `now()`, not null, note: 'Дата обновления пользователя в нашей системе']
+  updatedAt DateTime [not null, note: 'Дата создания пользователя в нашей системе']
+
+  Note: '-------------------------------------------------------
+Схема "Амплуа"
+-------------------------------------------------------
+
+Модель **Амплуа**
+
+Является точкой входа пользователя в качестве сущности в университете.
+Он ссылается на другие модели, но так же, хранит в себе роли пользователя в рамках учреждения
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table Curators {
+  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  groups Groups [not null, note: 'Курируемые им группы']
+  Amplua Amplua [not null]
+
+  Note: 'Модель **Староста**
+
+Профиль старосты
+
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table GroupHeads {
+  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  group String [note: 'Ссылка на группу']
+  role GroupHeadRank [not null, note: 'Уровень старосты(староста, зам старосты)']
+  Group Groups
+  Amplua Amplua [not null]
+
+  Note: 'Модель **Староста**
+
+Профиль старосты
+
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table Lectors {
+  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  lastName String [not null, note: 'Фамилия']
+  firstName String [not null, note: 'Имя']
+  surname String [not null, note: 'Отчество']
+  initials String [not null, note: 'Инициалы']
+  faculity Int [note: 'Ссылка на факультет преподавателя']
+  ranks LectorRanks [not null]
+  Faculity Facilities
+  Amplua Amplua [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  Note: 'Модель **Преподаватель**
+
+Профиль преподавателя
+
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table LectorRanks {
+  id Int [pk, increment, note: 'Уникальный идентификатор']
+  name String [unique, not null, note: 'Название']
+  short String [unique, not null, note: 'Короткий вариант названия']
+  lectors Lectors [not null]
+
+  Note: 'Модель **Ранги Преподавателей**
+
+Предназначен для хранения рангов преподавателей.
+Пример: `Доцент(доц.)`, `Профессор(проф.)` и тд
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table Students {
+  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  studentID String [unique, not null, note: 'Уникальный идентификатор студента']
+  group String [note: 'Ссылка на группу, в которой пользователь находится']
+  subGroup Int [note: 'Ссылка на подгруппу, в которой пользователь находится']
+  SubGroup SubGroups
+  Amplua Amplua [not null]
+  Group Groups
+
+  Note: 'Модель **Студент**
+
+Профиль студента
+
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table Tutors {
+  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  groups Groups [not null, note: 'Группы, в которых пользователь является тьютором']
+  Amplua Amplua [not null]
+
+  Note: 'Модель **Тьютор**
+
+Профиль тьютора
+
+
+@namespace Amplua
+@erd Amplua'
+}
+
+Table Schedule {
+  id Int [pk, increment]
+  discipline Int [not null]
+  Discipline Disciplines [not null]
+}
+
+Table Auditoriums {
+  id Int [pk, increment, note: 'Уникальный идентификатор аудитории в базе данных']
+  building Int [not null, note: 'Уникальный идентификатор корпуса']
+  number String [not null, note: 'Номер аудитории в строковом формате(302, 302a)']
+  Building Buildings [not null]
+  updatedAt DateTime [not null, note: 'Дата обновления аудитории в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата добавления аудитории в нашу систему']
+
+  Note: 'Модель **Аудитории**
+
+Модель, где хранятся данные об аудитории, находящийся в каком то строении
+
+@namespace University
+@erd University'
+}
+
+Table Buildings {
+  id Int [pk, increment, note: 'Уникальный идентификатор здания']
+  name String [not null, note: 'Название корпуса']
+  shortName String [not null, note: 'Короткое название корпуса']
+  nonVerbalName String [note: 'Внегласное  название корпуса']
+  address String [not null, note: 'Адрес(улица) на котором находится корпус']
+  university Int [not null, note: '// Уникальный идентификатор университета, к которому корпус привязан']
+  auditoriums Auditoriums [not null]
+  University Universities [not null]
+  updatedAt DateTime [not null, note: 'Дата обновления строения в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата добавления строения в нашу систему']
+
+  Note: 'Модель **Корпуса**
+
+Модель является частью университета, представляющую с собой объект, хранящий данные об отдельных строениях
+в которых есть аудитории, в которых могут проходить занятия.
+
+На самом деле, эта модель может быть обширнее, например: стадион или спортзал.
+
+@namespace University
+@erd University'
+}
+
+Table Disciplines {
+  id Int [pk, increment, note: 'Уникальный идентификатор дисциплины в базе данных']
+  name String [not null, note: 'Название дисциплины']
+  shortName String [note: 'Короткий формат названия']
+  faculity Int [note: 'Уникальный идентификатор факультета']
+  schedules Schedule [not null]
+  Faculity Facilities
+  updatedAt DateTime [not null, note: 'Дата обновления дисциплины в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата добавления дисциплины в нашу систему']
+
+  Note: 'Модель **Дисциплина**
+
+Модель собирающая в себя данные о дисциплине.
+
+@namespace University
+@erd University'
+}
+
+Table Facilities {
+  id Int [pk, increment, note: 'Уникальный идентификатор университета в базе данных']
+  university Int [not null, note: 'Уникальный идентификатор университета']
+  disciplines Disciplines [not null]
+  lectors Lectors [not null]
+  groups Groups [not null]
+  University Universities [not null]
+  updatedAt DateTime [not null, note: 'Дата обновления пользователя в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания пользователя в нашей системе']
+
+  Note: 'Модель **Факультет**
+
+Модель, описывающая факультет
+
+@namespace University
+@erd University'
+}
+
+Table Groups {
+  id String [pk, note: 'Уникальный идентификатор группы в университете']
+  name String [unique, not null, note: 'Название группы']
+  shortName String [unique, not null, note: 'Название группы, короткий вариант']
+  curator String [note: 'Ссылка на куратора']
+  faculity Int [not null, note: 'Ссылка на факультет']
+  tutor String [note: 'Ссылка на тьютора']
+  year Int [not null, note: 'Год образования']
+  groupHeads GroupHeads [not null]
+  students Students [not null]
+  subGroups SubGroups [not null]
+  Curator Curators
+  Faculity Facilities [not null]
+  Tutor Tutors
+  updatedAt DateTime [not null, note: 'Дата обновления группы в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания группы в нашей системе']
+
+  Note: 'Модель **Группа**
+
+Модель, описывающая группу
+
+@namespace University
+@erd University'
+}
+
+Table SubGroups {
+  id Int [pk, increment, note: 'Уникальный идентификатор подгруппы']
+  name String [not null, note: 'Название подгруппы']
+  groupID String [not null, note: 'Уникальный идентификатор группы']
+  order SubGroupOrder [not null, note: 'Порядок подгруппы(Первая, вторая)']
+  students Students [not null]
+  Group Groups [not null]
+
+  Note: 'Модель **Подгруппа**
+
+Модель, описывающая подгруппу
+
+@namespace University
+@erd University'
+}
+
+Table Universities {
+  id Int [pk, increment, note: 'Уникальный идентификатор университета в системе']
+  name String [unique, not null, note: 'Название университета']
+  shartName String [unique, not null, note: 'Название университета в сокращенном варианте']
+  city String [not null, note: 'Город, где университет находится']
+  studyTime Json [not null, note: 'Массив, где хранятся время когда проходят учебные процессы
+@minItems 5']
+  weeks Weeks [not null, note: 'Связь с моделью Week для определения названий недель в конкретном университете
+@minItems 2
+@maxItems 2']
+  faculties Facilities [not null, note: 'Факультеты, которые относятся к данному университету']
+  buildings Buildings [not null, note: 'Корпуса, которые относятся к данному университету']
+  updatedAt DateTime [not null, note: 'Дата обновления университета в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания университета в нашей системе']
+
+  Note: '-------------------------------------------------------
+Схема "Университет"
+-------------------------------------------------------
+
+Модель **Университет**
+
+Модель университета является основной моделью ВУЗов в нашей системе.
+От неё исходят все остальные модели, создавая древообразную структуру.
+
+@namespace University
+@erd University'
+}
+
+Table Weeks {
+  id Int [pk, increment, note: 'ID недели в университете']
+  title String [not null, note: 'Название недели в кокретном университете']
+  order WeekOrder [not null, note: 'Порядок недели']
+  university Int [note: 'ID университета']
+  University Universities
+  updatedAt DateTime [not null, note: 'Дата обновления недели в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания недели в нашей системе']
+
+  Note: 'Модель **Неделя**
+
+Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
+а также, позволяет реализовать поддержку именования недель в конкретном университете.
+
+Например: "Первая и Вторая", "Красная и Чёрная"
+@namespace University
+@erd University'
+}
+
+Table Devices {
+  id Int [pk, increment, note: 'Уникальный идентификатор']
+  userID String [not null, note: 'Уникальный идентификатор пользователя']
+  ip String [note: 'IP адресс, если удалось получить']
+  device String [note: 'Название устройства, если удалось получить']
+  os String [note: 'Название операционной системы, если удалось получить']
+  User Users [not null]
+
+  Note: 'Модель **Устройство**
+
+Предназначен для реализации минимальной статистики пользователей сервиса
+
+@namespace User
+@erd User'
+}
+
+Table Options {
+  id String [pk, note: 'Уникальный идентификатор пользователя']
+  isBlocked Boolean [not null, default: false, note: 'Предназначен для показа статуса блокировки пользователя в системе']
+  isViewWelcomeScreen Boolean [not null, default: false, note: 'Увидел ли пользователь приветственное окно в мини приложении']
+  User Users [not null]
+
+  Note: 'Модель **Опции**
+
+Хранит в себе поля с дополнительными ключами для работы сервиса
+
+@namespace User
+@erd User'
+}
+
+Table Profiles {
+  id String [pk, note: 'Уникальный идентификатор пользователя в системе']
+  avatar String [note: 'Аватар пользователя']
+  tgID BigInt [unique, not null, note: 'Уникальный идентификатор пользователя в телеграм']
+  lastName String [note: 'Фамилия пользователя в телеграм']
+  firstName String [note: 'Имя в телеграм']
+  username String [unique, note: 'Имя пользователя в телеграм']
+  lang String [not null, note: 'Выбраный им язык']
+  isPremium Boolean [not null, note: 'Является ли пользователь премиум подписчиком в телеграм']
+  User Users [not null]
+  updatedAt DateTime [not null, note: 'Дата обновления профиля пользователя в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания профиля пользователя в нашей системе']
+
+  Note: 'Модель **Профиль**
+
+Хранит в себе данные телеграм аккаунта пользователя
+
+@namespace User
+@erd User'
+}
+
+Table Settings {
+  id String [pk, note: 'Уникальный идентификатор пользователя']
+  mailing MailingSettings [note: 'Ссылка на модель с параметрами рассылки']
+  schedule ScheduleSettings [note: 'Ссылка на модель с параметрами расписаний']
+  miniapp MiniappSettings [note: 'Ссылка на модель с параметрами мини приложения']
+  User Users [not null]
+  updatedAt DateTime [not null, note: 'Дата обновления настроек пользователя в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания настроек пользователя в нашей системе']
+
+  Note: 'Модель **Настройки**
+
+Хранит в себе параметры работы или показа приложения **Thodle**
+
+@namespace User
+@erd User'
+}
+
+Table MiniappSettings {
+  id String [pk, note: 'Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Настройки*)']
+  fullscreen Boolean [not null, default: false, note: 'Полноэкранный режим']
+  toastPosition ToastPosition [not null, default: 'Top', note: 'Позиционирование тостов(мини уведомлений)']
+  rounded Boolean [not null, default: true, note: 'Скругления интерфейса']
+  roundedSettings Boolean [not null, default: false, note: 'Скругления интерфейса настроек']
+  roundedSchedule Boolean [not null, default: true, note: 'Скругления интерфейса расписаний']
+  preset ThemePreset [not null, default: 'Thodle', note: 'Параметры внешнего вида приложений
+
+Варианты | Значения
+-------|--------
+**Thodle** | Предустановленные параметры внешнего вида
+**Custom** | Пользовательские параметры внешнего вида']
+  theme MiniappTheme [not null, default: 'Device', note: 'Тема приложения
+
+Варианты | Значения
+-------|---------
+**Device** | Тема устройства
+**Thodle** | Наша кастомная тема *Thodle*
+**Mint** | Тема *Мята*']
+  schema MiniappSchema [not null, default: 'Dark', note: 'Цветовая схема
+
+Варианты | Значения
+-------|---------
+**Auto** | Схема устройства
+**Dark** | Тёмная
+**Light** | Светлая']
+  Settings Settings [not null]
+
+  Note: 'Модель **Настройки Мини Приложения**
+
+Хранит в себе параметры работы или показа мини приложения телеграм
+
+@namespace User
+@erd User'
+}
+
+Table MailingSettings {
+  id String [pk, note: 'Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Настройки*)']
+  isPossible Boolean [not null, default: true, note: 'Разрешена ли рассылка']
+  Settings Settings [not null]
+
+  Note: 'Модель **Параметры Рассылки**
+
+Хранит в себе параметры рассылки
+
+@namespace User
+@erd User'
+}
+
+Table ScheduleSettings {
+  id String [pk, note: 'Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Настройки*)']
+  shortLessonName Boolean [not null, default: false, note: 'Показывать короткие названия пар?']
+  Settings Settings [not null]
+
+  Note: 'Модель **Расписание**
+
+Хранит в себе параметры работы или показа расписаний как в мини приложении, так и в сообщениях от бота
+
+@namespace User
+@erd User'
+}
+
+Table Users {
+  id String [pk, note: 'Уникальный идентификатор пользователя']
+  role UserRole [not null, default: 'R_0', note: 'Роль пользователя в системе
+
+Ключ | Значение
+-------|--------
+**R_0**    | **Regular**   : Обычный пользователь. Не имеет доступ ни к чему, кроме самого сервиса DAPP и бота.
+**R_1**    | **Increase**  : Пользователь
+**R_2**    | **Supervisor**:
+**R_3**    | **Admin**     :']
+  amplua Amplua [note: 'Ссылка на связующую модель пользователя и его статусом в университете']
+  settings Settings [note: 'Ссылка на модель с настройками пользователя']
+  devices Devices [not null, note: 'Ссылка на модель с устройствами пользователя']
+  profile Profiles [note: 'Ссылка на модель с профилем телеграм пользователя']
+  options Options [note: 'Ссылка на модель с статусами пользователя']
+  updatedAt DateTime [not null, note: 'Дата обновления пользователя в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания пользователя в нашей системе']
+
+  Note: '-------------------------------------------------------
+Схема "Users"
+-------------------------------------------------------
+
+Модель **Пользователь**
+
+Является точкой входа пользователя в системе **Thodle**.
+Не хранит важные и значимые данные, а только ссылки на другие модели, предназначенные для этого.
+Есть только поле `role`, которое хранит роль пользователя в системе.
+
+
+@namespace User
+@erd User'
+}
+
+Table LectorToLectorRank {
+  ranksId Int [ref: > LectorRanks.id]
+  lectorsId String [ref: > Lectors.id]
+}
+
+Enum AmpluaRole {
+  UNDEFINED
+  STUDENT
+  CURATOR
+  GROUP_HEAD
+  LECTOR
+  TUTOR
+}
+
+Enum GroupHeadRank {
+  PRIMARY
+  SECONDARY
+}
+
+Enum SubGroupOrder {
+  FIRST
+  SECOND
+}
+
+Enum WeekOrder {
+  FIRST
+  SECOND
+}
+
+Enum MiniappTheme {
+  Device
+  Thodle
+  Mint
+}
+
+Enum MiniappSchema {
+  Auto
+  Light
+  Dark
+}
+
+Enum ThemePreset {
+  Custom
+  Thodle
+}
+
+Enum ToastPosition {
+  Top
+  TopLeft
+  TopRight
+  Bottom
+  BottomLeft
+  BottomRight
+}
+
+Enum UserRole {
+  R_0
+  R_1
+  R_2
+  R_3
+}
+
+Enum LessonType {
+  LECTURE
+  PRACTICE
+  ADDITIONAL
+}
+
+Ref: Amplua.id - Users.id [delete: Cascade]
+
+Ref: Curators.id - Amplua.id [delete: Cascade]
+
+Ref: GroupHeads.group > Groups.id
+
+Ref: GroupHeads.id - Amplua.id [delete: Cascade]
+
+Ref: Lectors.faculity > Facilities.id
+
+Ref: Lectors.id - Amplua.id [delete: Cascade]
+
+Ref: Students.subGroup > SubGroups.id
+
+Ref: Students.id - Amplua.id [delete: Cascade]
+
+Ref: Students.group > Groups.id
+
+Ref: Tutors.id - Amplua.id [delete: Cascade]
+
+Ref: Schedule.discipline > Disciplines.id
+
+Ref: Auditoriums.building > Buildings.id
+
+Ref: Buildings.university > Universities.id [delete: Cascade]
+
+Ref: Disciplines.faculity > Facilities.id
+
+Ref: Facilities.university > Universities.id [delete: Cascade]
+
+Ref: Groups.curator > Curators.id
+
+Ref: Groups.faculity > Facilities.id
+
+Ref: Groups.tutor > Tutors.id
+
+Ref: SubGroups.groupID > Groups.id
+
+Ref: Weeks.university > Universities.id
+
+Ref: Devices.userID > Users.id [delete: Cascade]
+
+Ref: Options.id - Users.id [delete: Cascade]
+
+Ref: Profiles.id - Users.id [delete: Cascade]
+
+Ref: Settings.id - Users.id [delete: Cascade]
+
+Ref: MiniappSettings.id - Settings.id [delete: Cascade]
+
+Ref: MailingSettings.id - Settings.id [delete: Cascade]
+
+Ref: ScheduleSettings.id - Settings.id [delete: Cascade]

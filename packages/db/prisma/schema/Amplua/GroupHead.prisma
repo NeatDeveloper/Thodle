@@ -1,14 +1,22 @@
+/// Модель **Староста**
+///
+/// Профиль старосты
+///
+///
+/// @namespace Amplua
+/// @erd Amplua
 model GroupHead {
+    /// Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
     id String @id
 
+    /// Ссылка на группу
     group String?
+
+    /// Уровень старосты(староста, зам старосты)
     role  GroupHeadRank
 
     Group  Group?  @relation(fields: [group], references: [id])
     Amplua Amplua @relation(fields: [id], references: [id], onDelete: Cascade)
-
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@index([group])
     @@map("GroupHeads")

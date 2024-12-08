@@ -1,12 +1,27 @@
+/// Модель **Преподаватель**
+///
+/// Профиль преподавателя
+///
+///
+/// @namespace Amplua
+/// @erd Amplua
 model Lector {
+    /// Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
     id   String @id
 
+    /// Фамилия
     lastName  String @map("last_name")
+
+    /// Имя
     firstName String @map("first_name")
+
+    /// Отчество
     surname   String
+
+    /// Инициалы
     initials  String
 
-    group    Int  @unique
+    /// Ссылка на факультет преподавателя
     faculity Int?
 
     ranks    LectorRank[]
@@ -17,7 +32,6 @@ model Lector {
     createdAt DateTime @default(now()) @map("created_at")
     updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@index([group])
     @@index([faculity])
     @@map("Lectors")
     @@schema("amplua")

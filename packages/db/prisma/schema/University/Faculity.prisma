@@ -1,12 +1,14 @@
 /// Модель **Факультет**
 ///
-/// Описание, всех факультетов университета. Конкретно в данном случае, факультеты прикреплены к университету
-
+/// Модель, описывающая факультет
+///
+/// @namespace University
+/// @erd University
 model Faculity {
-    /// ID университета в базе данных
+    /// Уникальный идентификатор университета в базе данных
     id Int @id @default(autoincrement())
 
-    /// ID университета
+    /// Уникальный идентификатор университета
     university Int
 
     disciplines Discipline[]
@@ -15,10 +17,11 @@ model Faculity {
 
     University University @relation(fields: [university], references: [id], onDelete: Cascade)
 
-    /// Дата создания пользователя в нашей системе
-    createdAt DateTime @default(now()) @map("created_at")
     /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+
+    /// Дата создания пользователя в нашей системе
+    createdAt DateTime @default(now()) @map("created_at")
 
     @@index([university])
     @@map("Facilities")

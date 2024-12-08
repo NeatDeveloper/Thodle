@@ -1,16 +1,26 @@
+/// Модель **Студент**
+///
+/// Профиль студента
+///
+///
+/// @namespace Amplua
+/// @erd Amplua
 model Student {
+    /// Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
     id String @id
 
+    /// Уникальный идентификатор студента
+    studentID String @unique @map("student_id")
+
+    /// Ссылка на группу, в которой пользователь находится
     group String?
 
+    /// Ссылка на подгруппу, в которой пользователь находится
     subGroup Int? @map("sub_group")
 
     SubGroup SubGroup? @relation(fields: [subGroup], references: [id])
     Amplua   Amplua    @relation(fields: [id], references: [id], onDelete: Cascade)
     Group    Group?    @relation(fields: [group], references: [id])
-
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@index([group])
     @@index([subGroup])

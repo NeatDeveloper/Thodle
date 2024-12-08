@@ -1,48 +1,73 @@
-/// Модель **Неделя**
+/// Модель **Группа**
 ///
-/// Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
-/// а также, позволяет реализовать поддержку именования недель в конкретном университете.
+/// Модель, описывающая группу
 ///
-/// Например: "Первая и Вторая", "Красная и Чёрная"
-
+/// @namespace University
+/// @erd University
 model Group {
-    /// ID группы в университете
+    /// Уникальный идентификатор группы в университете
     id String @id @default(cuid())
 
+    /// Название группы
     name String @unique
 
+    /// Название группы, короткий вариант
+    shortName String @unique @map("short_name")
+
+    /// Ссылка на куратора
     curator    String?
+
+    /// Ссылка на факультет
     faculity   Int
+
+    /// Ссылка на тьютора
+    tutor      String?
+
+    /// Год образования
+    year      Int
+
     groupHeads GroupHead[]
     students   Student[]
-    tutor      Tutor?
-
-    year      Int
     subGroups SubGroup[]
 
     Curator  Curator? @relation(fields: [curator], references: [id])
     Faculity Faculity @relation(fields: [faculity], references: [id])
+    Tutor    Tutor?   @relation(fields: [tutor], references: [id])
 
-    /// Дата создания пользователя в нашей системе
-    createdAt DateTime @default(now()) @map("created_at")
-    /// Дата обновления пользователя в нашей системе
+    /// Дата обновления группы в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+
+    /// Дата создания группы в нашей системе
+    createdAt DateTime @default(now()) @map("created_at")
 
     @@index([faculity])
     @@index([curator])
+    @@index([tutor])
     @@map("Groups")
     @@schema("university")
 }
 
+/// Модель **Подгруппа**
+///
+/// Модель, описывающая подгруппу
+///
+/// @namespace University
+/// @erd University
 model SubGroup {
-    id Int @id @default(autoincrement())
+    /// Уникальный идентификатор подгруппы
+    id   Int    @id @default(autoincrement())
+
+    /// Название подгруппы
     name String
 
+    /// Уникальный идентификатор группы
     groupID String @map("group_id")
 
+    /// Порядок подгруппы(Первая, вторая)
     order SubGroupOrder
 
     students Student[]
+
     Group    Group     @relation(fields: [groupID], references: [id])
 
     @@index([groupID])

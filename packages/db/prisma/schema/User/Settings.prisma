@@ -1,34 +1,85 @@
+/// Модель **Настройки**
+///
+/// Хранит в себе параметры работы или показа приложения **Thodle**
+///
+/// @namespace User
+/// @erd User
 model Settings {
+    /// Уникальный идентификатор пользователя
     id String @id
+
+    /// Ссылка на модель с параметрами рассылки
+    mailing MailingSettings?
+
+    /// Ссылка на модель с параметрами расписаний
+    schedule ScheduleSettings?
+
+    /// Ссылка на модель с параметрами мини приложения
+    miniapp MiniappSettings?
 
     User User @relation(fields: [id], references: [id], onDelete: Cascade)
 
-    mailing  MailingSettings?
-    schedule ScheduleSettings?
-    miniapp  MiniappSettings?
-
+    /// Дата обновления настроек пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+
+    /// Дата создания настроек пользователя в нашей системе
     createdAt DateTime @default(now()) @map("created_at")
 
     @@map("Settings")
     @@schema("user")
 }
 
+/// Модель **Настройки Мини Приложения**
+///
+/// Хранит в себе параметры работы или показа мини приложения телеграм
+///
+/// @namespace User
+/// @erd User
 model MiniappSettings {
+    /// Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Настройки*)
     id String @id
 
-    fullscreen      Boolean       @default(false)
-    toastPosition   ToastPosition @default(Top) @map("toast_position")
+    /// Полноэкранный режим
+    fullscreen    Boolean       @default(false)
+    /// Позиционирование тостов(мини уведомлений)
+    toastPosition ToastPosition @default(Top) @map("toast_position")
 
-    rounded         Boolean       @default(true)
-    roundedSettings Boolean       @default(false) @map("rounded_settings")
-    roundedSchedule Boolean       @default(false) @map("rounded_schedule")
+    /// Скругления интерфейса
+    rounded Boolean @default(true)
 
-    presset         ThemePresset  @default(Thodle)
-    theme           MiniappTheme  @default(Device)
-    schema          MiniappSchema @default(Dark)
+    /// Скругления интерфейса настроек
+    roundedSettings Boolean @default(false) @map("rounded_settings")
 
-    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+    /// Скругления интерфейса расписаний
+    roundedSchedule Boolean @default(true) @map("rounded_schedule")
+
+    /// Параметры внешнего вида приложений
+    ///
+    /// Варианты | Значения
+    /// -------|--------
+    /// **Thodle** | Предустановленные параметры внешнего вида
+    /// **Custom** | Пользовательские параметры внешнего вида
+    preset ThemePreset   @default(Thodle)
+
+    /// Тема приложения
+    ///
+    /// Варианты | Значения
+    /// -------|---------
+    /// **Device** | Тема устройства
+    /// **Thodle** | Наша кастомная тема *Thodle*
+    /// **Mint** | Тема *Мята*
+    theme  MiniappTheme  @default(Device)
+
+    /// Цветовая схема
+    ///
+    /// Варианты | Значения
+    /// -------|---------
+    /// **Auto** | Схема устройства
+    /// **Dark** | Тёмная
+    /// **Light** | Светлая
+    schema MiniappSchema @default(Dark)
+
+    Settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
 
     @@map("MiniappSettings")
     @@schema("user")
@@ -36,8 +87,8 @@ model MiniappSettings {
 
 enum MiniappTheme {
     Device @map("theme_device")
-    Thodle  @map("theme_thodle")
-    Mint    @map("theme_mint")
+    Thodle @map("theme_thodle")
+    Mint   @map("theme_mint")
 
     @@map("MiniappThemes")
     @@schema("user")
@@ -52,43 +103,59 @@ enum MiniappSchema {
     @@schema("user")
 }
 
-enum ThemePresset {
-    Custom @map("theme_presset_custom")
-    Thodle @map("theme_presset_thodle")
+enum ThemePreset {
+    Custom @map("theme_preset_custom")
+    Thodle @map("theme_preset_thodle")
 
-    @@map("ThemePressets")
+    @@map("ThemePresets")
     @@schema("user")
 }
 
 enum ToastPosition {
-    Top @map("toast_position_top")
-    TopLeft @map("toast_position_topleft")
-    TopRight @map("toast_position_topright")
-    Bottom @map("toast_position_bottom")
-    BottomLeft @map("toast_position_bottomleft")
+    Top         @map("toast_position_top")
+    TopLeft     @map("toast_position_topleft")
+    TopRight    @map("toast_position_topright")
+    Bottom      @map("toast_position_bottom")
+    BottomLeft  @map("toast_position_bottomleft")
     BottomRight @map("toast_position_bottomright")
 
     @@map("ToastsPosition")
     @@schema("user")
 }
 
+/// Модель **Параметры Рассылки**
+///
+/// Хранит в себе параметры рассылки
+///
+/// @namespace User
+/// @erd User
 model MailingSettings {
+    /// Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Настройки*)
     id String @id
 
+    /// Разрешена ли рассылка
     isPossible Boolean @default(true) @map("isPossible")
 
-    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+    Settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
 
     @@map("MailingSettings")
     @@schema("user")
 }
 
+/// Модель **Расписание**
+///
+/// Хранит в себе параметры работы или показа расписаний как в мини приложении, так и в сообщениях от бота
+///
+/// @namespace User
+/// @erd User
 model ScheduleSettings {
+    /// Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Настройки*)
     id String @id
 
+    /// Показывать короткие названия пар?
     shortLessonName Boolean @default(false) @map("short_lesson_name")
 
-    settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
+    Settings Settings @relation(fields: [id], references: [id], onDelete: Cascade)
 
     @@map("ScheduleSettings")
     @@schema("user")

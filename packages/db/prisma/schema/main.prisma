@@ -3,11 +3,16 @@ generator client {
     previewFeatures = ["fullTextSearchPostgres", "multiSchema", "prismaSchemaFolder", "omitApi"]
 }
 
+generator dblm {
+    provider = "prisma-dbml-generator"
+    output = "../"
+    outputName = "ThodleDatabase.dblm"
+}
+
 generator markdown {
-    provider        = "prisma-markdown"
-    output          = "../DatabaseSchema.md"
-    title           = "Thodle Bot"
-    previewFeatures = ["multiSchema"]
+  provider = "prisma-markdown"
+  output   = "../ThodleDatabase.md"
+  title    = "Thodle Database Schema"
 }
 
 datasource db {

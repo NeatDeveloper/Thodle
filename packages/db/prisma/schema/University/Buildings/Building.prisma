@@ -1,27 +1,40 @@
 /// Модель **Корпуса**
 ///
-/// Описание корпусов университета, для упрощения навигации студентов в основном приложение
-
+/// Модель является частью университета, представляющую с собой объект, хранящий данные об отдельных строениях
+/// в которых есть аудитории, в которых могут проходить занятия.
+///
+/// На самом деле, эта модель может быть обширнее, например: стадион или спортзал.
+///
+/// @namespace University
+/// @erd University
 model Building {
-    /// ID университета в базе данных
+    /// Уникальный идентификатор здания
     id Int @id @default(autoincrement())
 
     /// Название корпуса
-    title      String
-    /// Внегласное название корпуса
-    shortName String? @map("short_name")
+    name      String
+
+    /// Короткое название корпуса
+    shortName String @map("short_name")
+
+    /// Внегласное  название корпуса
+    nonVerbalName String? @map("non_verbal_name")
+
     /// Адрес(улица) на котором находится корпус
     address    String
-    /// ID университета, к которому корпус привязан
+
+    /// // Уникальный идентификатор университета, к которому корпус привязан
     university Int
 
     auditoriums Auditorium[]
+
     University  University   @relation(fields: [university], references: [id], onDelete: Cascade)
 
-    /// Дата создания пользователя в нашей системе
-    createdAt DateTime @default(now()) @map("created_at")
-    /// Дата обновления пользователя в нашей системе
+    /// Дата обновления строения в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+
+    /// Дата добавления строения в нашу систему
+    createdAt DateTime @default(now()) @map("created_at")
 
     @@index([university])
     @@map("Buildings")

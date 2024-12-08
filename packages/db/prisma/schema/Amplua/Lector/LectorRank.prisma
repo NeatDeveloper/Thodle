@@ -1,11 +1,22 @@
+/// Модель **Ранги Преподавателей**
+///
+/// Предназначен для хранения рангов преподавателей.
+/// Пример: `Доцент(доц.)`, `Профессор(проф.)` и тд
+///
+/// @namespace Amplua
+/// @erd Amplua
 model LectorRank {
+    /// Уникальный идентификатор
     id Int @id @default(autoincrement())
 
-    title        String @unique
-    shortVariant String @unique @map("short_variant")
+    /// Название
+    name  String @unique
+
+    /// Короткий вариант названия
+    short String @unique
 
     lectors Lector[]
 
-    @@schema("amplua")
     @@map("LectorRanks")
+    @@schema("amplua")
 }

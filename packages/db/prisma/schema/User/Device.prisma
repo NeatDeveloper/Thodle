@@ -1,11 +1,23 @@
-
+/// Модель **Устройство**
+///
+/// Предназначен для реализации минимальной статистики пользователей сервиса
+///
+/// @namespace User
+/// @erd User
 model Device {
+    /// Уникальный идентификатор
     id Int @id @default(autoincrement())
 
+    /// Уникальный идентификатор пользователя
     userID   String @map("user_id")
 
+    /// IP адресс, если удалось получить
     ip     String?
+
+    /// Название устройства, если удалось получить
     device String?
+
+    /// Название операционной системы, если удалось получить
     os     String?
 
     User User @relation(fields: [userID], references: [id], onDelete: Cascade)

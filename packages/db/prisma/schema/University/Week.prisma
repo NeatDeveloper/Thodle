@@ -4,35 +4,38 @@
 /// а также, позволяет реализовать поддержку именования недель в конкретном университете.
 ///
 /// Например: "Первая и Вторая", "Красная и Чёрная"
-
+/// @namespace University
+/// @erd University
 model Week {
     /// ID недели в университете
     id Int @id @default(autoincrement())
 
     /// Название недели в кокретном университете
     title String
+
     /// Порядок недели
-    count WeekCount
+    order WeekOrder
+
     /// ID университета
     university Int?
 
     University University? @relation(fields: [university], references: [id])
 
-
-    /// Дата создания пользователя в нашей системе
-    createdAt DateTime @default(now()) @map("created_at")
-    /// Дата обновления пользователя в нашей системе
+    /// Дата обновления недели в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+
+    /// Дата создания недели в нашей системе
+    createdAt DateTime @default(now()) @map("created_at")
 
     @@index([university])
     @@map("Weeks")
     @@schema("university")
 }
 
-/// @namespace UniversityStructure
-enum WeekCount {
-    FIRST  @map("week_count_first")
-    SECOND @map("week_count_second")
+enum WeekOrder {
+    FIRST  @map("week_order_first")
+    SECOND @map("week_order_second")
 
+    @@map("WeekOrders")
     @@schema("university")
 }

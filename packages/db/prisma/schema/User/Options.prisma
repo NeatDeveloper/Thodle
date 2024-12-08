@@ -1,13 +1,20 @@
-
+/// Модель **Опции**
+///
+/// Хранит в себе поля с дополнительными ключами для работы сервиса
+///
+/// @namespace User
+/// @erd User
 model Options {
+    /// Уникальный идентификатор пользователя
     id String @id
 
+    /// Предназначен для показа статуса блокировки пользователя в системе
     isBlocked           Boolean @default(false) @map("is_blocked")
+
+    /// Увидел ли пользователь приветственное окно в мини приложении
     isViewWelcomeScreen Boolean @default(false) @map("is_view_welcome_screen")
 
     User User @relation(fields: [id], references: [id], onDelete: Cascade)
-
-    updatedAt DateTime @updatedAt @map("updated_at")
 
     @@map("Options")
     @@schema("user")

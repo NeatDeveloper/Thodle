@@ -1,30 +1,39 @@
-
+/// Модель **Профиль**
+///
+/// Хранит в себе данные телеграм аккаунта пользователя
+///
+/// @namespace User
+/// @erd User
 model Profile {
+    /// Уникальный идентификатор пользователя в системе
     id String @id @default(cuid())
 
     /// Аватар пользователя
     avatar String?
 
-    /// ID пользователя в телеграм
+    /// Уникальный идентификатор пользователя в телеграм
     tgID BigInt @unique @map("tg_id")
 
     /// Фамилия пользователя в телеграм
     lastName  String? @map("last_name")
-    /// Имя пользователя в телеграм
+
+    /// Имя в телеграм
     firstName String? @map("first_name")
-    /// Имя пользователя пользователя в телеграм
+
+    /// Имя пользователя в телеграм
     username  String? @unique
 
     /// Выбраный им язык
     lang String
 
-    /// Является ли пользователь премиум пользователем
+    /// Является ли пользователь премиум подписчиком в телеграм
     isPremium Boolean @map("is_premium")
 
     User User @relation(fields: [id], references: [id], onDelete: Cascade)
 
     /// Дата обновления профиля пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
+
     /// Дата создания профиля пользователя в нашей системе
     createdAt DateTime @default(now()) @map("created_at")
 
