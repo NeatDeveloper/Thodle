@@ -10,7 +10,7 @@ export const profileSchema = z.object({
     isPremium: z.optional(z.boolean()).default(false),
 });
 
-export const profileRequest = z.object({
+export const profileObject = z.object({
     avatar: z.string().nullable(),
     tgID: z.bigint(),
     lastName: z.string(),
@@ -22,4 +22,4 @@ export const profileRequest = z.object({
 
 
 export type ProfileSchema = z.infer<typeof profileSchema>;
-export type ProfileRequest = z.infer<typeof profileRequest>;
+export type ProfileObject = z.infer<typeof profileObject>;

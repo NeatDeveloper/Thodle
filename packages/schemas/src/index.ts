@@ -1,4 +1,2 @@
-export * from './settings';
-export * from './options';
-export * from './profile';
-export * from './device';
+export * from './user';
+export * from './university';

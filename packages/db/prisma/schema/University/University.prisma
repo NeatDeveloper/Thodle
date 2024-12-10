@@ -16,14 +16,10 @@ model University {
     name String @unique
 
     /// Сокращённое название университета
-    shartName String @unique @map("short_name")
+    shortName String @unique @map("short_name")
 
     /// Город, где находится университет
     city String
-
-    /// Массив, с временем занятий
-    /// @minItems 5
-    studyTime Json @map("study_time")
 
     /// Связь с моделью Week для определения названий недель в конкретном университете
     /// @minItems 2
@@ -36,6 +32,8 @@ model University {
     /// Корпуса, которые относятся к данному университету
     buildings Building[]
 
+    studyTime StudyTime?
+
     /// Дата обновления университета в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -43,5 +41,21 @@ model University {
     createdAt DateTime @default(now()) @map("created_at")
 
     @@map("Universities")
+    @@schema("university")
+}
+
+model StudyTime {
+    id Int @id
+
+    startTime            Int  @map("start_time")
+    durationLesson       Int  @map("duration_lesson")
+    breakTime            Int  @map("break_time")
+    breakLessonTime      Int? @map("break_lesson_time")
+    startBigBreakTime    Int  @map("start_big_break_time")
+    durationBigBreakTime Int  @map("duration_big_break_time")
+
+    University University @relation(fields: [id], references: [id], onDelete: Cascade)
+
+    @@map("StudyTimes")
     @@schema("university")
 }

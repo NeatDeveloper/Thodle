@@ -1,8 +1,7 @@
 import type { KyInstance } from "ky";
 import type { Page } from "@sveltejs/kit";
 import { getContext as getSvelteContext, setContext as setSvelteContext } from "svelte";
-import { beforeNavigate } from "$app/navigation";
-import type { SettingsSchema, SettingsRequest } from '@repo/schemas';
+import type { SettingsSchema, SettingsObject } from '@repo/schemas';
 
 class User {
     api = $state() as KyInstance;
@@ -42,7 +41,7 @@ class User {
     }
 
     updateSettings = async <T extends SettingsSchema>(update: T): Promise<T | null> => {
-        const response = await this.api.patch<Partial<SettingsRequest>>('student/settings', {
+        const response = await this.api.patch<Partial<SettingsObject>>('student/settings', {
             json: update
         });
 

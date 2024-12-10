@@ -11,6 +11,9 @@ model Faculity {
     /// Уникальный идентификатор университета
     university Int
 
+    name String
+    shortName String @map("short_name")
+
     disciplines Discipline[]
     lectors     Lector[]
     groups      Group[]

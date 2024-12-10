@@ -13,15 +13,15 @@ Table Amplua {
 **CURATOR** | Куратор
 **GROUP_HEAD** | Староста
 **LECTOR** | Преподаватель
-**TUTOR** | Тьютор(высока вероятность что по итогу не реализуем)']
+**TUTOR** | Тьютор(высока вероятность, что по итогу не реализуем)']
   student Students [note: 'Ссылка на профиль студента']
   groupHead GroupHeads [note: 'Ссылка на профиль старосты']
   curator Curators [note: 'Ссылка на профиль куратора']
   tutor Tutors [note: 'Ссылка на профиль тьютора']
   lector Lectors [note: 'Ссылка на профиль преподавателя']
   User Users [not null]
-  createdAt DateTime [default: `now()`, not null, note: 'Дата обновления пользователя в нашей системе']
-  updatedAt DateTime [not null, note: 'Дата создания пользователя в нашей системе']
+  updatedAt DateTime [not null, note: 'Дата обновления сущности в нашей системе']
+  createdAt DateTime [default: `now()`, not null, note: 'Дата создания пользователя в нашей системе']
 
   Note: '-------------------------------------------------------
 Схема "Амплуа"
@@ -30,15 +30,15 @@ Table Amplua {
 Модель **Амплуа**
 
 Является точкой входа пользователя в качестве сущности в университете.
-Он ссылается на другие модели, но так же, хранит в себе роли пользователя в рамках учреждения
+Она ссылается на другие модели, но так же, хранит в себе роли пользователя в рамках учреждения
 
 @namespace Amplua
 @erd Amplua'
 }
 
 Table Curators {
-  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
-  groups Groups [not null, note: 'Курируемые им группы']
+  id String [pk, note: 'Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  groups Groups [not null, note: 'Группы под его контролем']
   Amplua Amplua [not null]
 
   Note: 'Модель **Староста**
@@ -73,6 +73,7 @@ Table Lectors {
   surname String [not null, note: 'Отчество']
   initials String [not null, note: 'Инициалы']
   faculity Int [note: 'Ссылка на факультет преподавателя']
+  lessons Lessons [not null]
   ranks LectorRanks [not null]
   Faculity Facilities
   Amplua Amplua [not null]
@@ -97,7 +98,7 @@ Table LectorRanks {
   Note: 'Модель **Ранги Преподавателей**
 
 Предназначен для хранения рангов преподавателей.
-Пример: `Доцент(доц.)`, `Профессор(проф.)` и тд
+Пример: `Доцент (доц.)`, `Профессор (проф.)` и тд
 
 @namespace Amplua
 @erd Amplua'
@@ -106,8 +107,8 @@ Table LectorRanks {
 Table Students {
   id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
   studentID String [unique, not null, note: 'Уникальный идентификатор студента']
-  group String [note: 'Ссылка на группу, в которой пользователь находится']
-  subGroup Int [note: 'Ссылка на подгруппу, в которой пользователь находится']
+  group String [note: 'Ссылка на группу, в которой находится пользователь']
+  subGroup Int [note: 'Ссылка на подгруппу, в которой находится пользователь']
   SubGroup SubGroups
   Amplua Amplua [not null]
   Group Groups
@@ -122,7 +123,7 @@ Table Students {
 }
 
 Table Tutors {
-  id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
+  id String [pk, note: 'Уникальный идентификатор пользователя(в данном случае, для связи с моделью *Амплуа*)']
   groups Groups [not null, note: 'Группы, в которых пользователь является тьютором']
   Amplua Amplua [not null]
 
@@ -135,16 +136,30 @@ Table Tutors {
 @erd Amplua'
 }
 
-Table Schedule {
+Table Schedules {
+  id Int [pk, increment]
+  dayOrder Int [not null]
+  weekOrder WeekOrder [not null]
+  lessons Lessons [not null]
+}
+
+Table Lessons {
   id Int [pk, increment]
   discipline Int [not null]
+  auditorium Int [not null]
+  lector String [not null]
+  schedule Int [not null]
+  Lector Lectors [not null]
+  Auditorium Auditoriums [not null]
   Discipline Disciplines [not null]
+  Schedule Schedules [not null]
 }
 
 Table Auditoriums {
   id Int [pk, increment, note: 'Уникальный идентификатор аудитории в базе данных']
   building Int [not null, note: 'Уникальный идентификатор корпуса']
   number String [not null, note: 'Номер аудитории в строковом формате(302, 302a)']
+  lessons Lessons [not null]
   Building Buildings [not null]
   updatedAt DateTime [not null, note: 'Дата обновления аудитории в нашей системе']
   createdAt DateTime [default: `now()`, not null, note: 'Дата добавления аудитории в нашу систему']
@@ -185,7 +200,7 @@ Table Disciplines {
   name String [not null, note: 'Название дисциплины']
   shortName String [note: 'Короткий формат названия']
   faculity Int [note: 'Уникальный идентификатор факультета']
-  schedules Schedule [not null]
+  lessons Lessons [not null]
   Faculity Facilities
   updatedAt DateTime [not null, note: 'Дата обновления дисциплины в нашей системе']
   createdAt DateTime [default: `now()`, not null, note: 'Дата добавления дисциплины в нашу систему']
@@ -201,6 +216,8 @@ Table Disciplines {
 Table Facilities {
   id Int [pk, increment, note: 'Уникальный идентификатор университета в базе данных']
   university Int [not null, note: 'Уникальный идентификатор университета']
+  name String [not null]
+  shortName String [not null]
   disciplines Disciplines [not null]
   lectors Lectors [not null]
   groups Groups [not null]
@@ -223,7 +240,7 @@ Table Groups {
   curator String [note: 'Ссылка на куратора']
   faculity Int [not null, note: 'Ссылка на факультет']
   tutor String [note: 'Ссылка на тьютора']
-  year Int [not null, note: 'Год образования']
+  year Int [not null, note: 'Год создания группы']
   groupHeads GroupHeads [not null]
   students Students [not null]
   subGroups SubGroups [not null]
@@ -245,7 +262,7 @@ Table SubGroups {
   id Int [pk, increment, note: 'Уникальный идентификатор подгруппы']
   name String [not null, note: 'Название подгруппы']
   groupID String [not null, note: 'Уникальный идентификатор группы']
-  order SubGroupOrder [not null, note: 'Порядок подгруппы(Первая, вторая)']
+  order SubGroupOrder [not null, note: 'Номер подгруппы(Первая, вторая)']
   students Students [not null]
   Group Groups [not null]
 
@@ -260,15 +277,14 @@ Table SubGroups {
 Table Universities {
   id Int [pk, increment, note: 'Уникальный идентификатор университета в системе']
   name String [unique, not null, note: 'Название университета']
-  shartName String [unique, not null, note: 'Название университета в сокращенном варианте']
-  city String [not null, note: 'Город, где университет находится']
-  studyTime Json [not null, note: 'Массив, где хранятся время когда проходят учебные процессы
-@minItems 5']
+  shortName String [unique, not null, note: 'Сокращённое название университета']
+  city String [not null, note: 'Город, где находится университет']
   weeks Weeks [not null, note: 'Связь с моделью Week для определения названий недель в конкретном университете
 @minItems 2
 @maxItems 2']
   faculties Facilities [not null, note: 'Факультеты, которые относятся к данному университету']
   buildings Buildings [not null, note: 'Корпуса, которые относятся к данному университету']
+  studyTime StudyTimes
   updatedAt DateTime [not null, note: 'Дата обновления университета в нашей системе']
   createdAt DateTime [default: `now()`, not null, note: 'Дата создания университета в нашей системе']
 
@@ -278,28 +294,36 @@ Table Universities {
 
 Модель **Университет**
 
-Модель университета является основной моделью ВУЗов в нашей системе.
-От неё исходят все остальные модели, создавая древообразную структуру.
+Модель университета является основной моделью ВУЗов в нашей системе, от неё исходят все остальные модели.
 
 @namespace University
 @erd University'
 }
 
+Table StudyTimes {
+  id Int [pk]
+  startTime Int [not null]
+  durationLesson Int [not null]
+  breakTime Int [not null]
+  breakLessonTime Int
+  startBigBreakTime Int [not null]
+  durationBigBreakTime Int [not null]
+  University Universities [not null]
+}
+
 Table Weeks {
   id Int [pk, increment, note: 'ID недели в университете']
-  title String [not null, note: 'Название недели в кокретном университете']
+  title String [not null, note: 'Название недели в конкретном университете']
   order WeekOrder [not null, note: 'Порядок недели']
-  university Int [note: 'ID университета']
+  university Int [note: 'Идентификатор университета']
   University Universities
-  updatedAt DateTime [not null, note: 'Дата обновления недели в нашей системе']
-  createdAt DateTime [default: `now()`, not null, note: 'Дата создания недели в нашей системе']
 
   Note: 'Модель **Неделя**
 
-Описание, названий недель университета. Конкретно в данном случае, это поможет в правильном структурировании расписаний в приложении,
-а также, позволяет реализовать поддержку именования недель в конкретном университете.
-
+Описание названий недель университета. В данном случае, это поможет правильно структурировать расписания
+и реализовывать поддержку именования недель в конкретном университете.
 Например: "Первая и Вторая", "Красная и Чёрная"
+
 @namespace University
 @erd University'
 }
@@ -558,7 +582,13 @@ Ref: Students.group > Groups.id
 
 Ref: Tutors.id - Amplua.id [delete: Cascade]
 
-Ref: Schedule.discipline > Disciplines.id
+Ref: Lessons.lector > Lectors.id
+
+Ref: Lessons.auditorium > Auditoriums.id
+
+Ref: Lessons.discipline > Disciplines.id
+
+Ref: Lessons.schedule > Schedules.id
 
 Ref: Auditoriums.building > Buildings.id
 
@@ -575,6 +605,8 @@ Ref: Groups.faculity > Facilities.id
 Ref: Groups.tutor > Tutors.id
 
 Ref: SubGroups.groupID > Groups.id
+
+Ref: StudyTimes.id - Universities.id [delete: Cascade]
 
 Ref: Weeks.university > Universities.id
 

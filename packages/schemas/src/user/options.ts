@@ -5,11 +5,11 @@ export const optionsSchema = z.object({
     heSawWelcomeScreen: z.optional(z.boolean())
 });
 
-export const optionsRequest = z.object({
+export const optionsObject = z.object({
     isBlocked: z.boolean(),
     heSawWelcomeScreen: z.boolean()
 });
 
 
 export type OptionsSchema = z.infer<typeof optionsSchema>;
-export type OptionsRequest = z.infer<typeof optionsRequest>;
+export type OptionsObject = z.infer<typeof optionsObject>;
