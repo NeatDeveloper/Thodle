@@ -15,15 +15,12 @@ model Student {
     /// Ссылка на группу, в которой находится пользователь
     group String?
 
-    /// Ссылка на подгруппу, в которой находится пользователь
-    subGroup Int? @map("sub_group")
+    subGroup SubGroupOrder @default(FIRST)
 
-    SubGroup SubGroup? @relation(fields: [subGroup], references: [id])
     Amplua   Amplua    @relation(fields: [id], references: [id], onDelete: Cascade)
     Group    Group?    @relation(fields: [group], references: [id])
 
     @@index([group])
-    @@index([subGroup])
     @@map("Students")
     @@schema("amplua")
 }

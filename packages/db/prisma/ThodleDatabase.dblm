@@ -108,8 +108,7 @@ Table Students {
   id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
   studentID String [unique, not null, note: 'Уникальный идентификатор студента']
   group String [note: 'Ссылка на группу, в которой находится пользователь']
-  subGroup Int [note: 'Ссылка на подгруппу, в которой находится пользователь']
-  SubGroup SubGroups
+  subGroup SubGroupOrder [not null, default: 'FIRST']
   Amplua Amplua [not null]
   Group Groups
 
@@ -136,23 +135,17 @@ Table Tutors {
 @erd Amplua'
 }
 
-Table Schedules {
-  id Int [pk, increment]
-  dayOrder Int [not null]
-  weekOrder WeekOrder [not null]
-  lessons Lessons [not null]
-}
-
 Table Lessons {
   id Int [pk, increment]
+  group String [not null]
   discipline Int [not null]
   auditorium Int [not null]
   lector String [not null]
-  schedule Int [not null]
+  fromSubGroup SubGroupOrder
+  Group Groups [not null]
   Lector Lectors [not null]
   Auditorium Auditoriums [not null]
   Discipline Disciplines [not null]
-  Schedule Schedules [not null]
 }
 
 Table Auditoriums {
@@ -161,8 +154,6 @@ Table Auditoriums {
   number String [not null, note: 'Номер аудитории в строковом формате(302, 302a)']
   lessons Lessons [not null]
   Building Buildings [not null]
-  updatedAt DateTime [not null, note: 'Дата обновления аудитории в нашей системе']
-  createdAt DateTime [default: `now()`, not null, note: 'Дата добавления аудитории в нашу систему']
 
   Note: 'Модель **Аудитории**
 
@@ -181,8 +172,6 @@ Table Buildings {
   university Int [not null, note: '// Уникальный идентификатор университета, к которому корпус привязан']
   auditoriums Auditoriums [not null]
   University Universities [not null]
-  updatedAt DateTime [not null, note: 'Дата обновления строения в нашей системе']
-  createdAt DateTime [default: `now()`, not null, note: 'Дата добавления строения в нашу систему']
 
   Note: 'Модель **Корпуса**
 
@@ -243,7 +232,7 @@ Table Groups {
   year Int [not null, note: 'Год создания группы']
   groupHeads GroupHeads [not null]
   students Students [not null]
-  subGroups SubGroups [not null]
+  lessons Lessons [not null]
   Curator Curators
   Faculity Facilities [not null]
   Tutor Tutors
@@ -253,22 +242,6 @@ Table Groups {
   Note: 'Модель **Группа**
 
 Модель, описывающая группу
-
-@namespace University
-@erd University'
-}
-
-Table SubGroups {
-  id Int [pk, increment, note: 'Уникальный идентификатор подгруппы']
-  name String [not null, note: 'Название подгруппы']
-  groupID String [not null, note: 'Уникальный идентификатор группы']
-  order SubGroupOrder [not null, note: 'Номер подгруппы(Первая, вторая)']
-  students Students [not null]
-  Group Groups [not null]
-
-  Note: 'Модель **Подгруппа**
-
-Модель, описывающая подгруппу
 
 @namespace University
 @erd University'
@@ -574,21 +547,19 @@ Ref: Lectors.faculity > Facilities.id
 
 Ref: Lectors.id - Amplua.id [delete: Cascade]
 
-Ref: Students.subGroup > SubGroups.id
-
 Ref: Students.id - Amplua.id [delete: Cascade]
 
 Ref: Students.group > Groups.id
 
 Ref: Tutors.id - Amplua.id [delete: Cascade]
 
+Ref: Lessons.group > Groups.id
+
 Ref: Lessons.lector > Lectors.id
 
 Ref: Lessons.auditorium > Auditoriums.id
 
 Ref: Lessons.discipline > Disciplines.id
-
-Ref: Lessons.schedule > Schedules.id
 
 Ref: Auditoriums.building > Buildings.id
 
@@ -603,8 +574,6 @@ Ref: Groups.curator > Curators.id
 Ref: Groups.faculity > Facilities.id
 
 Ref: Groups.tutor > Tutors.id
-
-Ref: SubGroups.groupID > Groups.id
 
 Ref: StudyTimes.id - Universities.id [delete: Cascade]
 

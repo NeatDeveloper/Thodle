@@ -1,9 +1,13 @@
-import type { LessonType, SubGroupOrder, WeekCount } from "@prisma/client";
+// import type { LessonType, SubGroupOrder, WeekCount } from "@prisma/client";
+import type {
+    WeekOrder,
+    StudyTimeObject
+} from '@repo/schemas';
 
 declare global {
     namespace Schedule {
         interface Day {
-            week: WeekCount;
+            week: WeekOrder;
             weekName: string;
             dayOrder: number;
             lessons: Lesson[];
@@ -13,7 +17,6 @@ declare global {
             type: LessonType;
             name: string;
             shortName: string;
-            time: string;
             point: string;
             lector: string;
         }

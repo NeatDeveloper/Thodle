@@ -18,3 +18,5 @@ export type UniversityObject = z.infer<typeof universityObject>;
 export * from './studyTime';
 export * from './week';
 export * from './faculity';
+export * from './building';
+export * from './auditorium';

@@ -18,12 +18,6 @@ model Auditorium {
 
     Building Building @relation(fields: [building], references: [id])
 
-    /// Дата обновления аудитории в нашей системе
-    updatedAt  DateTime @updatedAt @map("updated_at")
-
-    /// Дата добавления аудитории в нашу систему
-    createdAt  DateTime @default(now()) @map("created_at")
-
     @@map("Auditoriums")
     @@schema("university")
     @@index([building])

@@ -1,10 +1,12 @@
 import { webhookCallback } from 'grammy';
 import bot from './bot';
-import { getTelegram } from '@repo/utils/env';
+import { getMode, getTelegram } from '@repo/utils/env';
 
 const telegram = getTelegram();
+const mode = getMode();
 
-await bot.init();
+if(mode.MODE === 'PROD') {
+    await bot.init();
 
 const handleUpdate = webhookCallback(bot, 'std/http', {
     secretToken: telegram.TELEGRAM_SECRET_KEY
@@ -31,3 +33,9 @@ Bun.serve({
     },
 
 });
+
+}
+
+if(mode.MODE === 'DEV') {
+    await bot.start();
+}

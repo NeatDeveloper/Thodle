@@ -1,4 +1,4 @@
-import { factory } from '../../../helpers';
+import { factory } from 'helpers';
 import mailing from './mailing';
 import student from './student';
 import university from './university';

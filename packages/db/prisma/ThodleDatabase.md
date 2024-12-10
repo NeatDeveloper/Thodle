@@ -42,7 +42,7 @@ erDiagram
   String id PK
   String student_id UK
   String group FK "nullable"
-  Int sub_group FK "nullable"
+  SubGroupOrder subGroup
 }
 "Tutors" {
   String id PK
@@ -139,7 +139,7 @@ erDiagram
   - `id`: Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
   - `student_id`: Уникальный идентификатор студента
   - `group`: Ссылка на группу, в которой находится пользователь
-  - `sub_group`: Ссылка на подгруппу, в которой находится пользователь
+  - `subGroup`: 
 
 ### `Tutors`
 Модель **Тьютор**
@@ -164,8 +164,6 @@ erDiagram
   Int id PK
   Int building FK
   String number
-  DateTime updated_at
-  DateTime created_at
 }
 "Buildings" {
   Int id PK
@@ -174,8 +172,6 @@ erDiagram
   String non_verbal_name "nullable"
   String address
   Int university FK
-  DateTime updated_at
-  DateTime created_at
 }
 "Disciplines" {
   Int id PK
@@ -204,12 +200,6 @@ erDiagram
   DateTime updated_at
   DateTime created_at
 }
-"SubGroups" {
-  Int id PK
-  String name
-  String group_id FK
-  SubGroupOrder order
-}
 "Universities" {
   Int id PK
   String name UK
@@ -229,7 +219,6 @@ erDiagram
 "Disciplines" }o--o| "Facilities" : Faculity
 "Facilities" }o--|| "Universities" : University
 "Groups" }o--|| "Facilities" : Faculity
-"SubGroups" }o--|| "Groups" : Group
 "Weeks" }|--o| "Universities" : University
 ```
 
@@ -242,8 +231,6 @@ erDiagram
   - `id`: Уникальный идентификатор аудитории в базе данных
   - `building`: Уникальный идентификатор корпуса
   - `number`: Номер аудитории в строковом формате(302, 302a)
-  - `updated_at`: Дата обновления аудитории в нашей системе
-  - `created_at`: Дата добавления аудитории в нашу систему
 
 ### `Buildings`
 Модель **Корпуса**
@@ -260,8 +247,6 @@ erDiagram
   - `non_verbal_name`: Внегласное  название корпуса
   - `address`: Адрес(улица) на котором находится корпус
   - `university`: // Уникальный идентификатор университета, к которому корпус привязан
-  - `updated_at`: Дата обновления строения в нашей системе
-  - `created_at`: Дата добавления строения в нашу систему
 
 ### `Disciplines`
 Модель **Дисциплина**
@@ -304,17 +289,6 @@ erDiagram
   - `year`: Год создания группы
   - `updated_at`: Дата обновления группы в нашей системе
   - `created_at`: Дата создания группы в нашей системе
-
-### `SubGroups`
-Модель **Подгруппа**
-
-Модель, описывающая подгруппу
-
-**Properties**
-  - `id`: Уникальный идентификатор подгруппы
-  - `name`: Название подгруппы
-  - `group_id`: Уникальный идентификатор группы
-  - `order`: Номер подгруппы(Первая, вторая)
 
 ### `Universities`
 -------------------------------------------------------
@@ -541,17 +515,13 @@ erDiagram
 ## default
 ```mermaid
 erDiagram
-"Schedules" {
-  Int id PK
-  Int day_order
-  WeekOrder week_order
-}
 "Lessons" {
   Int id PK
+  String group FK
   Int discipline FK
   Int auditorium FK
   String lector FK
-  Int schedule FK
+  SubGroupOrder from_sub_group "nullable"
 }
 "StudyTimes" {
   Int id PK
@@ -562,24 +532,17 @@ erDiagram
   Int start_big_break_time
   Int duration_big_break_time
 }
-"Lessons" }o--|| "Schedules" : Schedule
 ```
-
-### `Schedules`
-
-**Properties**
-  - `id`: 
-  - `day_order`: 
-  - `week_order`: 
 
 ### `Lessons`
 
 **Properties**
   - `id`: 
+  - `group`: 
   - `discipline`: 
   - `auditorium`: 
   - `lector`: 
-  - `schedule`: 
+  - `from_sub_group`: 
 
 ### `StudyTimes`
 

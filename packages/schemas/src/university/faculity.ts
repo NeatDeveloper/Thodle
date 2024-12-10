@@ -1,5 +1,4 @@
 import { z } from '@hono/zod-openapi';
-import { WeekOrder as _WeekOrder } from '@prisma/client'
 
 export const faculitySchema = z.object({
     name: z.string(),

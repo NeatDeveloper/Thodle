@@ -30,12 +30,6 @@ model Building {
 
     University  University   @relation(fields: [university], references: [id], onDelete: Cascade)
 
-    /// Дата обновления строения в нашей системе
-    updatedAt DateTime @updatedAt @map("updated_at")
-
-    /// Дата добавления строения в нашу систему
-    createdAt DateTime @default(now()) @map("created_at")
-
     @@index([university])
     @@map("Buildings")
     @@schema("university")
