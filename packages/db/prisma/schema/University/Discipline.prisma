@@ -17,7 +17,7 @@ model Discipline {
     /// Уникальный идентификатор факультета
     faculity Int?
 
-    schedules Schedule[]
+    lessons Lesson[]
 
     Faculity Faculity? @relation(fields: [faculity], references: [id])
 

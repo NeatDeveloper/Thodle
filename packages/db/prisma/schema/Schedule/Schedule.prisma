@@ -1,10 +1,33 @@
 model Schedule {
     id Int @id @default(autoincrement())
 
-    discipline Int
+    dayOrder  Int       @map("day_order")
+    weekOrder WeekOrder @map("week_order")
 
-    Discipline   Discipline @relation(fields: [discipline], references: [id])
+    lessons Lesson[]
 
+    @@map("Schedules")
     @@schema("schedule")
+}
+
+model Lesson {
+    id Int @id @default(autoincrement())
+
+    discipline Int
+    auditorium Int
+    lector     String
+
+    schedule Int
+
+    Lector     Lector     @relation(fields: [lector], references: [id])
+    Auditorium Auditorium @relation(fields: [auditorium], references: [id])
+    Discipline Discipline @relation(fields: [discipline], references: [id])
+    Schedule   Schedule   @relation(fields: [schedule], references: [id])
+
     @@index([discipline])
+    @@index([auditorium])
+    @@index([lector])
+    @@index([schedule])
+    @@map("Lessons")
+    @@schema("schedule")
 }

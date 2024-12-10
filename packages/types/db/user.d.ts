@@ -1,18 +1,18 @@
-import type { User as _User } from '@prisma/client';
 import type {
-    SettingsRequest,
-    ProfileRequest,
-    OptionsRequest
+    OptionsObject,
+    ProfileObject,
+    SettingsObject,
+    UserObject
 } from '@repo/schemas';
 
 declare global {
     namespace DB {
         namespace User {
-            interface InApiContext extends _User {}
-            interface DTO extends _User {
-                settings: SettingsRequest;
-                profile: ProfileRequest;
-                options: OptionsRequest;
+            interface InApiContext extends UserObject {}
+            interface DTO extends UserObject {
+                settings: SettingsObject;
+                profile: ProfileObject;
+                options: OptionsObject;
             }
         }
     }

@@ -1,13 +1,10 @@
 import { z } from '@hono/zod-openapi';
+import { ToastPosition as _ToastPosition } from '@prisma/client';
 
 export const theme = z.enum(['Device', 'Thodle', 'Mint']);
 export const preset = z.enum(['Custom', 'Thodle']);
 export const schema = z.enum(['Auto', 'Dark', 'Light']);
-export const toastPosition = z.enum([
-    'Top', 'TopLeft',
-    'TopRight', 'Bottom',
-    'BottomLeft', 'BottomRight'
-]);
+export const toastPosition = z.nativeEnum(_ToastPosition);
 
 export const settingsSchema = z.object({
     miniapp: z.optional(z.object({
@@ -35,7 +32,7 @@ export const settingsSchema = z.object({
     }))
 }).openapi('Settings')
 
-export const settingsRequest = z.object({
+export const settingsObject = z.object({
     miniapp: z.object({
         fullscreen: z.boolean(),
         toastPosition,
@@ -55,7 +52,7 @@ export const settingsRequest = z.object({
 
 
 export type SettingsSchema = z.infer<typeof settingsSchema>;
-export type SettingsRequest = z.infer<typeof settingsRequest>;
+export type SettingsObject = z.infer<typeof settingsObject>;
 
 export type Theme = z.infer<typeof theme>
 export type Schema = z.infer<typeof schema>
