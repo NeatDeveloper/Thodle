@@ -9,5 +9,5 @@ apiURL.protocol = 'https';
 
 export default {
     apiURL: apiURL.toString(),
-    name: `${app.APP_NAME} | Admin panel`
+    name: app.APP_NAME
 } as Meta

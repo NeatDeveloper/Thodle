@@ -75,7 +75,7 @@ export class MiniApp {
     #setup = () => {
         if(this.#_.WebApp.isVerticalSwipesEnabled) this.#_.WebApp.disableVerticalSwipes();
 
-        // if(!this.#_.WebApp.isExpanded) this.#_.WebApp.expand();
+        if(!this.#_.WebApp.isExpanded) this.#_.WebApp.expand();
 
         this.#_.WebApp.onEvent('themeChanged', this.#updateSchema);
 

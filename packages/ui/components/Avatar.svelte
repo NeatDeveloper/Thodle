@@ -10,7 +10,6 @@
 
 
 <div class="avatar" style="--size: {size};">
-    <!-- <img class="santa" src="./santa.png" width={size * 2.3} height={size * 2.3}> -->
     <img {src} {alt} class="avatar_image">
 </div>
 
@@ -23,9 +22,5 @@
             width: calc(var(--size) * 2px);
             border-radius: 50%;
         }
-        // .santa {
-        //     position: absolute;
-        //     top: calc(var(--size) * -1px / 1.4); right: calc(var(--size) * -1px / 1.4);
-        // }
     }
 </style>

@@ -21,7 +21,7 @@
     beforeNavigate((nav) => {
         if (blockPathnames.includes(nav.to?.url.pathname || '')) {
             miniapp.WebApp.HapticFeedback.notificationOccurred('warning');
-            miniapp.WebApp.showAlert('Доступ ограничен');
+            miniapp.WebApp.showAlert('В разработке');
             nav.cancel();
         }
     });
@@ -53,7 +53,7 @@
         left: 0,
         width: 0,
         height: 0,
-        top: 0
+        top: 0,
     });
 
     let nav = $state<HTMLElement>();
@@ -61,20 +61,27 @@
 
 {#if show}
     <nav
-    bind:this={nav}
+        bind:this={nav}
         class="nav"
-        out:slide={{ duration: 100, delay: 0 }}
-        in:slide={{ duration: 200, delay: 200 }}
+        out:slide={{ duration: 100, }}
+        in:slide={{ duration: 100, delay: 100 }}
     >
-    <div class="nav_carret" style="--left: {carret.left}px;--width: {carret.width}px;--height: {carret.height}px;"></div>
+        <div
+            class="nav_carret"
+            style:--left="{carret.left}px"
+            style:--height="{carret.height}px"
+            style:--width="{carret.width}px"
+        ></div>
 
         <ul class="nav-list">
             {#each links as link, i (i)}
                 <li class="nav-item">
                     <Link
-                        onactivate={link => {
-                            const rect = link.getBoundingClientRect()
-                            carret.left = rect.x - (nav?.getBoundingClientRect().left || 0);
+                        onactivate={(link) => {
+                            const rect = link.getBoundingClientRect();
+                            carret.left =
+                                rect.x -
+                                (nav?.getBoundingClientRect().left || 0);
                             carret.width = rect.width;
                             carret.top = rect.top;
                             carret.height = rect.height;
@@ -102,25 +109,19 @@
     $class: '.nav';
 
     #{$class} {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-
-        padding: 5px 10px 16px;
+        position: relative;
         width: 100%;
-
-        background-color: var(--bottom-bar-bg-color);
 
         &_carret {
             position: absolute;
-            top: var(--top); left: (var(--left));
+            top: 5px;
+            left: (var(--left));
             width: var(--width);
             height: var(--height);
             background-color: var(--accent-color);
-            opacity: .2;
+            opacity: 0.2;
             border-radius: 8px;
-            transition: all .2s ease;
-
+            transition: all 0.2s ease;
         }
 
         &-item {
@@ -131,12 +132,14 @@
                 top: 11px;
                 left: 50%;
                 translate: -50% 0;
-                font-size: 0.9rem;
+                font-size: .9rem;
                 text-align: center;
             }
         }
 
         &-list {
+            padding: 5px 10px 14px;
+            background-color: var(--bottom-bar-bg-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -149,15 +152,15 @@
                 justify-content: center;
                 align-items: center;
                 gap: 5px;
-                padding: 4px;
+                padding: 4px 0;
                 border-radius: 6px;
                 font-size: 1.2rem;
                 color: var(--accent-color);
+
                 &.block {
                     opacity: 0.4;
                 }
 
-                // background-color: rgba(black, .05);
                 transition: all 0.2s ease;
                 width: 100%;
 
@@ -184,9 +187,6 @@
                         fill: var(--text-color);
                     }
                     color: var(--text-color);
-                    // &::before {
-                    //     opacity: 0.2;
-                    // }
                 }
             }
         }
@@ -194,14 +194,11 @@
 
     :global :root[data-rounded] {
         .nav {
-            bottom: 11px;
-            left: 10px;
-            width: calc(100% - 20px);
-            padding: 5px;
-            border-radius: 10px;
-
-            .nav-list {
-                gap: 6px;
+            &-list {
+                margin: 0 10px 14px;
+                padding: 5px;
+                border-radius: 8px;
+                gap: 8px;
             }
         }
     }

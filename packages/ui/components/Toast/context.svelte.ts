@@ -4,6 +4,7 @@ import {
     onDestroy
 } from 'svelte';
 import { SvelteMap } from "svelte/reactivity";
+import type { ToastPosition } from '@repo/schemas';
 
 export interface Toast {
     id: string;
@@ -16,6 +17,7 @@ export interface Toast {
 class ToastStore {
     list = $state<Toast[]>([]);
     timeoutsList = new SvelteMap<Toast['id'], Timer>();
+    position = $state<ToastPosition>('Top');
 
     constructor() {
         onDestroy(() => {
@@ -26,8 +28,23 @@ class ToastStore {
         });
     }
 
-    push = (data: Omit<Toast, 'id'>) => {
-        const id = crypto.randomUUID();
+    createTestToast = () => {
+        this.push({
+            id: 'test',
+            title: 'Test, toast',
+            status: 'success',
+            duration: 1000
+        })
+    }
+
+    push = (data: Omit<Toast, 'id'> & { id?: string }) => {
+        let id = data.id;
+
+        if(this.timeoutsList.has(id || '')) {
+            this.delete(id || '');
+        }
+
+        if(!id) id = crypto.randomUUID();
 
         this.list.push({
             id, ...data,

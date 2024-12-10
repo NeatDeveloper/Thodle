@@ -1,16 +1,17 @@
 {
-  "name": "@repo/ui",
-  "module": "src/index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@repo/types": "*"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "exports": {
-    "./reset": "./reset.scss",
-    "./components": "./components/index.ts"
-  }
+    "name": "@repo/ui",
+    "module": "src/index.ts",
+    "type": "module",
+    "devDependencies": {
+        "@types/bun": "latest",
+        "@repo/types": "*",
+        "@repo/schemas": "*"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "exports": {
+        "./reset": "./reset.scss",
+        "./components": "./components/index.ts"
+    }
 }

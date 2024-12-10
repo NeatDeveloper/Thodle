@@ -6,8 +6,7 @@
     const user = User.getContext();
 </script>
 
-<Section type={!user.settings.miniapp.rounded ? 'default' :
-            user.settings.miniapp.roundedSettings ? 'rounded' : 'default'}>
+<Section type={user.settings.miniapp.roundedSettings ? 'rounded' : 'default'}>
     {#snippet title()}
         Рассылка
     {/snippet}

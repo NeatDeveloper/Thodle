@@ -1,0 +1,19 @@
+@mixin icon {
+    .icon {
+        aspect-ratio: 1;
+        padding: 4px;
+        width: 24px;
+        border: 1.6px solid var(--accent-color);
+        transition: all 0.2s ease;
+    }
+}
+@mixin rounded {
+    @include icon();
+
+    &.iconRound {
+        .icon {
+            aspect-ratio: 1;
+            border-radius: 6px;
+        }
+    }
+}

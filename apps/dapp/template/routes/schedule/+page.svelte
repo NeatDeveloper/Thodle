@@ -57,6 +57,9 @@
 
 <Schedule schedule={schedule} />
 <Schedule schedule={schedule} />
+<Schedule schedule={schedule} />
+<Schedule schedule={schedule} />
+<Schedule schedule={schedule} />
 
 <style lang="scss">
 

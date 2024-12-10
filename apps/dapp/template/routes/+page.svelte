@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Admin, MiniApp, User } from 'stores';
-    import { Avatar, Schedule } from 'components';
-    import { Icon, Link } from '@repo/ui/components';
+    import { Schedule } from 'components';
 
     const miniapp = MiniApp.getContext(),
         user = User.getContext(),
@@ -57,22 +56,6 @@
 </script>
 
 <article class="home">
-    <section class="top">
-        <div class="top-controls">
-            <Link href="/settings">
-                <Icon name="gear" />
-            </Link>
-            <h2 class="top-group">ИБ 2024 | 1 курс</h2>
-            {#if user.isReady}
-                <Avatar
-                    src={user.profile.avatar || ''}
-                    alt={user.profile.username || user.profile.firstName || ''}
-                    size={20}
-                />
-            {/if}
-        </div>
-    </section>
-
     <Schedule {schedule} />
 </article>
 

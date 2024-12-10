@@ -30,6 +30,7 @@
             user.settings.miniapp.rounded = true;
             user.settings.miniapp.roundedSettings = false;
             user.settings.miniapp.toastPosition = 'Top';
+            user.settings.miniapp.fullscreen = false;
         } else {
             ui.setTheme(user.settings.miniapp.theme);
             ui.setSchema(user.settings.miniapp.schema);
@@ -141,19 +142,9 @@
 <Toasts />
 
 {#if user.isReady}
-    <!-- content here -->
-    {#if miniapp.fullscreen.active}
-        <Header />
-    {/if}
-    <main class="content">
+    <Header />
+    <main id="content">
         {@render children()}
     </main>
     <Nav />
 {/if}
-
-<style lang="scss">
-    // .content {
-    //     height: 100vh;
-    //     overflow-y: scroll;
-    // }
-</style>
