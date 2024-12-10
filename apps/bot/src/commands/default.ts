@@ -5,6 +5,42 @@ import prisma from '@repo/db';
 
 const commands = new Composer<APP.Context>();
 
+commands.callbackQuery(["pn", "vt", "sr", "cht", 'pt'], async __context__ => {
+    __context__.editMessageText("", {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: "Пн",
+                        callback_data: "pn"
+                    },
+                    {
+                        text: "Вт",
+                        callback_data: "vt"
+                    },
+                    {
+                        text: "Ср",
+                        callback_data: "sr"
+                    },
+                    {
+                        text: "Чт",
+                        callback_data: "cht"
+                    },
+                    {
+                        text: "Пт",
+                        callback_data: "pt"
+                    },
+
+
+                ]
+
+            ]
+        }
+    })
+})
+
+
+
 commands.command('start', async (__context__) => {
 
     let user = await prisma.user.findFirst({
@@ -17,9 +53,9 @@ commands.command('start', async (__context__) => {
 
     if (!user) user = await User.create({
         tgID: __context__.from?.id as number,
-        lastName : __context__.from?.last_name as string,
+        lastName: __context__.from?.last_name as string,
         firstName: __context__.from?.first_name as string,
-        username : __context__.from?.username as string,
+        username: __context__.from?.username as string,
         isPremium: __context__.from?.is_premium || false,
         lang: __context__.from?.language_code || 'ru',
     });
