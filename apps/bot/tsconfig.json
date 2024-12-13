@@ -12,6 +12,8 @@
             "middlewares/*": ["./src/middlewares/*"],
             "context": ["./src/context"],
             "context/*": ["./src/context/*"],
+            "helpers": ["./src/helpers"],
+            "helpers/*": ["./src/helpers/*"],
             "src": ["./src"],
             "src/*": ["./src/*"],
         }

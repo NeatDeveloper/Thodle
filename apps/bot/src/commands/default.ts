@@ -4,41 +4,6 @@ import prisma from '@repo/db';
 
 const commands = new Composer<APP.Context>();
 
-commands.callbackQuery(["pn", "vt", "sr", "cht", 'pt'], async __context__ => {
-    __context__.editMessageText("", {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: "Пн",
-                        callback_data: "pn"
-                    },
-                    {
-                        text: "Вт",
-                        callback_data: "vt"
-                    },
-                    {
-                        text: "Ср",
-                        callback_data: "sr"
-                    },
-                    {
-                        text: "Чт",
-                        callback_data: "cht"
-                    },
-                    {
-                        text: "Пт",
-                        callback_data: "pt"
-                    },
-
-
-                ]
-
-            ]
-        }
-    })
-})
-
-
 
 commands.command('start', async (__context__) => {
 
