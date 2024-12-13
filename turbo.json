@@ -10,6 +10,7 @@
             "dependsOn": [
                 "^build"
             ],
+            "env": [".env.production"],
             "inputs": [
                 "$TURBO_DEFAULT$"
             ]
