@@ -1,10 +1,17 @@
 :root {
-    --bg-color: #264653;
-    --bg-secondary-color: #2a9d8f;
-    --text-color: #ffffff;
-    --border-radius: 12px;
-    --link-color: #e9c46a;
-    --destructive-text-color: #e63946;
+    --bg-color: #17212b;
+    --accent-color: #6ab3f2;
+    --text-color: #f5f5f5;
+    --button-bg-color: #5289c1;
+    --button-text-color: #ffffff;
+    --secondary-bg-color: #232e3c;
+    --section-bg-color: #17212b;
+    --section-separator-color: #111921;
+    --header-bg-color: #17212b;
+    --bottom-bar-bg-color: #17212b;
+    --section-header-text-color: #6ab3f2;
+    --subtitle-text-color: #708599;
+    --hint-color: #708599;
 }
 
 :root[data-theme=second] {

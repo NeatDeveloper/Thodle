@@ -17,7 +17,7 @@ model Week {
     order WeekOrder
 
     /// Идентификатор университета
-    university Int?
+    university String?
 
     University University? @relation(fields: [university], references: [id])
 

@@ -1,7 +1,8 @@
 import prisma, { userInclude } from '@repo/db';
 import { CreateException, factory } from 'helpers';
 import { zValidator } from '@hono/zod-validator';
-import { settingsSchema, type SettingsRequest, type SettingsSchema } from '@repo/schemas';
+import { settingsSchema } from '@repo/schemas';
+import type { SettingsObject, SettingsSchema } from '@repo/schemas';
 
 const settings = factory.createApp().basePath('/settings');
 
@@ -15,7 +16,7 @@ settings.patch('/',
 
         const user = __context__.get('user');
 
-        let _return: Partial<SettingsRequest> = {};
+        let _return: Partial<SettingsObject> = {};
 
         if(miniapp !== undefined) {
             const _miniapp = await prisma.miniappSettings.update({
@@ -55,7 +56,7 @@ settings.patch('/',
 
         if(!Object.keys(_return)) throw CreateException('BAD_REQUEST', { message: 'Не удалось ничего обновить!' });
 
-        return __context__.json<Partial<SettingsRequest>>(_return);
+        return __context__.json<Partial<SettingsObject>>(_return);
     });
 
 settings.get('/', async __context__ => {

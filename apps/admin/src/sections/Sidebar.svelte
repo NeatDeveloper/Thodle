@@ -12,9 +12,10 @@
 <style lang="scss">
     .sidebar {
         grid-area: sidebar;
+        padding-top: calc(var(--header-height) + 15px);
 
         &-content {
-            padding: 10px;
+            padding-top: 10px;
             height: 100%;
             background-color: var(--bg-secondary-color);
             border-radius: var(--border-radius);

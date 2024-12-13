@@ -14,6 +14,10 @@ Table Amplua {
 **GROUP_HEAD** | Староста
 **LECTOR** | Преподаватель
 **TUTOR** | Тьютор(высока вероятность, что по итогу не реализуем)']
+  lastName String [note: 'Фамилия']
+  firstName String [note: 'Имя']
+  surname String [note: 'Отчество']
+  initials String [note: 'Инициалы']
   student Students [note: 'Ссылка на профиль студента']
   groupHead GroupHeads [note: 'Ссылка на профиль старосты']
   curator Curators [note: 'Ссылка на профиль куратора']
@@ -68,10 +72,6 @@ Table GroupHeads {
 
 Table Lectors {
   id String [pk, note: 'Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)']
-  lastName String [not null, note: 'Фамилия']
-  firstName String [not null, note: 'Имя']
-  surname String [not null, note: 'Отчество']
-  initials String [not null, note: 'Инициалы']
   faculity Int [note: 'Ссылка на факультет преподавателя']
   lessons Lessons [not null]
   ranks LectorRanks [not null]
@@ -137,15 +137,16 @@ Table Tutors {
 
 Table Lessons {
   id Int [pk, increment]
-  group String [not null]
-  discipline Int [not null]
-  auditorium Int [not null]
-  lector String [not null]
+  group String
+  discipline Int
+  auditorium Int
+  lector String
   fromSubGroup SubGroupOrder
-  Group Groups [not null]
-  Lector Lectors [not null]
-  Auditorium Auditoriums [not null]
-  Discipline Disciplines [not null]
+  type LessonType [not null]
+  Group Groups
+  Lector Lectors
+  Auditorium Auditoriums
+  Discipline Disciplines
 }
 
 Table Auditoriums {
@@ -169,7 +170,7 @@ Table Buildings {
   shortName String [not null, note: 'Короткое название корпуса']
   nonVerbalName String [note: 'Внегласное  название корпуса']
   address String [not null, note: 'Адрес(улица) на котором находится корпус']
-  university Int [not null, note: '// Уникальный идентификатор университета, к которому корпус привязан']
+  university String [not null, note: '// Уникальный идентификатор университета, к которому корпус привязан']
   auditoriums Auditoriums [not null]
   University Universities [not null]
 
@@ -204,7 +205,7 @@ Table Disciplines {
 
 Table Facilities {
   id Int [pk, increment, note: 'Уникальный идентификатор университета в базе данных']
-  university Int [not null, note: 'Уникальный идентификатор университета']
+  university String [not null, note: 'Уникальный идентификатор университета']
   name String [not null]
   shortName String [not null]
   disciplines Disciplines [not null]
@@ -248,7 +249,8 @@ Table Groups {
 }
 
 Table Universities {
-  id Int [pk, increment, note: 'Уникальный идентификатор университета в системе']
+  id String [pk, note: 'Уникальный идентификатор университета в системе']
+  iconURL String
   name String [unique, not null, note: 'Название университета']
   shortName String [unique, not null, note: 'Сокращённое название университета']
   city String [not null, note: 'Город, где находится университет']
@@ -274,7 +276,7 @@ Table Universities {
 }
 
 Table StudyTimes {
-  id Int [pk]
+  id String [pk]
   startTime Int [not null]
   durationLesson Int [not null]
   breakTime Int [not null]
@@ -288,7 +290,7 @@ Table Weeks {
   id Int [pk, increment, note: 'ID недели в университете']
   title String [not null, note: 'Название недели в конкретном университете']
   order WeekOrder [not null, note: 'Порядок недели']
-  university Int [note: 'Идентификатор университета']
+  university String [note: 'Идентификатор университета']
   University Universities
 
   Note: 'Модель **Неделя**
@@ -342,6 +344,7 @@ Table Profiles {
   firstName String [note: 'Имя в телеграм']
   username String [unique, note: 'Имя пользователя в телеграм']
   lang String [not null, note: 'Выбраный им язык']
+  avatarUpdatedAt DateTime
   isPremium Boolean [not null, note: 'Является ли пользователь премиум подписчиком в телеграм']
   User Users [not null]
   updatedAt DateTime [not null, note: 'Дата обновления профиля пользователя в нашей системе']
@@ -486,6 +489,12 @@ Enum GroupHeadRank {
   SECONDARY
 }
 
+Enum LessonType {
+  LECTURE
+  PRACTICE
+  ADDITIONAL
+}
+
 Enum SubGroupOrder {
   FIRST
   SECOND
@@ -527,12 +536,6 @@ Enum UserRole {
   R_1
   R_2
   R_3
-}
-
-Enum LessonType {
-  LECTURE
-  PRACTICE
-  ADDITIONAL
 }
 
 Ref: Amplua.id - Users.id [delete: Cascade]

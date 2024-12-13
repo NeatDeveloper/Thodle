@@ -19,7 +19,7 @@ class User {
     onready = async () => { }
 
     init = async () => {
-        const response = await this.api.get('student/me');
+        const response = await this.api.get('student');
 
         if (response.status === 200) {
             this.#_ = await response.json();

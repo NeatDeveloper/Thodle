@@ -1,4 +1,5 @@
 // import type { LessonType, SubGroupOrder, WeekCount } from "@prisma/client";
+import type { SubGroupOrder } from '@prisma/client';
 import type {
     WeekOrder,
     StudyTimeObject
@@ -6,60 +7,60 @@ import type {
 
 declare global {
     namespace Schedule {
-        interface Day {
+        interface _Base<T> {
             week: WeekOrder;
-            weekName: string;
-            dayOrder: number;
-            lessons: Lesson[];
+            day: number;
+            lessons: T[];
+        }
+        interface Group extends _Base<GroupLesson> { }
+        interface Lector extends _Base<LectorLesson> { }
+        interface Auditorium extends _Base<AuditoriumLesson> { }
+
+
+        type GroupLesson = _GroupScheduleBaseForAllGroups | _GroupScheduleBaseNotForAllGroups;
+
+        interface LectorLesson extends _LectorScheduleBase {
+            order: number;
+        }
+        interface AuditoriumLesson extends _AuditoriumScheduleBase {
+            order: number;
         }
 
-        interface LessonBase {
+        // Default schemas
+        interface _GroupScheduleBase {
             type: LessonType;
-            name: string;
-            shortName: string;
-            point: string;
-            lector: string;
+            discipline: string;
+            disciplineShortName?: string;
+            auditorium?: string;
+            lector?: string;
+        }
+        interface _LectorScheduleBase {
+            type: LessonType;
+            groupName: string;
+            auditorium?: string;
+            discipline: string;
         }
 
-        interface LessonForAllGroups extends LessonBase {
+        interface _AuditoriumScheduleBase {
+            type: LessonType;
+            groupName: string;
+            lector: string;
+            discipline: string;
+        }
+
+        interface _GroupScheduleBaseForAllGroups extends _GroupScheduleBase {
             forAllGroups: true;
             order: number;
         }
 
-        interface LessonNotForAllGroups {
+        interface _GroupScheduleBaseNotForAllGroups {
             forAllGroups: false;
             order: number;
-            lessons: (LessonBase & {
+            lessons: (_GroupScheduleBase & {
                 group: SubGroupOrder;
             })[];
         }
-
-        type Lesson = LessonForAllGroups | LessonNotForAllGroups;
     }
 }
-
-// Redis key name
-// {Group[GroupID]|Lector[LectorID]}:{Week}:{Day}
-
-// const monday: Schedule.Day = {
-//     week: 'FIRST',
-//     weekName: 'Красная неделя',
-//     dayOrder: 0,
-//     lessons: [
-//         {
-//             forAllGroups: false,
-//             order: 1,
-//             lessons: [
-//                 {
-
-//                 }
-//             ]
-//         },
-//         {
-//             forAllGroups: true,
-
-//         }
-//     ]
-// }
 
 export { };

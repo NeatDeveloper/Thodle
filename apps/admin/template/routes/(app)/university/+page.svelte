@@ -1,50 +1,51 @@
 <script lang="ts">
 	import { Core } from '@repo/utils/stores';
 	import { onMount } from 'svelte';
+	import CreateUniversity from './CreateUniversity.svelte';
+	import type { UniversityObject } from '@repo/schemas';
+	import { Avatar } from '@repo/ui/components';
+	import UniversitySection from './UniversitySection.svelte';
 
-	let universitiesList = $state([]);
+	let universities = $state<UniversityObject[]>([]);
 	const core = Core.getContext<App.Core>();
 
-	const updateUniversitiesList = async () => {
+	const updateUniversities = async () => {
 		const response = await core.api.get('admin/university');
 
-		if (response.status === 200) universitiesList = await response.json();
+		if (response.status === 200) universities = await response.json();
 	};
 
-	let newUniversityData = $state({
-		name: '',
-		shortName: '',
-		city: ''
-	});
-
-	onMount(updateUniversitiesList);
+	onMount(updateUniversities);
 </script>
 
-<form
-	onsubmit={async __event__ => {
-		__event__.stopPropagation();
-		__event__.preventDefault();
-
-        const response = await core.api.post('admin/university', {
-            json: newUniversityData
-        });
-
-        if(response.status === 200) universitiesList.push(await response.json())
+<CreateUniversity
+	oncreate={async () => {
+		await updateUniversities();
 	}}
->
-	<input
-		type="text"
-		bind:value={newUniversityData.shortName}
-		placeholder="Название университета(сокращённо)"
-	/>
-	<input type="text" bind:value={newUniversityData.name} placeholder="Название университета" />
-	<input type="text" bind:value={newUniversityData.city} placeholder="Город" />
+/>
 
-    <button type="submit">Отправить</button>
-</form>
+<section class="universities">
+    <h2 class="universities_title">Список университетов</h2>
+	{#if universities}
+		<ul class="universities-list">
+			{#each universities as university, _ (_)}
+				<UniversitySection {university} />
+			{/each}
+		</ul>
+	{/if}
+</section>
 
-{#each universitiesList as university, i(i)}
-     <a href="/university/{university?.id}">{ university?.name }</a>
-{:else}
-     <h2>Пусто</h2>
-{/each}
+<style lang="scss">
+	.universities {
+        margin-top: 40px;
+
+        &_title {
+            margin-bottom: 20px;
+        }
+        &-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--app-gap);
+        }
+	}
+</style>

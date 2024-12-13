@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { Form } from '@repo/ui/components';
     import { Core } from '@repo/utils/stores';
 	import { onMount } from 'svelte';
 
@@ -15,18 +16,9 @@
     onMount(updateUniversity)
 </script>
 
-<pre>
-{JSON.stringify(university, null, 4)}
-</pre>
 
+<Form
 
-<form
-	onsubmit={async __event__ => {
-		__event__.stopPropagation();
-		__event__.preventDefault();
-
-	}}
 >
-
-    <button type="submit">Отправить</button>
-</form>
+    <Form.Field type="text" />
+</Form>

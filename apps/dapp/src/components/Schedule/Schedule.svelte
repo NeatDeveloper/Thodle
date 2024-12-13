@@ -5,7 +5,7 @@
     import { User } from "stores";
 
     interface Props {
-        schedule: Schedule.Day;
+        schedule: Schedule.Group;
     };
 
     const user = User.getContext();

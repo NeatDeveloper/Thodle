@@ -21,13 +21,3 @@ datasource db {
     relationMode = "prisma"
     schemas      = ["base", "user", "university", "amplua", "schedule"]
 }
-
-
-enum LessonType {
-    LECTURE  @map("lesson_type_lecture")
-    PRACTICE @map("lesson_type_practice")
-    ADDITIONAL @map("lesson_type_additional")
-
-    @@map("LessonType")
-    @@schema("university")
-}

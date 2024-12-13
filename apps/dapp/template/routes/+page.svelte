@@ -1,58 +1,54 @@
 <script lang="ts">
     import { Admin, MiniApp, User } from 'stores';
-    import { Schedule } from 'components';
+    import { Schedule, Section } from 'components';
 
     const miniapp = MiniApp.getContext(),
         user = User.getContext(),
         admin = Admin.getContext();
 
-    const schedule: Schedule.Day = {
+    const schedule: Schedule.Group = {
         week: 'FIRST',
-        dayOrder: 0,
-        weekName: 'Красная неделя',
+        day: 0,
         lessons: [
             {
                 forAllGroups: true,
                 order: 0,
-                name: 'Математический анализ',
-                point: '410(глав)',
-                shortName: 'Мат. анализ',
+                discipline: 'Математический анализ',
+                auditorium: '410(глав)',
+                disciplineShortName: 'Мат. анализ',
                 type: 'LECTURE',
                 lector: 'Артисевич А. Е.',
-                time: '',
             },
             {
                 forAllGroups: true,
-                name: 'Физика',
+                discipline: 'Физика',
                 order: 1,
-                point: '401(глав)',
-                shortName: 'Физика',
+                auditorium: '401(глав)',
+                disciplineShortName: 'Физика',
                 type: 'PRACTICE',
                 lector: 'Хокон Р. М.',
-                time: '',
             },
             {
                 forAllGroups: true,
-                name: 'История Россия',
+                discipline: 'История Россия',
                 order: 2,
-                point: '710(эконом)',
-                shortName: 'История России',
+                auditorium: '710(эконом)',
+                disciplineShortName: 'История России',
                 type: 'LECTURE',
                 lector: 'проф. Малышева Е. М.',
-                time: '',
             },
             {
                 forAllGroups: true,
-                name: 'Иностранный язык',
+                discipline: 'Иностранный язык',
                 order: 3,
-                point: '315(глав)',
-                shortName: 'Ин. яз',
+                auditorium: '315(глав)',
+                disciplineShortName: 'Ин. яз',
                 type: 'PRACTICE',
                 lector: 'доц. Читало Л. Р.',
-                time: '',
             },
         ],
     };
+
 </script>
 
 <article class="home">
@@ -60,6 +56,56 @@
 </article>
 
 <style lang="scss">
+    .home {
+        height: 100%;
+        position: relative;
+
+        :global .blockquote {
+            p {
+                padding: 6px;
+                text-align: center;
+                background-color: var(--section-bg-color);
+                border-radius: 6px;
+                // font-size: 1.5rem;
+
+                span {
+                    display: block;
+                    padding-top: 10px;
+                    font-size: 1.3rem;
+                }
+            }
+        }
+    }
+    .poweredby {
+        position: absolute;
+        bottom: 10px; left: 50%;
+        translate: -50% 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: grayscale($color: gray);
+
+        p {
+            margin-bottom: 2px;
+        }
+
+        &-links {
+            display: flex;
+            align-items: center;
+        }
+
+        &_link {
+            color: inherit;
+            background-color: transparent !important;
+            font-size: 1.6rem;
+            padding: 2px 5px;
+
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+
     .top {
         position: relative;
         background-color: var(--bg-color);

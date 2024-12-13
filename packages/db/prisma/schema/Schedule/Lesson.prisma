@@ -1,21 +1,34 @@
 model Lesson {
     id Int @id @default(autoincrement())
 
-    group        String
-    discipline   Int
-    auditorium   Int
-    lector       String
+    group        String?
+    discipline   Int?
+    auditorium   Int?
+    lector       String?
     fromSubGroup SubGroupOrder? @map("from_sub_group")
 
-    Group      Group      @relation(fields: [group], references: [id])
-    Lector     Lector     @relation(fields: [lector], references: [id])
-    Auditorium Auditorium @relation(fields: [auditorium], references: [id])
-    Discipline Discipline @relation(fields: [discipline], references: [id])
+    type LessonType
+
+    Group      Group?      @relation(fields: [group], references: [id])
+    Lector     Lector?     @relation(fields: [lector], references: [id])
+    Auditorium Auditorium? @relation(fields: [auditorium], references: [id])
+    Discipline Discipline? @relation(fields: [discipline], references: [id])
 
     @@index([group])
     @@index([discipline])
     @@index([auditorium])
     @@index([lector])
     @@map("Lessons")
+    @@schema("schedule")
+}
+
+
+
+enum LessonType {
+    LECTURE  @map("lesson_type_lecture")
+    PRACTICE @map("lesson_type_practice")
+    ADDITIONAL @map("lesson_type_additional")
+
+    @@map("LessonType")
     @@schema("schedule")
 }

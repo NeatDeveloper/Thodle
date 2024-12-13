@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Core } from '@repo/utils/stores';
 
-    const core = Core.getCoreContext();
+    const core = Core.getContext();
 
     let message = $state('');
 

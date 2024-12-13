@@ -11,6 +11,7 @@
     },
     "exports": {
         ".": "./src/index.ts",
-        "./user": "./src/user/index.ts"
+        "./cache": "./src/cache/index.ts",
+        "./s3": "./src/s3/index.ts"
     }
 }

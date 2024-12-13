@@ -26,6 +26,8 @@ model Profile {
     /// Выбраный им язык
     lang String
 
+    avatarUpdatedAt DateTime? @map("avatar_updated_at")
+
     /// Является ли пользователь премиум подписчиком в телеграм
     isPremium Boolean @map("is_premium")
 

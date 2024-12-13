@@ -1,5 +1,4 @@
 import { Composer } from 'grammy';
-import User from '@repo/db/user';
 import object from '@repo/utils/object';
 import prisma from '@repo/db';
 
@@ -43,22 +42,16 @@ commands.callbackQuery(["pn", "vt", "sr", "cht", 'pt'], async __context__ => {
 
 commands.command('start', async (__context__) => {
 
-    let user = await prisma.user.findFirst({
-        where: {
-            profile: {
-                tgID: __context__.from?.id
-            }
-        }
-    });
+    let user = await prisma.user.get(__context__.from?.id || 0);
 
-    if (!user) user = await User.create({
+    if (!user) user = await prisma.user.set({
         tgID: __context__.from?.id as number,
         lastName: __context__.from?.last_name as string,
         firstName: __context__.from?.first_name as string,
         username: __context__.from?.username as string,
         isPremium: __context__.from?.is_premium || false,
         lang: __context__.from?.language_code || 'ru',
-    });
+    }, true);
 
     if (user) await __context__.reply(`
 \`\`\`json

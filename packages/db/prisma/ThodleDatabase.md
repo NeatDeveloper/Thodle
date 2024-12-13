@@ -12,6 +12,10 @@ erDiagram
 "Amplua" {
   String id PK
   AmpluaRole role
+  String last_name "nullable"
+  String first_name "nullable"
+  String surname "nullable"
+  String initials "nullable"
   DateTime updated_at
   DateTime created_at
 }
@@ -25,10 +29,6 @@ erDiagram
 }
 "Lectors" {
   String id PK
-  String last_name
-  String first_name
-  String surname
-  String initials
   Int faculity FK "nullable"
   DateTime created_at
   DateTime updated_at
@@ -83,6 +83,10 @@ erDiagram
     > **GROUP_HEAD** | Староста
     > **LECTOR** | Преподаватель
     > **TUTOR** | Тьютор(высока вероятность, что по итогу не реализуем)
+  - `last_name`: Фамилия
+  - `first_name`: Имя
+  - `surname`: Отчество
+  - `initials`: Инициалы
   - `updated_at`: Дата обновления сущности в нашей системе
   - `created_at`: Дата создания пользователя в нашей системе
 
@@ -111,10 +115,6 @@ erDiagram
 
 **Properties**
   - `id`: Уникальный идентификатора пользователя(в данном случае, для связи с моделью *Амплуа*)
-  - `last_name`: Фамилия
-  - `first_name`: Имя
-  - `surname`: Отчество
-  - `initials`: Инициалы
   - `faculity`: Ссылка на факультет преподавателя
   - `created_at`: 
   - `updated_at`: 
@@ -171,7 +171,7 @@ erDiagram
   String short_name
   String non_verbal_name "nullable"
   String address
-  Int university FK
+  String university FK
 }
 "Disciplines" {
   Int id PK
@@ -183,7 +183,7 @@ erDiagram
 }
 "Facilities" {
   Int id PK
-  Int university FK
+  String university FK
   String name
   String short_name
   DateTime updated_at
@@ -201,7 +201,8 @@ erDiagram
   DateTime created_at
 }
 "Universities" {
-  Int id PK
+  String id PK
+  String icon_url "nullable"
   String name UK
   String short_name UK
   String city
@@ -212,7 +213,7 @@ erDiagram
   Int id PK
   String title
   WeekOrder order
-  Int university FK "nullable"
+  String university FK "nullable"
 }
 "Auditoriums" }o--|| "Buildings" : Building
 "Buildings" }o--|| "Universities" : University
@@ -301,6 +302,7 @@ erDiagram
 
 **Properties**
   - `id`: Уникальный идентификатор университета в системе
+  - `icon_url`: 
   - `name`: Название университета
   - `short_name`: Сокращённое название университета
   - `city`: Город, где находится университет
@@ -343,6 +345,7 @@ erDiagram
   String first_name "nullable"
   String username UK "nullable"
   String lang
+  DateTime avatar_updated_at "nullable"
   Boolean is_premium
   DateTime updated_at
   DateTime created_at
@@ -419,6 +422,7 @@ erDiagram
   - `first_name`: Имя в телеграм
   - `username`: Имя пользователя в телеграм
   - `lang`: Выбраный им язык
+  - `avatar_updated_at`: 
   - `is_premium`: Является ли пользователь премиум подписчиком в телеграм
   - `updated_at`: Дата обновления профиля пользователя в нашей системе
   - `created_at`: Дата создания профиля пользователя в нашей системе
@@ -517,14 +521,15 @@ erDiagram
 erDiagram
 "Lessons" {
   Int id PK
-  String group FK
-  Int discipline FK
-  Int auditorium FK
-  String lector FK
+  String group FK "nullable"
+  Int discipline FK "nullable"
+  Int auditorium FK "nullable"
+  String lector FK "nullable"
   SubGroupOrder from_sub_group "nullable"
+  LessonType type
 }
 "StudyTimes" {
-  Int id PK
+  String id PK
   Int start_time
   Int duration_lesson
   Int break_time
@@ -543,6 +548,7 @@ erDiagram
   - `auditorium`: 
   - `lector`: 
   - `from_sub_group`: 
+  - `type`: 
 
 ### `StudyTimes`
 

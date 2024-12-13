@@ -14,6 +14,8 @@ declare global {
                 profile: ProfileObject;
                 options: OptionsObject;
             }
+
+            type Profile = ProfileObject;
         }
     }
 }

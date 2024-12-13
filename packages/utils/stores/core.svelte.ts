@@ -27,4 +27,5 @@ export const
 export interface Meta {
     name: string;
     apiURL: string;
+    s3: string;
 }

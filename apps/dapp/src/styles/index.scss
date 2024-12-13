@@ -2,6 +2,9 @@
 
 
 :root {
+    body {
+        padding-top: calc(var(--tg-content-safe-area-inset-top));
+    }
     &[data-fullscreen] {
         body {
             padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
@@ -27,6 +30,9 @@
     .toasts {
         --toast-top-padding: calc(var(--tg-safe-area-inset-top) - 2px) !important;
     }
+
+    --border-radius: 10px;
+    --border-radius-small: calc(var(--border-radius) * .8);
 }
 
 * {

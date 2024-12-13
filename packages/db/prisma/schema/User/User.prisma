@@ -23,22 +23,22 @@ model User {
     /// **R_1**    | **Increase**  : Пользователь
     /// **R_2**    | **Supervisor**:
     /// **R_3**    | **Admin**     :
-    role     UserRole  @default(R_0)
+    role UserRole @default(R_0)
 
     /// Ссылка на связующую модель пользователя и его статусом в университете
-    amplua   Amplua?
+    amplua Amplua?
 
     /// Ссылка на модель с настройками пользователя
     settings Settings?
 
     /// Ссылка на модель с устройствами пользователя
-    devices  Device[]
+    devices Device[]
 
     /// Ссылка на модель с профилем телеграм пользователя
-    profile  Profile?
+    profile Profile?
 
     /// Ссылка на модель с статусами пользователя
-    options  Options?
+    options Options?
 
     /// Дата обновления пользователя в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")

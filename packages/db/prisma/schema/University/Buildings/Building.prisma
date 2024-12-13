@@ -24,7 +24,7 @@ model Building {
     address    String
 
     /// // Уникальный идентификатор университета, к которому корпус привязан
-    university Int
+    university String
 
     auditoriums Auditorium[]
 

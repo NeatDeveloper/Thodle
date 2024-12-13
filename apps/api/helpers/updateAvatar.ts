@@ -1,14 +1,23 @@
 import prisma from "@repo/db"
+import ms from 'ms';
 
-export default async (user: APP.Context['Variables']['user'], avatar: string) => {
+export default async (user: DB.User.InApiContext, avatar: string) => {
     try {
-        await prisma.profile.update({
+        const threeHoursAgo = new Date(Date.now() - ms('3h'));
+
+        const result = await prisma.profile.update({
             where: {
-                id: user.id
+                id: user.id,
+                OR: [
+                    { avatarUpdatedAt: null },
+                    { avatarUpdatedAt: { lt: threeHoursAgo } }
+                ]
             },
             data: {
-                avatar
+                avatar,
+                avatarUpdatedAt: new Date()
             }
         })
+
     } catch {}
 }

@@ -10,6 +10,13 @@ const ENV_SCHEMA = z.object({
     APP_IP: z.string().ip(),
     APP_HOST: z.string().url(),
 
+    S3_ENDPOINT: z.string().url(),
+    S3_VIRTUAL_ENDPOINT: z.string().url(),
+    S3_API_ENDPOINT: z.string().url(),
+    S3_ACCESS_KEY: z.string(),
+    S3_SECRET_ACCESS_KEY: z.string(),
+    S3_BACKET_NAME: z.string(),
+
     // App ports
     API_PORT: z.coerce.number(),
     DAPP_PORT: z.coerce.number(),
@@ -87,6 +94,15 @@ const MODE = ENV_SCHEMA.pick({
     EDITION: true
 })
 
+const S3 = ENV_SCHEMA.pick({
+    S3_ENDPOINT: true,
+    S3_VIRTUAL_ENDPOINT: true,
+    S3_API_ENDPOINT: true,
+    S3_ACCESS_KEY: true,
+    S3_SECRET_ACCESS_KEY: true,
+    S3_BACKET_NAME: true,
+});
+
 
 export const getTelegram = () => TELEGRAM.parse(Bun.env);
 export const getPorts = () => PORTS.parse(Bun.env);
@@ -94,3 +110,4 @@ export const getApp = () => APP.parse(Bun.env);
 export const getDatabase = () => DATABASE.parse(Bun.env);
 export const getCache = () => CACHE.parse(Bun.env);
 export const getMode = () => MODE.parse(Bun.env);
+export const getS3 = () => S3.parse(Bun.env);

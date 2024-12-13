@@ -25,6 +25,18 @@ model Amplua {
     /// **TUTOR** | Тьютор(высока вероятность, что по итогу не реализуем)
     role AmpluaRole[] @default([UNDEFINED])
 
+    /// Фамилия
+    lastName String? @map("last_name")
+
+    /// Имя
+    firstName String? @map("first_name")
+
+    /// Отчество
+    surname String?
+
+    /// Инициалы
+    initials String?
+
     /// Ссылка на профиль студента
     student   Student?
 
@@ -48,7 +60,7 @@ model Amplua {
     /// Дата создания пользователя в нашей системе
     createdAt DateTime @default(now()) @map("created_at")
 
-    
+
     @@map("Amplua")
     @@schema("amplua")
 }

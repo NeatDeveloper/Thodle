@@ -1,6 +1,6 @@
 <script lang="ts">
     interface Props {
-        lesson: Schedule.Lesson;
+        lesson: Schedule.GroupLesson;
     }
     const { lesson }: Props = $props();
 </script>
@@ -15,7 +15,7 @@
             {/if}
         </span>
         <div class="lesson-data section-data">
-            <span class="lesson_name">{lesson.name}</span>
+            <span class="lesson_name">{lesson.discipline}</span>
             <span class="lesson_lector">{lesson.lector}</span>
         </div>
     {/if}

@@ -2,14 +2,14 @@
     interface Props {
         src?: string;
         alt?: string;
-        size?: 20 | 24 | 28 | 40 | 48 | 96;
+        size?: number;
     };
 
     const { src = '', alt = '', size = 24 }: Props = $props();
 </script>
 
 
-<div class="avatar" style="--size: {size};">
+<div class="avatar" style="--size: {size}px;">
     <img {src} {alt} class="avatar_image">
 </div>
 
@@ -19,7 +19,9 @@
         &_image {
             aspect-ratio: 1;
             object-fit: contain;
-            width: calc(var(--size) * 2px);
+            width: var(--size);
+            height: var(--size);
+            object-fit: cover;
             border-radius: 50%;
         }
     }

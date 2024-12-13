@@ -39,7 +39,7 @@
 
             #{$class} {
                 &-content {
-                    border-radius: 8px;
+                    border-radius: var(--border-radius);
                 }
 
                 &_title {

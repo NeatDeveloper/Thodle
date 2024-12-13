@@ -35,6 +35,7 @@
         "@repo/types": "*",
         "@repo/adapter": "*",
         "@repo/ui": "*",
-        "@repo/utils": "*"
+        "@repo/utils": "*",
+        "@repo/schemas": "*"
 	}
 }

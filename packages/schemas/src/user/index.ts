@@ -8,8 +8,8 @@ export type UserRole = z.infer<typeof userRole>;
 export const userObject = z.object({
     id: z.string(),
     role: userRole,
-    updatedAt: z.string().date(),
-    createdAt: z.string().date()
+    updatedAt: z.date(),
+    createdAt: z.date()
 });
 
 

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import type { Page } from '@sveltejs/kit';
-    import type { Snippet } from 'svelte';
+    import { onMount, type Snippet } from 'svelte';
     import type { HTMLAnchorAttributes } from 'svelte/elements';
 
     interface Props {
@@ -9,8 +9,9 @@
         class?: string;
         href?: string;
         isActive?: boolean;
-        onactivate?: (link: HTMLAnchorElement) => any;
+        onactive?: (link: HTMLAnchorElement) => any;
         target?: HTMLAnchorAttributes['target'];
+        rect?: DOMRect;
     }
 
     let {
@@ -18,8 +19,9 @@
         class: __class,
         href = '#',
         isActive = $bindable(false),
-        onactivate,
+        onactive,
         target,
+        rect = $bindable()
     }: Props = $props();
 
     let link = $state<HTMLAnchorElement>();
@@ -38,7 +40,11 @@
         check($page);
 
         $effect(() => {
-            if (isActive === true && link) onactivate?.(link);
+            if (isActive && link) {
+                onactive?.(link);
+                rect = link.getBoundingClientRect();
+            }
+
         });
     });
 </script>

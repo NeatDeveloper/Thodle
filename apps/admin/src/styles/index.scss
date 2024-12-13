@@ -1,5 +1,12 @@
+:root {
+    --header-height: 30px;
+    --sidebar-width: 220px;
+    --app-padding: 10px;
+    --app-gap: 15px;
+}
+
 body {
-    padding: 10px;
+    padding: var(--app-padding);
     background-color: var(--bg-color);
     color: var(--text-color);
     height: 100vh; width: 100vw;
@@ -14,9 +21,9 @@ body {
         "sidebar header"
         "sidebar content"
     ;
-    gap: 15px;
-    grid-template-columns: clamp(180px, 25%, 250px) 2fr;
-    grid-template-rows: 50px 1fr;
+    gap: var(--app-gap);
+    grid-template-columns: var(--sidebar-width) 2fr;
+    grid-template-rows: var(--header-height) 1fr;
 }
 
 

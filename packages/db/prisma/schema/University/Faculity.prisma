@@ -9,7 +9,7 @@ model Faculity {
     id Int @id @default(autoincrement())
 
     /// Уникальный идентификатор университета
-    university Int
+    university String
 
     name String
     shortName String @map("short_name")

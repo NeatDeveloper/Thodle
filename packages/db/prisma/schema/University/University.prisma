@@ -10,7 +10,9 @@
 /// @erd University
 model University {
     /// Уникальный идентификатор университета в системе
-    id Int @id @default(autoincrement())
+    id String @id @default(cuid())
+
+    iconURL String? @map("icon_url")
 
     /// Название университета
     name String @unique
@@ -45,7 +47,7 @@ model University {
 }
 
 model StudyTime {
-    id Int @id
+    id String @id
 
     startTime            Int  @map("start_time")
     durationLesson       Int  @map("duration_lesson")

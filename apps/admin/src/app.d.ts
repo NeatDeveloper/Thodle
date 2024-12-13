@@ -1,4 +1,6 @@
 import '@repo/types/env';
+import '@repo/types/index';
+import '@repo/types/db';
 
 declare global {
 	namespace App {
