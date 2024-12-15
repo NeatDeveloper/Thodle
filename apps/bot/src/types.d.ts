@@ -1,12 +1,11 @@
 import '@repo/types/env';
 import '@repo/types/schedule';
-
-import type { ContextDeclaration } from 'context/declaration';
+import type { Context as BotContext } from 'grammy';
 
 declare global {
     namespace APP {
-        type Context = ContextDeclaration.Base;
+        interface Context extends BotContext { }
     }
 }
 
-export {};
+export { };

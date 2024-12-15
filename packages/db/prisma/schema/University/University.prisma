@@ -29,12 +29,14 @@ model University {
     weeks Week[]
 
     /// Факультеты, которые относятся к данному университету
-    faculties Faculity[]
+    faculities Faculity[]
 
     /// Корпуса, которые относятся к данному университету
     buildings Building[]
 
     studyTime StudyTime?
+
+    disciplines Discipline[]
 
     /// Дата обновления университета в нашей системе
     updatedAt DateTime @updatedAt @map("updated_at")

@@ -168,7 +168,6 @@ Table Buildings {
   id Int [pk, increment, note: 'Уникальный идентификатор здания']
   name String [not null, note: 'Название корпуса']
   shortName String [not null, note: 'Короткое название корпуса']
-  nonVerbalName String [note: 'Внегласное  название корпуса']
   address String [not null, note: 'Адрес(улица) на котором находится корпус']
   university String [not null, note: '// Уникальный идентификатор университета, к которому корпус привязан']
   auditoriums Auditoriums [not null]
@@ -189,11 +188,9 @@ Table Disciplines {
   id Int [pk, increment, note: 'Уникальный идентификатор дисциплины в базе данных']
   name String [not null, note: 'Название дисциплины']
   shortName String [note: 'Короткий формат названия']
-  faculity Int [note: 'Уникальный идентификатор факультета']
   lessons Lessons [not null]
-  Faculity Facilities
-  updatedAt DateTime [not null, note: 'Дата обновления дисциплины в нашей системе']
-  createdAt DateTime [default: `now()`, not null, note: 'Дата добавления дисциплины в нашу систему']
+  University Universities [not null]
+  university String [not null]
 
   Note: 'Модель **Дисциплина**
 
@@ -208,12 +205,9 @@ Table Facilities {
   university String [not null, note: 'Уникальный идентификатор университета']
   name String [not null]
   shortName String [not null]
-  disciplines Disciplines [not null]
   lectors Lectors [not null]
   groups Groups [not null]
   University Universities [not null]
-  updatedAt DateTime [not null, note: 'Дата обновления пользователя в нашей системе']
-  createdAt DateTime [default: `now()`, not null, note: 'Дата создания пользователя в нашей системе']
 
   Note: 'Модель **Факультет**
 
@@ -257,9 +251,10 @@ Table Universities {
   weeks Weeks [not null, note: 'Связь с моделью Week для определения названий недель в конкретном университете
 @minItems 2
 @maxItems 2']
-  faculties Facilities [not null, note: 'Факультеты, которые относятся к данному университету']
+  faculities Facilities [not null, note: 'Факультеты, которые относятся к данному университету']
   buildings Buildings [not null, note: 'Корпуса, которые относятся к данному университету']
   studyTime StudyTimes
+  disciplines Disciplines [not null]
   updatedAt DateTime [not null, note: 'Дата обновления университета в нашей системе']
   createdAt DateTime [default: `now()`, not null, note: 'Дата создания университета в нашей системе']
 
@@ -568,7 +563,7 @@ Ref: Auditoriums.building > Buildings.id
 
 Ref: Buildings.university > Universities.id [delete: Cascade]
 
-Ref: Disciplines.faculity > Facilities.id
+Ref: Disciplines.university > Universities.id [delete: Cascade]
 
 Ref: Facilities.university > Universities.id [delete: Cascade]
 
