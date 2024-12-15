@@ -17,9 +17,6 @@ model Building {
     /// Короткое название корпуса
     shortName String @map("short_name")
 
-    /// Внегласное  название корпуса
-    nonVerbalName String? @map("non_verbal_name")
-
     /// Адрес(улица) на котором находится корпус
     address    String
 

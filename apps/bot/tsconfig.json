@@ -4,18 +4,36 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "paths": {
-            "configuration": ["./src/configuration"],
-            "configuration/*": ["./src/configuration/*"],
-            "commands": ["./src/commands"],
-            "commands/*": ["./src/commands/*"],
-            "middlewares": ["./src/middlewares"],
-            "middlewares/*": ["./src/middlewares/*"],
-            "context": ["./src/context"],
-            "context/*": ["./src/context/*"],
-            "helpers": ["./src/helpers"],
-            "helpers/*": ["./src/helpers/*"],
-            "src": ["./src"],
-            "src/*": ["./src/*"],
+            "configuration": [
+                "./src/configuration"
+            ],
+            "configuration/*": [
+                "./src/configuration/*"
+            ],
+            "commands": [
+                "./src/commands"
+            ],
+            "commands/*": [
+                "./src/commands/*"
+            ],
+            "middlewares": [
+                "./src/middlewares"
+            ],
+            "middlewares/*": [
+                "./src/middlewares/*"
+            ],
+            "helpers": [
+                "./src/helpers"
+            ],
+            "helpers/*": [
+                "./src/helpers/*"
+            ],
+            "src": [
+                "./src"
+            ],
+            "src/*": [
+                "./src/*"
+            ],
         }
     }
 }

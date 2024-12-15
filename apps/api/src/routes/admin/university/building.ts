@@ -1,24 +1,48 @@
-import { factory } from 'helpers';
+import { CreateException, factory } from 'helpers';
 import prisma from '@repo/db';
+import { zValidator } from '@hono/zod-validator';
+import { buildingSchema, type BuildingSchema } from '@repo/schemas';
 
 const building = factory.createApp().basePath('/building');
 
-building.get('/:universityID', async __context__ => {
-    const universityID = __context__.req.param('universityID');
 
-    const buildings = await prisma.building.findMany({
-        where: {
-            university: +universityID
-        }
+building.get('/:id', async __context__ => {
+    const id = __context__.req.param('id');
+
+    const building = await prisma.building.findMany({
+        where: { id: +id }
     });
+
+    return __context__.json(building)
+});
+building.get('/', async __context__ => {
+
+    const buildings = await prisma.building.findMany();
 
     return __context__.json(buildings)
 });
 
-building.post('/', async __context__ => {
-    const universities = await prisma.university.findMany();
+building.post('/',
+    zValidator('form', buildingSchema, async result => {
+        if (!result.success) throw CreateException('BAD_REQUEST', { message: result.error.message })
+    }),
+    async __context__ => {
+        const form = await __context__.req.parseBody<BuildingSchema>();
 
-    return __context__.json(universities)
-});
+        let building = await prisma.building.findFirst({
+            where: {
+                university: form.university,
+                name: form.name,
+            }
+        });
+
+        if (building) throw CreateException('BAD_REQUEST');
+
+        building = await prisma.building.create({
+            data: form
+        });
+
+        return __context__.json(building);
+    });
 
 export default building;

@@ -14,17 +14,10 @@ model Faculity {
     name String
     shortName String @map("short_name")
 
-    disciplines Discipline[]
     lectors     Lector[]
     groups      Group[]
 
     University University @relation(fields: [university], references: [id], onDelete: Cascade)
-
-    /// Дата обновления пользователя в нашей системе
-    updatedAt DateTime @updatedAt @map("updated_at")
-
-    /// Дата создания пользователя в нашей системе
-    createdAt DateTime @default(now()) @map("created_at")
 
     @@index([university])
     @@map("Facilities")

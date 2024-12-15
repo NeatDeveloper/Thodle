@@ -13,7 +13,7 @@ export const universitySchema = z.object({
     ].includes(file.type))
 });
 
-export const universityObject = universitySchema.extend({
+export const universityObject = z.object({
     id: z.string(),
     name: z.string(),
     shortName: z.string(),
@@ -28,7 +28,9 @@ export type UniversityObject = z.infer<typeof universityObject>;
 
 
 export * from './studyTime';
+export * from './discipline';
 export * from './week';
 export * from './faculity';
+export * from './lector';
 export * from './building';
 export * from './auditorium';

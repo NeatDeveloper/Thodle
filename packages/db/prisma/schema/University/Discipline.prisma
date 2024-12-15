@@ -14,20 +14,12 @@ model Discipline {
     /// Короткий формат названия
     shortName String? @map("short_name")
 
-    /// Уникальный идентификатор факультета
-    faculity Int?
-
     lessons Lesson[]
 
-    Faculity Faculity? @relation(fields: [faculity], references: [id])
+    University University @relation(fields: [university], references: [id], onDelete: Cascade)
+    university String
 
-    /// Дата обновления дисциплины в нашей системе
-    updatedAt DateTime @updatedAt @map("updated_at")
-
-    /// Дата добавления дисциплины в нашу систему
-    createdAt DateTime @default(now()) @map("created_at")
-
-    @@schema("university")
-    @@index([faculity])
     @@map("Disciplines")
+    @@schema("university")
+    @@index([university])
 }

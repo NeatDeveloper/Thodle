@@ -169,7 +169,6 @@ erDiagram
   Int id PK
   String name
   String short_name
-  String non_verbal_name "nullable"
   String address
   String university FK
 }
@@ -177,17 +176,13 @@ erDiagram
   Int id PK
   String name
   String short_name "nullable"
-  Int faculity FK "nullable"
-  DateTime updated_at
-  DateTime created_at
+  String university FK
 }
 "Facilities" {
   Int id PK
   String university FK
   String name
   String short_name
-  DateTime updated_at
-  DateTime created_at
 }
 "Groups" {
   String id PK
@@ -217,7 +212,7 @@ erDiagram
 }
 "Auditoriums" }o--|| "Buildings" : Building
 "Buildings" }o--|| "Universities" : University
-"Disciplines" }o--o| "Facilities" : Faculity
+"Disciplines" }o--|| "Universities" : University
 "Facilities" }o--|| "Universities" : University
 "Groups" }o--|| "Facilities" : Faculity
 "Weeks" }|--o| "Universities" : University
@@ -245,7 +240,6 @@ erDiagram
   - `id`: Уникальный идентификатор здания
   - `name`: Название корпуса
   - `short_name`: Короткое название корпуса
-  - `non_verbal_name`: Внегласное  название корпуса
   - `address`: Адрес(улица) на котором находится корпус
   - `university`: // Уникальный идентификатор университета, к которому корпус привязан
 
@@ -258,9 +252,7 @@ erDiagram
   - `id`: Уникальный идентификатор дисциплины в базе данных
   - `name`: Название дисциплины
   - `short_name`: Короткий формат названия
-  - `faculity`: Уникальный идентификатор факультета
-  - `updated_at`: Дата обновления дисциплины в нашей системе
-  - `created_at`: Дата добавления дисциплины в нашу систему
+  - `university`: 
 
 ### `Facilities`
 Модель **Факультет**
@@ -272,8 +264,6 @@ erDiagram
   - `university`: Уникальный идентификатор университета
   - `name`: 
   - `short_name`: 
-  - `updated_at`: Дата обновления пользователя в нашей системе
-  - `created_at`: Дата создания пользователя в нашей системе
 
 ### `Groups`
 Модель **Группа**

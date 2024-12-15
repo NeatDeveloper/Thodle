@@ -4,21 +4,31 @@ import { upload } from '@repo/db/s3';
 import faculity from './faculity';
 import building from './building';
 import { zValidator } from '@hono/zod-validator';
-import { universityObject, universitySchema, type UniversityObject, type UniversitySchema } from '@repo/schemas';
+import { universitySchema, type UniversitySchema } from '@repo/schemas';
 import { generate } from '@repo/utils/crypto';
+import discipline from './discipline';
 
 const university = factory.createApp().basePath('/university');
 
 university.get('/', async __context__ => {
+
     const universities = await prisma.university.findMany();
 
     return __context__.json(universities)
 });
 university.get('/:id', async __context__ => {
     const id = __context__.req.param('id');
+    const buildings = __context__.req.query('buildings');
+    const faculities = __context__.req.query('faculities');
+    const disciplines = __context__.req.query('disciplines');
 
     const university = await prisma.university.findUnique({
-        where: { id }
+        where: { id },
+        include: {
+            buildings: typeof buildings === 'string',
+            faculities: typeof faculities === 'string',
+            disciplines: typeof disciplines === 'string',
+        }
     });
 
     return __context__.json(university)
@@ -62,5 +72,6 @@ university.post('/',
 
 university.route('/', faculity);
 university.route('/', building);
+university.route('/', discipline);
 
 export default university;

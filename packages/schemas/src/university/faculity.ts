@@ -3,7 +3,7 @@ import { z } from '@hono/zod-openapi';
 export const faculitySchema = z.object({
     name: z.string(),
     shortName: z.string(),
-    university: z.number(),
+    university: z.string(),
 });
 export const faculityObject = faculitySchema.extend({
     id: z.number()
