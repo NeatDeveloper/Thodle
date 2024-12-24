@@ -41,7 +41,7 @@
                         alt={user.profile.username ||
                             user.profile.firstName ||
                             ''}
-                        size={30}
+                        size={40}
                     />
                 </Link>
             {/if}

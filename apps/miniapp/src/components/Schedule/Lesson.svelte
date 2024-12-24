@@ -7,13 +7,7 @@
 
 <li class="lesson section-item">
     {#if lesson.forAllGroups}
-        <span class="lesson_type">
-            {#if lesson.type === 'LECTURE'}
-                👨‍🏫
-            {:else if lesson.type === 'PRACTICE'}
-                📝
-            {/if}
-        </span>
+    <img class="lesson_type" src="/{lesson.type.toLowerCase()}.png" width="30" height="30" alt="" />
         <div class="lesson-data section-data">
             <span class="lesson_name">{lesson.discipline}</span>
             <span class="lesson_lector">{lesson.lector}</span>
@@ -28,7 +22,8 @@
         gap: 14px;
 
         &_type {
-            font-size: 2.8rem;
+            object-fit: cover;
+            scale: 1.5;
         }
 
         &_lector {

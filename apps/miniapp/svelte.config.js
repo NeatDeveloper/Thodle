@@ -1,5 +1,8 @@
 import adapter from '@repo/adapter';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { getPorts } from '@repo/utils/env';
+
+const ports = getPorts()
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -7,8 +10,8 @@ export default {
 
 	kit: {
 		adapter: adapter({
-            out: "../../prod/dapp",
-            port: process.env.DAPP_PORT,
+            out: "../../prod/miniapp",
+            port: ports.MINIAPP_PORT,
         }),
 
         alias: {

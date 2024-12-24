@@ -10,7 +10,7 @@ try {
         hostName: new URL(app.APP_HOST).hostname,
         sitePort: ports.SITE_PORT,
         botPort: ports.BOT_PORT,
-        dappPort: ports.DAPP_PORT,
+        miniappPort: ports.MINIAPP_PORT,
         apiPort: ports.API_PORT,
         adminPort: ports.ADMIN_PORT,
     });

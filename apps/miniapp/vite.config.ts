@@ -1,6 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
-import { getPorts } from '../../packages/utils/env';
+import { getPorts } from '@repo/utils/env';
 
 const ports = getPorts();
 
@@ -10,7 +10,7 @@ export default defineConfig({
         include: ['src/**/*.{test,spec}.{js,ts}'],
     },
     server: {
-        port: ports.DAPP_PORT,
+        port: ports.MINIAPP_PORT,
     },
     css: {
         preprocessorOptions: {

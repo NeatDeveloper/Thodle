@@ -19,7 +19,7 @@ const ENV_SCHEMA = z.object({
 
     // App ports
     API_PORT: z.coerce.number(),
-    DAPP_PORT: z.coerce.number(),
+    MINIAPP_PORT: z.coerce.number(),
     BOT_PORT: z.coerce.number(),
     SITE_PORT: z.coerce.number(),
     ADMIN_PORT: z.coerce.number(),
@@ -64,7 +64,7 @@ const DATABASE = ENV_SCHEMA.pick({
 
 const PORTS = ENV_SCHEMA.pick({
     API_PORT: true,
-    DAPP_PORT: true,
+    MINIAPP_PORT: true,
     BOT_PORT: true,
     SITE_PORT: true,
     ADMIN_PORT: true

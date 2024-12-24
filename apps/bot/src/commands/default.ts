@@ -1,6 +1,9 @@
 import { Composer } from 'grammy';
 import object from '@repo/utils/object';
 import prisma from '@repo/db';
+import { getApp } from '@repo/utils/env';
+
+const app = getApp();
 
 const commands = new Composer<APP.Context>();
 
@@ -28,9 +31,9 @@ ${object.stringify(user)}
             inline_keyboard: [
                 [
                     {
-                        text: 'WebApp',
+                        text: 'MiniApp',
                         web_app: {
-                            url: 'https://dapp.thodle.tech'
+                            url: `https://miniapp.${new URL(app.APP_HOST).hostname}`
                         }
                     }
                 ]

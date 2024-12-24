@@ -6,8 +6,8 @@ bot.$hostName {
 	reverse_proxy http://localhost:$botPort
 }
 
-dapp.$hostName {
-	reverse_proxy http://localhost:$dappPort
+miniapp.$hostName {
+	reverse_proxy http://localhost:$miniappPort
 }
 
 api.$hostName {
